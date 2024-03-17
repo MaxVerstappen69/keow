@@ -57,6 +57,10 @@
       <input type="text" class="form-control" name="email" aria-describedby="email" placeholder="Enter Email">
     </div>
     <div class="form-group">
+      <label for="username">username</label>
+      <input type="text" class="form-control" name="username" aria-describedby="username" placeholder="Enter username">
+    </div>
+    <div class="form-group">
       <label for="password">Password</label>
       <input type="password" class="form-control" name="password" placeholder="Password">
     </div>
