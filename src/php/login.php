@@ -9,14 +9,8 @@
     <link rel="stylesheet" href="../../style/style.css">
 </head>
 <body>
-<header class="p-3 text-bg-dark">
-    <div class="container">
-        <div class="text-end">
-            <button type="button" class="btn btn-outline-light me-2"><a href="login.php">ลงชื่อเข้าใช้</a></button>
-            <button type="button" class="btn btn-warning"><a href="register.php">สมัครบัญชี</a></button>
-        </div>
-    </div>
-</header>
+
+    <?php include '../include/navbar.php';?>
 
 <main class="form-signin w-100 m-auto">
     <form method="post" action="login_process.php"> <!-- ระบุ action ให้ชี้ไปยังไฟล์ login_process.php -->
