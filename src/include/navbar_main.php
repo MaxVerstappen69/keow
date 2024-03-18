@@ -23,7 +23,7 @@
             <a href="#" class="btn" style="color: #000000;">
                 <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
             </a>
-            <a class="btn btn-sm fw-bold" href="register.php" role="button"
+            <a class="btn btn-sm fw-bold" href="login.php" role="button"
                 style="background-color: #EF959D; border-color: #EF959D; width: 100px; border-radius: 50px;">Sign In</a>
         </div>
     </div>
