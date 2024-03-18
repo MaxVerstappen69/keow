@@ -29,7 +29,7 @@ if (isset ($_SESSION['login_user'])) {
         <div class="container text-center border rounded-4 shadow w-50 my-5">
             <div class="row">
                 <div class="col fw-bold py-3 fs-3">
-                    LOGIN
+                ลงชื่อเข้าใช้
                 </div>
                 <hr class="hr" />
             </div>
