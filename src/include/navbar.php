@@ -4,8 +4,7 @@
     <div class="container d-flex justify-content-between align-items-center">
         <div>
             <a class="navbar-brand" href="index.php">
-                <img src="path/to/your/logo/image.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                LOGO
+                <img src="../../public/image/logo.png" width="90" height="70" class="d-inline-block align-top" alt="">
             </a>
         </div>
 
