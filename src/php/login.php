@@ -39,14 +39,16 @@
                 </div>
             </div>
 
-            <div class="form-check text-start my-3 ">
-                <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault"
-                    name="remember_me">
-                <label class="form-check-label" for="flexCheckDefault">จดจำฉันไว้</label>
+            <div class="container text-center w-50">
+                <div class="form-check text-start my-3 ">
+                    <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault"
+                        name="remember_me">
+                    <label class="form-check-label" for="flexCheckDefault">จดจำฉันไว้</label>
+                </div>
             </div>
-            <button class="btn w-100 py-2 fw-bold w-50" type="submit"
+            <button class="btn w-25 py-2 fw-bold rounded-pill" type="submit"
                 style="background-color: #EF959D">ลงชื่อเข้าใช้</button>
-            <p class="mt-5 mb-3 text-body-secondary">ยังไม่มีบัญชี?<a href="register.php">สมัครบัญชี</a></p>
+            <p class="mt-5 mb-5 text-body-secondary">ยังไม่มีบัญชี?<a href="register.php">สมัครบัญชี</a></p>
         </div>
 
     </form>
