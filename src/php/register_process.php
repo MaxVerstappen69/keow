@@ -9,8 +9,8 @@ if(isset($_POST['signup'])){
     $address = $_POST['address'];
     $phone = $_POST['phone'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
-    $con_password = $_POST['con_password'];
+    $password = md5($_POST['password']);
+    $con_password = md5($_POST['con_password']);
     $username = $_POST['username'];
     $user_role = 'user';
 
@@ -76,10 +76,10 @@ $check_username->bind_param('s', $username);
             exit();
         }
 
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+       
         $stmt = $conn->prepare('INSERT INTO customer (firstname, lastname, address, phone, email, password, username, user_role) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-        $stmt->bind_param('ssssssss', $firstname, $lastname, $address, $phone, $email, $passwordHash, $username, $user_role);
+        $stmt->bind_param('ssssssss', $firstname, $lastname, $address, $phone, $email, $password, $username, $user_role);
         $stmt->execute();
         $_SESSION['success'] = "สมัครสมาชิกเรียบร้อยแล้ว <a href='login.php' class='alert-link'>คลิกที่นี่</a> เพื่อเข้าสู่ระบบ";
         header('location: register.php');

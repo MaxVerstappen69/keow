@@ -5,7 +5,7 @@ require_once "../../config/db.php";
 // เมื่อมีการส่งข้อมูลมาจากฟอร์ม
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    $password = md5($_POST['password']);
 
     // คิวรี่ฐานข้อมูลเพื่อตรวจสอบข้อมูลผู้ใช้
     $query = "SELECT * FROM customer WHERE email='$email' AND password='$password'";
