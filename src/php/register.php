@@ -35,39 +35,76 @@
         ?>
       </div>
     <?php } ?>
-    <div class="form-group">
-      <label for="firstname">firstname</label>
-      <input type="text" class="form-control" name="firstname" aria-describedby="firstname" placeholder="Enter Firstname">
-    </div>
-    <div class="form-group">
-      <label for="lastname">lastname</label>
-      <input type="text" class="form-control" name="lastname" aria-describedby="lastname" placeholder="Enter Lastname">
-    </div>
-    <div class="form-group">
-      <label for="address">address</label>
-      <input type="text" class="form-control" name="address" aria-describedby="address" placeholder="Enter Address">
-    </div>
-    <div class="form-group">
-      <label for="phone">phone number</label>
-      <input type="text" class="form-control" name="phone" aria-describedby="phone" placeholder="Enter Phone number">
-    </div>
-    <div class="form-group">
-      <label for="email">email</label>
-      <input type="text" class="form-control" name="email" aria-describedby="email" placeholder="Enter Email">
-    </div>
-    <div class="form-group">
-      <label for="username">username</label>
-      <input type="text" class="form-control" name="username" aria-describedby="username" placeholder="Enter username">
-    </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" class="form-control" name="password" placeholder="Password">
-    </div>
-    <div class="form-group">
-      <label for="confirm password">Password</label>
-      <input type="password" class="form-control" name="con_password" placeholder="Confirm Password">
-    </div>
-    <button type="submit" name="signup" class="btn btn-primary">Sign Up</button>
+    <?php include '../include/navbar_login.php'; ?>
+    <div class="container text-center border rounded-4 shadow w-50 my-5">
+            <div class="row">
+                <div class="col fw-bold py-3 fs-3">
+                สมัครบัญชีใช้งาน
+                </div>
+                <hr class="hr" />
+            </div>
+            <div class="row text-center pt-5">
+                <div class="column form-floating w-50 d-inline-block">
+                    <input type="username" name="username" class="form-control rounded-pill" id="floatingInput"
+                        placeholder="username">
+                    <label for="floatingInput">ชื่อจริง</label>
+                </div>
+                <div class="column form-floating w-50 d-inline-block">
+                    <input type="username" name="username" class="form-control rounded-pill" id="floatingInput"
+                        placeholder="username">
+                    <label style="" for="floatingPInput">นามสกุล</label>
+                </div>
+            </div>
+            <div class="container text-center pt-5">
+                <div class="column form-floating w-100 d-inline-block">
+                    <input type="address" name="address" class="form-control rounded-pill" id="floatingInput"
+                        placeholder="address">
+                    <label for="floatingInput">ที่อยู่</label>
+                </div>
+                </div>
+                <div class="row text-center pt-5">
+                <div class="column form-floating w-50 d-inline-block">
+                    <input type="phone" name="phone" class="form-control rounded-pill" id="floatingInput"
+                        placeholder="phone">
+                    <label for="floatingInput">เบอร์โทร</label>
+                </div>
+                <div class="column form-floating w-50 d-inline-block">
+                    <input type="email" name="email" class="form-control rounded-pill" id="floatingInput"
+                        placeholder="name@example.com">
+                    <label for="floatingInput">อีเมล์</label>
+                </div>
+            </div>
+            <div class="row text-center pt-5">
+                <div class="column form-floating w-50 d-inline-block">
+                    <input type="password" name="password" class="form-control rounded-pill" id="floatingpassword"
+                        placeholder="password">
+                    <label for="floatingpassword">รหัสผ่าน</label>
+                </div>
+                <div class="column form-floating w-50 d-inline-block">
+                    <input type="password" name="password" class="form-control rounded-pill" id="floatingpassword"
+                        placeholder="password">
+                    <label for="floatingpassword">ยืนยันรหัสผ่าน</label>
+                </div>
+            </div>
+            <div class="container text-center pt-5">
+                <div class="column form-floating w-50 d-inline-block">
+                    <input type="username" name="username" class="form-control rounded-pill" id="floatingInput"
+                        placeholder="username">
+                    <label for="floatingInput">ชื่อผู้ใช้งาน</label>
+                </div>
+                </div>
+
+
+            <div class="container text-center w-50">
+                <div class="form-check text-start my-3 ">
+                    
+
+                </div>
+            </div>
+            <button class="btn w-25 py-2 fw-bold rounded-pill" type="submit"
+                style="background-color: #EF959D">ลงทะเบียน</button>
+            <p class="mt-5 mb-5 text-body-secondary">มีบัญชีแล้ว?<a href="register.php">ลงชื่อเข้าใช้</a></p>
+        </div>
   </form>
 </body>
 </html>
