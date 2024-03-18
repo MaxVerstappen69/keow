@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-<nav class="navbar navbar-light shadow-sm" style="background-color: #B8D8BA;">
+<nav class="navbar navbar-light shadow" style="background-color: #B8D8BA;">
     <div class="container d-flex justify-content-between align-items-center">
         <div>
             <a class="navbar-brand" href="index.php">
@@ -23,7 +23,7 @@
             <a href="#" class="btn" style="color: #000000;">
                 <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
             </a>
-            <a class="btn btn-sm fw-bold" href="register.php" role="button"
+            <a class="btn fw-bold w-25" href="register.php" role="button"
                 style="background-color: #EF959D; border-color: #EF959D; width: 100px; border-radius: 50px;">Sign In</a>
         </div>
     </div>
