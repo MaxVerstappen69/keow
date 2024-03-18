@@ -1,3 +1,12 @@
+<?php
+session_start();
+require_once "../../config/db.php";
+if (isset ($_SESSION['login_user'])) {
+    // echo "ผู้ใช้เข้าสู่ระบบแล้ว";
+} else {
+    // echo "ไม่มีการเข้าสู่ระบบ";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
