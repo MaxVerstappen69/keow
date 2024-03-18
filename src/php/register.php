@@ -56,7 +56,7 @@
                     <label for="lastname">นามสกุล</label>
                 </div>
             </div>
-            <div class="container text-center pt-5">
+            <div class="row text-center pt-5">
                 <div class="column form-floating w-100 d-inline-block">
                 <input type="text" class="form-control rounded-pill" style="background-color: rgba(217, 217, 217, 0.44)" name="address" aria-describedby="address" placeholder="Enter Address">
                     <label for="address">ที่อยู่</label>
