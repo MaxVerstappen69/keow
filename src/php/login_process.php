@@ -2,29 +2,28 @@
 session_start();
 require_once "../../config/db.php";
 
-// When data is submitted via a form
+// เมื่อมีการส่งข้อมูลมาจากฟอร์ม
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username_email = $_POST['username_email']; // Assuming this field contains either username or email
+    $email = $_POST['email'];
     $password = md5($_POST['password']);
 
-    // Query the database to check user data
-    $query = "SELECT * FROM customer WHERE (username='$username_email' OR email='$username_email') AND password='$password'";
+    // คิวรี่ฐานข้อมูลเพื่อตรวจสอบข้อมูลผู้ใช้
+    $query = "SELECT * FROM customer WHERE email='$email' AND password='$password'";
     $result = mysqli_query($conn, $query);
     $count = mysqli_num_rows($result);
 
-    // If user data is found in the database
+    // ถ้าพบข้อมูลผู้ใช้ในฐานข้อมูล
     if($count == 1) {
-        $row = mysqli_fetch_assoc($result);
-        $_SESSION['login_user'] = $row['email']; // Store user's email in session
-        header("location: dashboard.php"); // Redirect to dashboard.php
+        $_SESSION['login_user'] = $email; // เก็บค่าอีเมล์ผู้ใช้ใน session
+        header("location: dashboard.php"); // เด้งไปยังหน้า dashboard.php
     } else {
-        echo "Username or email or password is incorrect";
+        echo "อีเมล์หรือรหัสผ่านไม่ถูกต้อง";
     }
 
-    // Check if the "remember me" checkbox is selected
+    // ตรวจสอบว่ากล่อง "จดจำฉัน" ถูกเลือกหรือไม่
     if(isset($_POST['remember_me'])) {
-        // Perform actions when "remember me" is selected
-        // For example, save data in a cookie
+        // ทำสิ่งที่คุณต้องการเมื่อกล่อง "จดจำฉัน" ถูกเลือก
+        // เช่น บันทึกข้อมูลลงในคุกกี้
     }
 }
 ?>
