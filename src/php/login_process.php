@@ -15,7 +15,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     // ถ้าพบข้อมูลผู้ใช้ในฐานข้อมูล
     if($count == 1) {
         $_SESSION['login_user'] = $email; // เก็บค่าอีเมล์ผู้ใช้ใน session
-        header("location: dashboard.php"); // เด้งไปยังหน้า dashboard.php
+        header("location: index.php");
     } else {
         echo "อีเมล์หรือรหัสผ่านไม่ถูกต้อง";
     }
