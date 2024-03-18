@@ -9,7 +9,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
-<body>
+  <body>
+    
   <form action="../php/register_process.php" method="post">
     <?php if(isset($_SESSION['error'])){ ?>
       <div class="alert alert-danger" role="alert">
@@ -35,6 +36,7 @@
         ?>
       </div>
     <?php } ?>
+
     <?php include '../include/navbar_login.php'; ?>
     <div class="container text-center border rounded-4 shadow w-50 my-5">
             <div class="row">
@@ -45,66 +47,53 @@
             </div>
             <div class="row text-center pt-5">
                 <div class="column form-floating w-50 d-inline-block">
-                    <input type="username" name="username" class="form-control rounded-pill" id="floatingInput"
-                        placeholder="username">
-                    <label for="floatingInput">ชื่อจริง</label>
+                <input type="text" class="form-control rounded-pill" name="firstname" aria-describedby="firstname" placeholder="Enter Firstname">
+                    <label for="firstname">ชื่อจริง</label>
                 </div>
                 <div class="column form-floating w-50 d-inline-block">
-                    <input type="username" name="username" class="form-control rounded-pill" id="floatingInput"
-                        placeholder="username">
-                    <label style="" for="floatingPInput">นามสกุล</label>
+                <input type="text" class="form-control rounded-pill" name="lastname" aria-describedby="lastname" placeholder="Enter Lastname">
+                    <label for="lastname">นามสกุล</label>
                 </div>
             </div>
             <div class="container text-center pt-5">
                 <div class="column form-floating w-100 d-inline-block">
-                    <input type="address" name="address" class="form-control rounded-pill" id="floatingInput"
-                        placeholder="address">
-                    <label for="floatingInput">ที่อยู่</label>
+                <input type="text" class="form-control rounded-pill" name="address" aria-describedby="address" placeholder="Enter Address">
+                    <label for="address">ที่อยู่</label>
                 </div>
                 </div>
                 <div class="row text-center pt-5">
                 <div class="column form-floating w-50 d-inline-block">
-                    <input type="phone" name="phone" class="form-control rounded-pill" id="floatingInput"
-                        placeholder="phone">
-                    <label for="floatingInput">เบอร์โทร</label>
+                <input type="text" class="form-control rounded-pill" name="phone" aria-describedby="phone" placeholder="Enter Phone number">
+                    <label for="phone">เบอร์โทร</label>
                 </div>
                 <div class="column form-floating w-50 d-inline-block">
-                    <input type="email" name="email" class="form-control rounded-pill" id="floatingInput"
-                        placeholder="name@example.com">
-                    <label for="floatingInput">อีเมล์</label>
+                <input type="text" class="form-control rounded-pill" name="email" aria-describedby="email" placeholder="Enter Email">
+                    <label for="email">อีเมล์</label>
                 </div>
             </div>
             <div class="row text-center pt-5">
                 <div class="column form-floating w-50 d-inline-block">
-                    <input type="password" name="password" class="form-control rounded-pill" id="floatingpassword"
-                        placeholder="password">
-                    <label for="floatingpassword">รหัสผ่าน</label>
+                <input type="text" class="form-control rounded-pill" name="username" aria-describedby="username" placeholder="Enter username">
+                    <label for="username">ชื่อผู้ใช้งาน</label>
                 </div>
                 <div class="column form-floating w-50 d-inline-block">
-                    <input type="password" name="password" class="form-control rounded-pill" id="floatingpassword"
-                        placeholder="password">
-                    <label for="floatingpassword">ยืนยันรหัสผ่าน</label>
+                <input type="password" class="form-control rounded-pill" name="password" placeholder="Password">
+                    <label for="password">รหัสผ่าน</label>
                 </div>
             </div>
             <div class="container text-center pt-5">
                 <div class="column form-floating w-50 d-inline-block">
-                    <input type="username" name="username" class="form-control rounded-pill" id="floatingInput"
-                        placeholder="username">
-                    <label for="floatingInput">ชื่อผู้ใช้งาน</label>
+                <input type="password" class="form-control rounded-pill" name="con_password" placeholder="Confirm Password">
+                    <label for="confirm password">ยืนยันรหัสผ่าน</label>
                 </div>
                 </div>
 
-
-            <div class="container text-center w-50">
-                <div class="form-check text-start my-3 ">
-                    
-
+                <div class="container">
+             <button class="btn w-25 py-2 fw-bold rounded-pill" type="submit" name="signup"
+                style="background-color: #EF959D">ลงทะเบียน</button>
+            <p class="mt-5 mb-5 text-body-secondary">มีบัญชีแล้ว?<a href="login.php">ลงชื่อเข้าใช้</a></p>       
                 </div>
             </div>
-            <button class="btn w-25 py-2 fw-bold rounded-pill" type="submit"
-                style="background-color: #EF959D">ลงทะเบียน</button>
-            <p class="mt-5 mb-5 text-body-secondary">มีบัญชีแล้ว?<a href="register.php">ลงชื่อเข้าใช้</a></p>
-        </div>
   </form>
 </body>
 </html>
