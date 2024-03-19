@@ -11,7 +11,8 @@ require_once "../../config/db.php";
   <title>Register</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 </head>
 
 <style>
@@ -36,14 +37,18 @@ require_once "../../config/db.php";
         ?>
       </div>
     <?php } ?>
-    <?php if (isset ($_SESSION['success'])) { ?>
-      <div class="alert-alert-success" role="alert">
-        <?php
-        echo $_SESSION['success'];
-        unset($_SESSION['success']);
-        ?>
-      </div>
-    <?php } ?>
+    <?php
+    // Process form submission or any PHP logic here
+    
+    // For example, suppose you want to display a SweetAlert2 dialog after processing a form
+    if (isset ($_SESSION['success'])) {
+      // Perform form submission handling
+    
+      // Generate JavaScript code to show SweetAlert2 dialog
+      echo '<script src="../js/sweetalert_successLogin.js"></script>';
+      unset($_SESSION['success']);
+    }
+    ?>
     <?php if (isset ($_SESSION['warning'])) { ?>
       <div class="alert-alert-warning" role="alert">
         <?php
@@ -116,6 +121,9 @@ require_once "../../config/db.php";
       </div>
     </div>
   </form>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 
 </html>
