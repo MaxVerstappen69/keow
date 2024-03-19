@@ -43,14 +43,14 @@ if(isset($_POST['signup'])){
         header('location: register.php');
         exit();
     } elseif($password != $con_password){
-        $_SESSION['error'] = 'รหัสผ่านตรงกัน';
+        $_SESSION['error'] = 'รหัสผ่านไม่ตรงกัน';
         header('location: register.php');
         exit();
     } elseif(empty($username)){
         $_SESSION['error'] = 'กรุณากรอกชื่อผู้ใช้';
         header('location: register.php');
         exit();
-    } 
+    }
 
     $check_email = $conn->prepare('SELECT email FROM customer WHERE email = ?');
     $check_email->bind_param('s', $email);

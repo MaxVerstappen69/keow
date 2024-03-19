@@ -21,6 +21,15 @@ if (isset ($_SESSION['login_user'])) {
         crossorigin="anonymous"></script>
 </head>
 
+<style>
+    .form-control {
+        border: 1px solid #ced4da;
+        /* Example border color */
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        /* Example box-shadow */
+    }
+</style>
+
 <body>
 
     <?php include '../include/navbar_login.php'; ?>
@@ -29,7 +38,7 @@ if (isset ($_SESSION['login_user'])) {
         <div class="container text-center border rounded-4 shadow w-50 my-5">
             <div class="row">
                 <div class="col fw-bold py-3 fs-3">
-                ลงชื่อเข้าใช้
+                    ลงชื่อเข้าใช้
                 </div>
                 <hr class="hr" />
             </div>
