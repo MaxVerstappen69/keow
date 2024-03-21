@@ -23,7 +23,39 @@ body {
     width: 100px;
 }
 
-.icon {
-  fill: black;
+.icon i {
+  color: black;
 }
 
+
+.icon p {
+  color: black;
+  font-size: 18px;
+}
+
+.icon{
+  text-decoration: none;
+}
+
+
+.name-pro h3 {
+  color: black;
+  margin-top: 50px;
+  background-color: #EF959D;
+  display: inline-block;
+  width: 220px;
+  height: 55px;
+  text-align: center;
+  border-radius: 30px;
+  line-height: 55px;
+  padding: 0;
+}
+
+.container .product{
+  background-color: #B8D8BA;
+  margin-top: 50px;
+  display: inline-block;
+  border-radius: 30px;
+  width: 230px;
+  height: 300px;
+}

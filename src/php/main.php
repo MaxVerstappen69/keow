@@ -36,13 +36,13 @@ if (isset ($_SESSION['login_user'])) {
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="../../public/image/computer.png" class="d-block w-100" alt="...">
+                <img src="../../public/image/computer1.png" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-                <img src="../../public/image/computer.png" class="d-block w-100" alt="...">
+                <img src="../../public/image/computer2.png" class="d-block w-100 h-50" alt="...">
             </div>
             <div class="carousel-item">
-                <img src="../../public/image/computer.png" class="d-block w-100" alt="...">
+                <img src="../../public/image/computer3.png" class="d-block w-100" alt="...">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
@@ -57,7 +57,7 @@ if (isset ($_SESSION['login_user'])) {
         </button>
     </div>
 
-    <div class="container" style="margin-top: 50px; width: 80%; border: 1px solid black; padding: 10px;">
+    <div class="container" style="margin-top: 50px; width: 100%; border: 1px solid black; padding: 10px;">
     <div class="pic" style="text-align: center; display: flex; justify-content: center;">
         <a href="monitor.php" class="icon" style="margin-right: 80px;">
             <i class="bi bi-display" style="font-size: 50px;"></i>
@@ -93,12 +93,29 @@ if (isset ($_SESSION['login_user'])) {
         </a>
         <a href="keyboard.php" class="icon">
             <i class="bi bi-keyboard" style="font-size: 50px;"></i>
-            <p>Keyboard</p>
+            <p>Accessories</p>
         </a>
     </div>
 </div>
 
+<div class="container">
+    <div class="name-pro">
+    <h3>สินค้าเข้าใหม่</h3>
+</div>
+</div>
 
+<div class="container">
+    <div class="product">
+    <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
+    <h3>RTX 4070</h3>
+</div>
+</div>
+
+<div class="container">
+<div class="name-pro">
+    <h3>อุปกรณ์เสริม</h3>
+</div>
+</div>
 
 
 </body>
