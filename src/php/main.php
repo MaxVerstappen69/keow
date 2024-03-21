@@ -57,7 +57,7 @@ if (isset ($_SESSION['login_user'])) {
         </button>
     </div>
 
-    <div class="container" style="margin-top: 50px; width: 100%; border: 1px solid black; padding: 10px;">
+    <div class="container" style="margin-top: 50px; width: 100%; border: 1px solid black; padding: 10px; box-shadow: 0px 0px 3px;">
     <div class="pic" style="text-align: center; display: flex; justify-content: center;">
         <a href="monitor.php" class="icon" style="margin-right: 80px;">
             <i class="bi bi-display" style="font-size: 50px;"></i>
@@ -98,7 +98,7 @@ if (isset ($_SESSION['login_user'])) {
     </div>
 </div>
 
-<div class="container">
+<div class="container ">
     <div class="name-pro">
     <h3>สินค้าเข้าใหม่</h3>
 </div>
