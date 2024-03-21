@@ -57,22 +57,48 @@ if (isset ($_SESSION['login_user'])) {
         </button>
     </div>
 
-    <div class="container" style="margin-top: 50px; width: 70%; border: 1px solid black; padding: 30px;">
-        <div class="pic" style="text-align: center;">
-        <div class="icon">
-            <i class="bi bi-display" style="font-size: 50px;" ></i>
-        </div>
-        <p>Monitor</p>
-            <i class="bi bi-cpu" style="font-size: 50px; margin-left: 80px;"></i>
-            <i class="bi bi-motherboard" style="font-size: 50px; margin-left: 80px;"></i>
-            <i class="bi bi-gpu-card" style="font-size: 50px; margin-left: 80px;"></i>
-            <i class="bi bi-memory" style="font-size: 50px; margin-left: 80px;"></i>
-            <i class="bi bi-memory" style="font-size: 50px; margin-left: 80px;"></i>
-            <i class="bi bi-device-hdd" style="font-size: 50px; margin-left: 80px;"></i>
-            <i class="bi bi-fan" style="font-size: 50px; margin-left: 80px;"></i>
-            <i class="bi bi-keyboard" style="font-size: 50px; margin-left: 80px;"></i>
-        </div>
+    <div class="container" style="margin-top: 50px; width: 80%; border: 1px solid black; padding: 10px;">
+    <div class="pic" style="text-align: center; display: flex; justify-content: center;">
+        <a href="monitor.php" class="icon" style="margin-right: 80px;">
+            <i class="bi bi-display" style="font-size: 50px;"></i>
+            <p>Monitor</p>
+        </a>
+        <a href="cpu.php" class="icon" style="margin-right: 80px;">
+            <i class="bi bi-cpu" style="font-size: 50px;"></i>
+            <p>CPU</p>
+        </a>
+        <a href="motherboard.php" class="icon" style="margin-right: 80px;">
+            <i class="bi bi-motherboard" style="font-size: 50px;"></i>
+            <p>Motherboard</p>
+        </a>
+        <a href="gpu.php" class="icon" style="margin-right: 80px;">
+            <i class="bi bi-gpu-card" style="font-size: 50px;"></i>
+            <p>GPU</p>
+        </a>
+        <a href="memory.php" class="icon" style="margin-right: 80px;">
+            <i class="bi bi-memory" style="font-size: 50px;"></i>
+            <p>Memory</p>
+        </a>
+        <a href="memory.php" class="icon" style="margin-right: 80px; margin-top:auto;">
+    <img src="../../public/image/powersupply.png" alt="" style="width: 50px; height: 50px;">
+    <p>Power Supply</p>
+</a>
+        <a href="hdd.php" class="icon" style="margin-right: 80px;">
+            <i class="bi bi-device-hdd" style="font-size: 50px;"></i>
+            <p>HDD</p>
+        </a>
+        <a href="fan.php" class="icon" style="margin-right: 80px;">
+            <i class="bi bi-fan" style="font-size: 50px;"></i>
+            <p>Fan</p>
+        </a>
+        <a href="keyboard.php" class="icon">
+            <i class="bi bi-keyboard" style="font-size: 50px;"></i>
+            <p>Keyboard</p>
+        </a>
     </div>
+</div>
+
+
 
 
 </body>
