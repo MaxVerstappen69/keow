@@ -27,6 +27,7 @@ if (isset ($_SESSION['login_user'])) {
 
     
     <h1>ลูกกะหรี่</h1>
+    <p>สวัสดี</p>
 </body>
 
 </html>
