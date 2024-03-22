@@ -1,6 +1,12 @@
 <?php
 session_start();
 require_once "../../config/db.php";
+if (isset ($_SESSION['login_user'])) {
+    // echo "ผู้ใช้เข้าสู่ระบบแล้ว";
+} else {
+    // echo "ไม่มีการเข้าสู่ระบบ";
+    header('location: index.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,53 +21,13 @@ require_once "../../config/db.php";
 
 </head>
 
-<style>
-  .form-control {
-    border: 1px solid #ced4da;
-    /* Example border color */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    /* Example box-shadow */
-  }
-</style>
-
 <body>
+    <?php include '../include/navbar_profile.php'; ?>
 
-  <?php include '../include/navbar_login.php'; ?>
-
-  <form action="../php/register_process.php" method="post">
-    <?php if (isset ($_SESSION['error'])) { ?>
-      <div class="alert alert-danger" role="alert">
-        <?php
-        echo $_SESSION['error'];
-        unset($_SESSION['error']);
-        ?>
-      </div>
-    <?php } ?>
-    <?php
-    // Process form submission or any PHP logic here
-    
-    // For example, suppose you want to display a SweetAlert2 dialog after processing a form
-    if (isset ($_SESSION['success'])) {
-      // Perform form submission handling
-    
-      // Generate JavaScript code to show SweetAlert2 dialog
-      echo '<script src="../js/sweetalert_successLogin.js"></script>';
-      unset($_SESSION['success']);
-    }
-    ?>
-    <?php if (isset ($_SESSION['warning'])) { ?>
-      <div class="alert-alert-warning" role="alert">
-        <?php
-        echo $_SESSION['warning'];
-        unset($_SESSION['warning']);
-        ?>
-      </div>
-    <?php } ?>
-
-    <div class="container text-center border rounded-4 shadow w-50 my-5">
+<div class="container text-center border rounded-4 shadow w-50 my-5">
       <div class="row">
         <div class="col fw-bold py-3 fs-3">
-          สมัครบัญชีใช้งาน
+          รายการสั่งซื้อ
         </div>
         <hr class="hr" />
       </div>
@@ -102,28 +68,15 @@ require_once "../../config/db.php";
           <label for="username">ชื่อผู้ใช้งาน</label>
         </div>
       </div>
-      <div class="container d-flex justify-content-between text-center pt-5">
-        <div class="form-floating d-inline-block" style="width: 45%">
-          <input type="password" class="form-control rounded-pill" name="password" aria-describedby="username"
-            placeholder="Enter username">
-          <label for="password">รหัสผ่าน</label>
-        </div>
-        <div class="form-floating d-inline-block" style="width: 45%">
-          <input type="password" class="form-control rounded-pill" name="con_password" placeholder="Password">
-          <label for="con_password">ยืนยันรหัสผ่าน</label>
-        </div>
-      </div>
+
 
       <div class="container pt-5">
         <button class="btn w-25 py-2 fw-bold rounded-pill" type="submit" name="signup"
-          style="background-color: #EF959D">ลงทะเบียน</button>
-        <p class="mt-5 mb-5 text-body-secondary">มีบัญชีแล้ว?<a href="login.php">ลงชื่อเข้าใช้</a></p>
+          style="background-color: #EF959D">แก้ไข</button>
       </div>
     </div>
   </form>
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-</body>
 
 </html>

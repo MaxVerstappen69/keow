@@ -25,21 +25,7 @@ if (!isset ($_SESSION)) {
                         alt="">
                 </a>
             </div>
-
-            <div class="text-center">
-                <form class="form-inline">
-                    <div class="input-group">
-                        <input class="form-control" type="search" placeholder="Search..." aria-label="Search"
-                            style="width: 30vw; border-radius: 30px;">
-                        <button type="submit" class="btn"><i class="bi bi-search" style="font-size: 1rem;"></i></button>
-                    </div>
-                </form>
-            </div>
-
             <div>
-                <a href="#" class="btn" style="color: #000000;">
-                    <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
-                </a>
                 <?php
                 // Check if the user is logged in
                 if (isset ($_SESSION['login_user'])) {
@@ -47,10 +33,7 @@ if (!isset ($_SESSION)) {
                     echo '<a class="btn btn-sm fw-bold" href="user_profile.php" role="button" style="background-color: #EF959D; border-color: #EF959D; width: 100px; border-radius: 50px;">profile</a>';
                     echo '<a class="btn btn-sm fw-bold" href="order.php" role="button" style="background-color: #EF959D; border-color: #EF959D; width: 100px; border-radius: 50px;">Order</a>';
                     echo '<a class="btn btn-sm fw-bold" href="logout.php" role="button" style="background-color: #EF959D; border-color: #EF959D; width: 100px; border-radius: 50px;">Logout</a>';
-                } else {
-                    // If not logged in, show sign-in button
-                    echo '<a class="btn btn-sm fw-bold" href="login.php" role="button" style="background-color: #EF959D; border-color: #EF959D; width: 100px; border-radius: 50px;">Sign In</a>';
-                }
+                } else {}    
                 ?>
             </div>
         </div>
