@@ -13,12 +13,12 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navbar</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
-
     <nav class="navbar navbar-light shadow" style="background-color: #B8D8BA;">
         <div class="container d-flex justify-content-between align-items-center">
             <div>
@@ -27,16 +27,6 @@ $result = $conn->query($sql);
                         alt="">
                 </a>
             </div>
-
-            <!-- <div class="text-center">
-                <form class="form-inline">
-                    <div class="input-group">
-                        <input class="form-control" type="search" placeholder="Search..." aria-label="Search"
-                            style="width: 30vw; border-radius: 30px;">
-                        <button type="submit" class="btn"><i class="bi bi-search" style="font-size: 1rem;"></i></button>
-                    </div>
-                </form>
-            </div> -->
 
             <div>
                 <a href="#" class="btn border-0" style="color: #000000;">
@@ -54,6 +44,7 @@ $result = $conn->query($sql);
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="visually-hidden">Toggle Dropdown</span>
                                 </button>
+
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="user_profile.php">Profile</a></li>
                                     <li><a class="dropdown-item" href="order.php">Order</a></li>
