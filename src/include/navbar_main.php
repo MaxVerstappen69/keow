@@ -1,14 +1,10 @@
 <?php
-// session_start();
+session_start();
 include "../../config/db.php";
 $id = isset ($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
 $sql = "SELECT * FROM customer WHERE email = '$id';";
 $result = $conn->query($sql);
-
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,8 +50,8 @@ $result = $conn->query($sql);
                             <div class="btn-group">
                                 <img src="data:image/png;base64,<?php echo base64_encode($row['thumbnail']); ?>"
                                     class="img-fluid rounded-circle" style="width: 40px; height: 40px;" alt="Thumbnail">
-                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split border-0" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split border-0"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="visually-hidden">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu">
@@ -69,7 +65,6 @@ $result = $conn->query($sql);
                             </div>
                             <?php
                         }
-                        // echo '<a class="btn btn-sm fw-bold" href="logout.php" role="button" style="background-color: #EF959D; border-color: #EF959D; width: 100px; border-radius: 50px;">Logout</a>';
                     }
                 } else {
                     echo '<a class="btn btn-sm fw-bold" href="login.php" role="button" style="background-color: #EF959D; border-color: #EF959D; width: 100px; border-radius: 50px;">Sign In</a>';
