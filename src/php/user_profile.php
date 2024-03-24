@@ -33,21 +33,15 @@ if (isset ($_SESSION['login_user'])) {
       </div>
       <div class="container d-flex justify-content-between text-center pt-5">
         <div class="form-floating d-inline-block" style="width: 45%">
-          <input type="text" class="form-control rounded-pill" name=" firstname" aria-describedby="firstname"
-            placeholder="Enter Firstname">
-          <label for="firstname">ชื่อจริง</label>
+          <?php echo $_SESSION [$firstname];?>
         </div>
         <div class="form-floating d-inline-block" style="width: 45%">
-          <input type="text" class="form-control rounded-pill" name=" lastname" aria-describedby="lastname"
-            placeholder="Enter Lastname">
-          <label for="lastname">นามสกุล</label>
+        <?php echo $_SESSION [$lastname];?>
         </div>
       </div>
       <div class="container text-center pt-5">
         <div class=" form-floating w-100 d-inline-block">
-          <input type="text" class="form-control rounded-pill" name=" address" aria-describedby="address"
-            placeholder="Enter Address">
-          <label for="address">ที่อยู่</label>
+        <?php echo $_SESSION[$address];  ?>
         </div>
       </div>
       <div class="container text-center pt-5">
