@@ -1,7 +1,8 @@
 <?php
-if (!isset ($_SESSION)) {
-    session_start();
-}
+include "../../config/db.php";
+$id = isset ($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
+$sql = "SELECT * FROM customer WHERE email = '$id';";
+$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -26,30 +27,37 @@ if (!isset ($_SESSION)) {
                 </a>
             </div>
 
-            <div class="text-center">
-                <form class="form-inline">
-                    <div class="input-group">
-                        <input class="form-control" type="search" placeholder="Search..." aria-label="Search"
-                            style="width: 30vw; border-radius: 30px;">
-                        <button type="submit" class="btn"><i class="bi bi-search" style="font-size: 1rem;"></i></button>
-                    </div>
-                </form>
-            </div>
-
             <div>
                 <a href="../php/admin_edit.php" class="btn btn-primary active">Admin</a>
                 <a href="#" class="btn" style="color: #000000;">
                     <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
                 </a>
                 <?php
-                // Check if the user is logged in
                 if (isset ($_SESSION['login_user'])) {
-                    // If logged in, show logout button
-                    echo '<a class="btn btn-sm fw-bold" href="order.php" role="button"><i class="bi bi-file-earmark-text" style="font-size: 1.5rem;"></i></a>';
-                    echo '<a class="btn btn-sm fw-bold" href="user_profile.php" role="button"><i class="bi bi-person-circle" style="font-size: 1.5rem;"></i></a>';
-                    echo '<a class="btn btn-sm fw-bold" href="logout.php" role="button" style="background-color: #EF959D; border-color: #EF959D; width: 100px; border-radius: 50px;">Logout</a>';
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                            <div class="btn-group">
+                                <img src="data:image/png;base64,<?php echo base64_encode($row['thumbnail']); ?>"
+                                    class="img-fluid rounded-circle" style="width: 40px; height: 40px;" alt="Thumbnail">
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split border-0"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="user_profile.php">Profile</a></li>
+                                    <li><a class="dropdown-item" href="order.php">Order</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                                </ul>
+                            </div>
+                            <?php
+                        }
+                    }
                 } else {
-                    // If not logged in, show sign-in button
                     echo '<a class="btn btn-sm fw-bold" href="login.php" role="button" style="background-color: #EF959D; border-color: #EF959D; width: 100px; border-radius: 50px;">Sign In</a>';
                 }
                 ?>
