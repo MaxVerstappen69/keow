@@ -34,34 +34,29 @@ $result = $conn->query($sql);
       while ($row = mysqli_fetch_assoc($result)) {
         ?>
         <div class="container d-flex justify-content-between text-center pt-5">
-          <div class="form-floating d-inline-block" style="width: 45%">
+          <div class="card form-floating d-inline-block" style="width: 45%">
             <?php echo $row['firstname'] ?>
           </div>
-          <div class="form-floating d-inline-block" style="width: 45%">
+          <div class="card form-floating d-inline-block" style="width: 45%">
             <?php echo $row['lastname']; ?>
           </div>
         </div>
         <div class="container text-center pt-5">
-          <div class=" form-floating w-100 d-inline-block">
+          <div class="card form-floating w-100 d-inline-block">
             <?php echo $row['address']; ?>
           </div>
         </div>
         <div class="container text-center pt-5">
-          <div class=" form-floating w-100 d-inline-block">
-            <input type="text" class="form-control rounded-pill" name=" email" aria-describedby="address"
-              placeholder="Enter Address">
-            <label for="email">อีเมล์</label>
+          <div class="card form-floating w-100 d-inline-block">
+          <?php echo $row['email']; ?>
           </div>
         </div>
         <div class="container d-flex justify-content-between text-center pt-5">
-          <div class="form-floating d-inline-block" style="width: 45%">
-            <input type="text" class="form-control rounded-pill" name="phone" aria-describedby="phone"
-              placeholder="Enter Phone number">
-            <label for="phone">เบอร์โทร</label>
+          <div class="card form-floating d-inline-block" style="width: 45%">
+          <?php echo $row['phone']; ?>
           </div>
-          <div class="form-floating d-inline-block" style="width: 45%">
-            <input type="text" class="form-control rounded-pill" name="username" placeholder="Password">
-            <label for="username">ชื่อผู้ใช้งาน</label>
+          <div class="card form-floating d-inline-block" style="width: 45%">
+          <?php echo $row['username']; ?>
           </div>
         </div>
         <?php
