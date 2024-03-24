@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once "../../config/db.php";
 if (isset ($_SESSION['login_user'])) {
     // echo "ผู้ใช้เข้าสู่ระบบแล้ว";
@@ -13,7 +12,7 @@ if (isset ($_SESSION['login_user'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
@@ -58,136 +57,137 @@ if (isset ($_SESSION['login_user'])) {
         </button>
     </div>
 
-    <div class="container w3-animate-bottom" style="margin-top: 50px; width: 100%; border: 1px solid black; padding: 10px; box-shadow: 0px 0px 3px; border-radius: 30px;">
-    <div class="pic" style="text-align: center; display: flex; justify-content: center;">
-        <a href="monitor.php" class="icon" style="margin-right: 80px;">
-            <i class="bi bi-display" style="font-size: 50px;"></i>
-            <p>Monitor</p>
-        </a>
-        <a href="cpu.php" class="icon" style="margin-right: 80px;">
-            <i class="bi bi-cpu" style="font-size: 50px;"></i>
-            <p>CPU</p>
-        </a>
-        <a href="motherboard.php" class="icon" style="margin-right: 80px;">
-            <i class="bi bi-motherboard" style="font-size: 50px;"></i>
-            <p>Motherboard</p>
-        </a>
-        <a href="gpu.php" class="icon" style="margin-right: 80px;">
-            <i class="bi bi-gpu-card" style="font-size: 50px;"></i>
-            <p>GPU</p>
-        </a>
-        <a href="memory.php" class="icon" style="margin-right: 80px;">
-            <i class="bi bi-memory" style="font-size: 50px;"></i>
-            <p>Memory</p>
-        </a>
-        <a href="memory.php" class="icon" style="margin-right: 80px; margin-top:auto;">
-    <img src="../../public/image/powersupply.png" alt="" style="width: 50px; height: 50px;">
-    <p>Power Supply</p>
-</a>
-        <a href="hdd.php" class="icon" style="margin-right: 80px;">
-            <i class="bi bi-device-hdd" style="font-size: 50px;"></i>
-            <p>HDD</p>
-        </a>
-        <a href="fan.php" class="icon" style="margin-right: 80px;">
-            <i class="bi bi-fan" style="font-size: 50px;"></i>
-            <p>Fan</p>
-        </a>
-        <a href="keyboard.php" class="icon">
-            <i class="bi bi-keyboard" style="font-size: 50px;"></i>
-            <p>Accessories</p>
-        </a>
+    <div class="container w3-animate-bottom"
+        style="margin-top: 50px; width: 100%; border: 1px solid black; padding: 10px; box-shadow: 0px 0px 3px; border-radius: 30px;">
+        <div class="pic" style="text-align: center; display: flex; justify-content: center;">
+            <a href="monitor.php" class="icon" style="margin-right: 80px;">
+                <i class="bi bi-display" style="font-size: 50px;"></i>
+                <p>Monitor</p>
+            </a>
+            <a href="cpu.php" class="icon" style="margin-right: 80px;">
+                <i class="bi bi-cpu" style="font-size: 50px;"></i>
+                <p>CPU</p>
+            </a>
+            <a href="motherboard.php" class="icon" style="margin-right: 80px;">
+                <i class="bi bi-motherboard" style="font-size: 50px;"></i>
+                <p>Motherboard</p>
+            </a>
+            <a href="gpu.php" class="icon" style="margin-right: 80px;">
+                <i class="bi bi-gpu-card" style="font-size: 50px;"></i>
+                <p>GPU</p>
+            </a>
+            <a href="memory.php" class="icon" style="margin-right: 80px;">
+                <i class="bi bi-memory" style="font-size: 50px;"></i>
+                <p>Memory</p>
+            </a>
+            <a href="memory.php" class="icon" style="margin-right: 80px; margin-top:auto;">
+                <img src="../../public/image/powersupply.png" alt="" style="width: 50px; height: 50px;">
+                <p>Power Supply</p>
+            </a>
+            <a href="hdd.php" class="icon" style="margin-right: 80px;">
+                <i class="bi bi-device-hdd" style="font-size: 50px;"></i>
+                <p>HDD</p>
+            </a>
+            <a href="fan.php" class="icon" style="margin-right: 80px;">
+                <i class="bi bi-fan" style="font-size: 50px;"></i>
+                <p>Fan</p>
+            </a>
+            <a href="keyboard.php" class="icon">
+                <i class="bi bi-keyboard" style="font-size: 50px;"></i>
+                <p>Accessories</p>
+            </a>
+        </div>
     </div>
-</div>
 
-<div class="container w3-animate-bottom" style=" justify-content: center; align-items: center; display: flex;">
-    <div class="name-pro">
-    <h3>สินค้าเข้าใหม่</h3>
-</div>
-</div>
+    <div class="container w3-animate-bottom" style=" justify-content: center; align-items: center; display: flex;">
+        <div class="name-pro">
+            <h3>สินค้าเข้าใหม่</h3>
+        </div>
+    </div>
 
-<div class="flex-container w3-animate-bottom" style=" justify-content: center; align-items: center; display: flex;">
-    <div href="#" class="container-product">
-    <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-    <h3>RTX 4070</h3>
-    <p>ราคา ฿12,000</p>
-    <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-</div>
-<div href="#" class="container-product">
-    <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-    <h3>RTX 4070</h3>
-    <p>ราคา ฿12,000</p>
-    <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-</div>
-<div href="#" class="container-product">
-    <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-    <h3>RTX 4070</h3>
-    <p>ราคา ฿12,000</p>
-    <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-</div>
-<div href="#" class="container-product">
-    <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-    <h3>RTX 4070</h3>
-    <p>ราคา ฿12,000</p>
-    <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-</div>
-<div href="#" class="container-product">
-    <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-    <h3>RTX 4070</h3>
-    <p>ราคา ฿12,000</p>
-    <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-</div>
-<div href="#" class="container-product">
-    <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-    <h3>RTX 4070</h3>
-    <p>ราคา ฿12,000</p>
-    <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-</div>
-</div>
+    <div class="flex-container w3-animate-bottom" style=" justify-content: center; align-items: center; display: flex;">
+        <div href="#" class="container-product">
+            <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
+            <h3>RTX 4070</h3>
+            <p>ราคา ฿12,000</p>
+            <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
+        </div>
+        <div href="#" class="container-product">
+            <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
+            <h3>RTX 4070</h3>
+            <p>ราคา ฿12,000</p>
+            <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
+        </div>
+        <div href="#" class="container-product">
+            <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
+            <h3>RTX 4070</h3>
+            <p>ราคา ฿12,000</p>
+            <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
+        </div>
+        <div href="#" class="container-product">
+            <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
+            <h3>RTX 4070</h3>
+            <p>ราคา ฿12,000</p>
+            <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
+        </div>
+        <div href="#" class="container-product">
+            <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
+            <h3>RTX 4070</h3>
+            <p>ราคา ฿12,000</p>
+            <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
+        </div>
+        <div href="#" class="container-product">
+            <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
+            <h3>RTX 4070</h3>
+            <p>ราคา ฿12,000</p>
+            <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
+        </div>
+    </div>
 
-<div class="container w3-animate-bottom" style=" justify-content: center; align-items: center; display: flex;">
-<div class="name-pro">
-    <h3>อุปกรณ์เสริม</h3>
-</div>
-</div>
+    <div class="container w3-animate-bottom" style=" justify-content: center; align-items: center; display: flex;">
+        <div class="name-pro">
+            <h3>อุปกรณ์เสริม</h3>
+        </div>
+    </div>
 
-<div class="flex-container w3-animate-bottom" style=" justify-content: center; align-items: center; display: flex;">
-    <div href="#" class="container-product">
-    <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-    <h3>RTX 4070</h3>
-    <p>ราคา ฿12,000</p>
-    <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-</div>
-<div href="#" class="container-product">
-    <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-    <h3>RTX 4070</h3>
-    <p>ราคา ฿12,000</p>
-    <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-</div>
-<div href="#" class="container-product">
-    <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-    <h3>RTX 4070</h3>
-    <p>ราคา ฿12,000</p>
-    <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-</div>
-<div href="#" class="container-product">
-    <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-    <h3>RTX 4070</h3>
-    <p>ราคา ฿12,000</p>
-    <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-</div>
-<div href="#" class="container-product">
-    <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-    <h3>RTX 4070</h3>
-    <p>ราคา ฿12,000</p>
-    <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-</div>
-<div href="#" class="container-product">
-    <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-    <h3>RTX 4070</h3>
-    <p>ราคา ฿12,000</p>
-    <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-</div>
-</div>
+    <div class="flex-container w3-animate-bottom" style=" justify-content: center; align-items: center; display: flex;">
+        <div href="#" class="container-product">
+            <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
+            <h3>RTX 4070</h3>
+            <p>ราคา ฿12,000</p>
+            <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
+        </div>
+        <div href="#" class="container-product">
+            <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
+            <h3>RTX 4070</h3>
+            <p>ราคา ฿12,000</p>
+            <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
+        </div>
+        <div href="#" class="container-product">
+            <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
+            <h3>RTX 4070</h3>
+            <p>ราคา ฿12,000</p>
+            <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
+        </div>
+        <div href="#" class="container-product">
+            <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
+            <h3>RTX 4070</h3>
+            <p>ราคา ฿12,000</p>
+            <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
+        </div>
+        <div href="#" class="container-product">
+            <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
+            <h3>RTX 4070</h3>
+            <p>ราคา ฿12,000</p>
+            <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
+        </div>
+        <div href="#" class="container-product">
+            <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
+            <h3>RTX 4070</h3>
+            <p>ราคา ฿12,000</p>
+            <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
+        </div>
+    </div>
 
 
 </body>
