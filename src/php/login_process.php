@@ -10,13 +10,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     // คิวรี่ฐานข้อมูลเพื่อตรวจสอบข้อมูลผู้ใช้
     $query = "SELECT * FROM customer WHERE email='$email' AND password='$password'";
     $result = mysqli_query($conn, $query);
-    $count = mysqli_num_rows($result);
+    
 
     // ถ้าพบข้อมูลผู้ใช้ในฐานข้อมูล
-    if($count == 1) {
+    if (mysqli_num_rows($result) == 1) {
+
+        $row = mysqli_fetch_array($result);
+
         $_SESSION['login_user'] = $email; // เก็บค่าอีเมล์ผู้ใช้ใน session
+        $_SESSION['user_role'] = $row['user_role'];
+
+    if($_SESSION['user_role'] == 'admin'){
+        header("location: admin.php");
+    }
+
+    if($_SESSION['user_role'] == 'user'){
         header("location: index.php");
-    } else {
+    } 
+    }
+    else {
         echo "อีเมล์หรือรหัสผ่านไม่ถูกต้อง";
     }
 
@@ -26,4 +38,5 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         // เช่น บันทึกข้อมูลลงในคุกกี้
     }
 }
+
 ?>

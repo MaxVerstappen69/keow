@@ -37,7 +37,6 @@ body {
   text-decoration: none;
 }
 
-
 .name-pro h3 {
   color: black;
   margin-top: 50px;
@@ -52,12 +51,25 @@ body {
   box-shadow: 0px 0px 3px;
 }
 
-.container .product{
+
+.flex-container .container-product{
+  margin: 20px;
   background-color: #B8D8BA;
   margin-top: 50px;
   display: inline-block;
   border-radius: 30px;
   width: 230px;
-  height: 300px;
+  height: 310px;
   box-shadow: 0px 0px 5px;
+  text-align: center;
+}
+
+.flex-container .container-product p{
+  font-size: 20px;
+}
+
+.flex-container .btn{
+  background-color: rgba(255, 255, 255, 0);
+  border-radius:  30px;
+  box-shadow: 0px 0px 2px;
 }

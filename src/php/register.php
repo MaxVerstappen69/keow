@@ -63,7 +63,7 @@ require_once "../../config/db.php";
         <div class="col fw-bold py-3 fs-3">
           สมัครบัญชีใช้งาน
         </div>
-        <hr class="hr" />
+        <hr class="hr"/>
       </div>
       <div class="container d-flex justify-content-between text-center pt-5">
         <div class="form-floating d-inline-block" style="width: 45%">

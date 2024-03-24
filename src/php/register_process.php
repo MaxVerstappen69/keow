@@ -60,7 +60,7 @@ if(isset($_POST['signup'])){
         $email_row = $result_email->fetch_assoc();
 
         $check_username = $conn->prepare('SELECT username FROM customer WHERE username = ?');
-$check_username->bind_param('s', $username);
+        $check_username->bind_param('s', $username);
         $check_username->execute();
         $result_username = $check_username->get_result();
         $username_row = $result_username->fetch_assoc();
