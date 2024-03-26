@@ -39,27 +39,33 @@ $result = $conn->query($sql);
           <div class="container d-flex justify-content-between text-center pt-5">
             <div class="card form-floating d-inline-block" style="width: 45%">
               <input type="text" class="form-control" name="firstname" value="<?php echo $row['firstname']; ?>"readonly>
+              <label for="firstname">ชื่อจริง</label>
             </div>
             <div class="card form-floating d-inline-block" style="width: 45%">
               <input type="text" class="form-control" name="lastname" value="<?php echo $row['lastname']; ?>"readonly>
+              <label for="lastname">นามสกุล</label>
             </div>
           </div>
           <div class="container text-center pt-5">
             <div class="card form-floating w-100 d-inline-block">
               <input type="text" class="form-control" name="address" value="<?php echo $row['address']; ?>"readonly>
+              <label for="address">ที่อยู่</label>
             </div>
           </div>
           <div class="container text-center pt-5">
             <div class="card form-floating w-100 d-inline-block">
               <input type="email" class="form-control" name="email" value="<?php echo $row['email']; ?>" readonly>
+              <label for="email">อีเมล์ (ไม่สามารถแก้ได้)</label>
             </div>
           </div>
           <div class="container d-flex justify-content-between text-center pt-5">
             <div class="card form-floating d-inline-block" style="width: 45%">
               <input type="text" class="form-control" name="phone" value="<?php echo $row['phone']; ?>"readonly>
+              <label for="phone">เบอร์โทรศัพท์</label>
             </div>
             <div class="card form-floating d-inline-block" style="width: 45%">
               <input type="text" class="form-control" name="username" value="<?php echo $row['username']; ?>"readonly>
+              <label for="username">ชื่อผู้ใช้งาน</label>
             </div>
             
           </div>
