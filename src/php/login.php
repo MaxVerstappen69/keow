@@ -19,6 +19,10 @@ if (isset ($_SESSION['login_user'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 </head>
 
 <style>
@@ -34,22 +38,20 @@ if (isset ($_SESSION['login_user'])) {
 
     <?php include '../include/navbar_login.php'; ?>
 
-    
-
     <form method="post" action="login_process.php">
 
-    <?php
-          if (isset ($_SESSION['error'])) {
+        <?php
+        if (isset ($_SESSION['error'])) {
             echo '<script src="../js/sweetalert_errorlogin.js"></script>';
             unset($_SESSION['error']);
-          }
-          ?>
+        }
+        ?>
         <div class="container text-center border rounded-4 shadow w-50 my-5">
             <div class="row">
                 <div class="col fw-bold py-3 fs-3">
                     ลงชื่อเข้าใช้
                 </div>
-                <hr class="hr"/>
+                <hr class="hr" />
             </div>
             <div class="container text-center pt-5">
                 <div class="form-floating w-50 d-inline-block">
