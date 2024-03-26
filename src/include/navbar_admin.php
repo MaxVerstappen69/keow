@@ -21,14 +21,13 @@ $result = $conn->query($sql);
     <nav class="navbar navbar-light shadow" style="background-color: #B8D8BA;">
         <div class="container d-flex justify-content-between align-items-center">
             <div>
-                <a class="navbar-brand" href="index.php">
+                <a class="navbar-brand" href="admin.php">
                     <img src="../../public/image/logo.png" width="90" height="70" class="d-inline-block align-top"
                         alt="">
                 </a>
             </div>
 
             <div>
-                <a href="../php/admin_edit.php" class="btn btn-primary active">Admin</a>
                 <a href="#" class="btn" style="color: #000000;">
                     <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
                 </a>
@@ -46,8 +45,9 @@ $result = $conn->query($sql);
                                 </button>
 
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="user_profile.php">Profile</a></li>
+                                <li><a class="dropdown-item" href="user_profile.php">Profile</a></li>
                                     <li><a class="dropdown-item" href="order.php">Order</a></li>
+                                    <li><a class="dropdown-item" href="admin_edit.php">admin</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>

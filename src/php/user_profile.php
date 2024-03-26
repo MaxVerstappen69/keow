@@ -20,7 +20,6 @@ $result = $conn->query($sql);
 </head>
 
 <body>
-
   <div class="container text-center border rounded-4 shadow w-50 my-5">
     <div class="row">
       <div class="col fw-bold py-3 fs-3">
@@ -33,6 +32,10 @@ $result = $conn->query($sql);
     if (mysqli_num_rows($result) > 0) {
       while ($row = mysqli_fetch_assoc($result)) {
         ?>
+        <div class="btn-group">
+          <img src="data:image/png;base64,<?php echo base64_encode($row['thumbnail']); ?>" class="img-fluid rounded-circle"
+            style="width: 100px; height: 100px;" alt="Thumbnail">
+        </div>
         <div class="container d-flex justify-content-between text-center pt-5">
           <div class="card form-floating d-inline-block" style="width: 45%">
             <?php echo $row['firstname'] ?>
@@ -48,15 +51,15 @@ $result = $conn->query($sql);
         </div>
         <div class="container text-center pt-5">
           <div class="card form-floating w-100 d-inline-block">
-          <?php echo $row['email']; ?>
+            <?php echo $row['email']; ?>
           </div>
         </div>
         <div class="container d-flex justify-content-between text-center pt-5">
           <div class="card form-floating d-inline-block" style="width: 45%">
-          <?php echo $row['phone']; ?>
+            <?php echo $row['phone']; ?>
           </div>
           <div class="card form-floating d-inline-block" style="width: 45%">
-          <?php echo $row['username']; ?>
+            <?php echo $row['username']; ?>
           </div>
         </div>
         <?php
@@ -66,8 +69,8 @@ $result = $conn->query($sql);
     ?>
 
     <div class="container pt-5">
-      <button class="btn w-25 py-2 fw-bold rounded-pill" type="submit" name="signup"
-        style="background-color: #EF959D">แก้ไขข้อมูลผู้ใช้</button>
+      <a href="user_profile_edit.php" target="_blank"><button class="btn w-25 py-2 fw-bold rounded-pill" type="submit"
+          name="signup" style="background-color: #EF959D; margin-bottom: 30px;">แก้ไขข้อมูลผู้ใช้</button></a>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
