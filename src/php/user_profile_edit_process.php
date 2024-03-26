@@ -18,8 +18,22 @@ if (isset($_POST['submit'])) {
     $phone = $_POST['phone'];
     $username = $_POST['username'];
 
-    // อัปเดตข้อมูลในฐานข้อมูล
-    $update_sql = "UPDATE customer SET firstname='$firstname', lastname='$lastname', address='$address', phone='$phone', username='$username'  WHERE email='$email'";
+    // Check if a file is selected for upload
+    if ($_FILES['profile_picture']['name']) {
+        // Get file details
+        $file_name = $_FILES['profile_picture']['name'];
+        $file_tmp = $_FILES['profile_picture']['tmp_name'];
+
+        // Read file content
+        $file_content = addslashes(file_get_contents($file_tmp));
+
+        // Update profile picture in the database
+        $update_sql = "UPDATE customer SET firstname='$firstname', lastname='$lastname', address='$address', phone='$phone', username='$username', thumbnail='$file_content' WHERE email='$email'";
+    } else {
+        // Update other profile information except profile picture
+        $update_sql = "UPDATE customer SET firstname='$firstname', lastname='$lastname', address='$address', phone='$phone', username='$username' WHERE email='$email'";
+    }
+
     if (mysqli_query($conn, $update_sql)) {
         echo '<script>alert("อัปเดตข้อมูลสำเร็จ")</script>';
         header("Location: user_profile.php");

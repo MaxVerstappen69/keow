@@ -36,32 +36,33 @@ $result = $conn->query($sql);
           <img src="data:image/png;base64,<?php echo base64_encode($row['thumbnail']); ?>" class="img-fluid rounded-circle"
             style="width: 100px; height: 100px;" alt="Thumbnail">
         </div>
-        <div class="container d-flex justify-content-between text-center pt-5">
-          <div class="card form-floating d-inline-block" style="width: 45%">
-            <?php echo $row['firstname'] ?>
+          <div class="container d-flex justify-content-between text-center pt-5">
+            <div class="card form-floating d-inline-block" style="width: 45%">
+              <input type="text" class="form-control" name="firstname" value="<?php echo $row['firstname']; ?>"readonly>
+            </div>
+            <div class="card form-floating d-inline-block" style="width: 45%">
+              <input type="text" class="form-control" name="lastname" value="<?php echo $row['lastname']; ?>"readonly>
+            </div>
           </div>
-          <div class="card form-floating d-inline-block" style="width: 45%">
-            <?php echo $row['lastname']; ?>
+          <div class="container text-center pt-5">
+            <div class="card form-floating w-100 d-inline-block">
+              <input type="text" class="form-control" name="address" value="<?php echo $row['address']; ?>"readonly>
+            </div>
           </div>
-        </div>
-        <div class="container text-center pt-5">
-          <div class="card form-floating w-100 d-inline-block">
-            <?php echo $row['address']; ?>
+          <div class="container text-center pt-5">
+            <div class="card form-floating w-100 d-inline-block">
+              <input type="email" class="form-control" name="email" value="<?php echo $row['email']; ?>" readonly>
+            </div>
           </div>
-        </div>
-        <div class="container text-center pt-5">
-          <div class="card form-floating w-100 d-inline-block">
-            <?php echo $row['email']; ?>
+          <div class="container d-flex justify-content-between text-center pt-5">
+            <div class="card form-floating d-inline-block" style="width: 45%">
+              <input type="text" class="form-control" name="phone" value="<?php echo $row['phone']; ?>"readonly>
+            </div>
+            <div class="card form-floating d-inline-block" style="width: 45%">
+              <input type="text" class="form-control" name="username" value="<?php echo $row['username']; ?>"readonly>
+            </div>
+            
           </div>
-        </div>
-        <div class="container d-flex justify-content-between text-center pt-5">
-          <div class="card form-floating d-inline-block" style="width: 45%">
-            <?php echo $row['phone']; ?>
-          </div>
-          <div class="card form-floating d-inline-block" style="width: 45%">
-            <?php echo $row['username']; ?>
-          </div>
-        </div>
         <?php
       }
     } else

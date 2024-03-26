@@ -24,7 +24,7 @@ $result = $conn->query($sql);
   <div class="container text-center border rounded-4 shadow w-50 my-5">
     <div class="row">
       <div class="col fw-bold py-3 fs-3">
-        ข้อมูลผู้ใช้
+       แก้ไขข้อมูลผู้ใช้
       </div>
       <hr class="hr" />
     </div>
@@ -33,7 +33,7 @@ $result = $conn->query($sql);
     if (mysqli_num_rows($result) > 0) {
       while ($row = mysqli_fetch_assoc($result)) {
         ?>
-        <form method="post" action="user_profile_edit_process.php">
+        <form method="post" action="user_profile_edit_process.php" enctype="multipart/form-data"> <!-- Add enctype attribute for file upload -->
           <div class="btn-group">
             <img src="data:image/png;base64,<?php echo base64_encode($row['thumbnail']); ?>" class="img-fluid rounded-circle"
               style="width: 100px; height: 100px;" alt="Thumbnail">
@@ -64,9 +64,13 @@ $result = $conn->query($sql);
               <input type="text" class="form-control" name="username" value="<?php echo $row['username']; ?>">
             </div>
           </div>
+          <div class="container text-center pt-5">
+            <label for="profile_picture" class="form-label">เลือกรูปภาพโปรไฟล์ใหม่</label>
+            <input type="file" class="form-control" id="profile_picture" name="profile_picture">
+          </div>
           <div class="container pt-5">
             <button class="btn w-25 py-2 fw-bold rounded-pill" type="submit" name="submit"
-              style="background-color: #EF959D">ยืนยัน</button>
+              style="background-color: #EF959D; margin-bottom:30px;">ยืนยัน</button>
           </div>
         </form>
         <?php
