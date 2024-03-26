@@ -29,7 +29,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     } 
     }
     else {
-        echo "อีเมล์หรือรหัสผ่านไม่ถูกต้อง";
+        $_SESSION['error'] = 'รหัสผ่านไม่ถูกต้อง';
+        header('location: login.php');
+        exit();
     }
 
     // ตรวจสอบว่ากล่อง "จดจำฉัน" ถูกเลือกหรือไม่

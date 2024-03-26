@@ -34,7 +34,16 @@ if (isset ($_SESSION['login_user'])) {
 
     <?php include '../include/navbar_login.php'; ?>
 
+    
+
     <form method="post" action="login_process.php">
+
+    <?php
+          if (isset ($_SESSION['error'])) {
+            echo '<script src="../js/sweetalert_errorlogin.js"></script>';
+            unset($_SESSION['error']);
+          }
+          ?>
         <div class="container text-center border rounded-4 shadow w-50 my-5">
             <div class="row">
                 <div class="col fw-bold py-3 fs-3">
@@ -70,6 +79,8 @@ if (isset ($_SESSION['login_user'])) {
         </div>
 
     </form>
+
+
 
 
 </body>
