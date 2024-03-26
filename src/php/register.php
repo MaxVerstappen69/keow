@@ -38,13 +38,7 @@ require_once "../../config/db.php";
       </div>
     <?php } ?>
     <?php
-    // Process form submission or any PHP logic here
-    
-    // For example, suppose you want to display a SweetAlert2 dialog after processing a form
     if (isset ($_SESSION['success'])) {
-      // Perform form submission handling
-    
-      // Generate JavaScript code to show SweetAlert2 dialog
       echo '<script src="../js/sweetalert_successLogin.js"></script>';
       unset($_SESSION['success']);
     }

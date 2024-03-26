@@ -1,7 +1,6 @@
 <?php
 require_once "../../config/db.php";
 include '../include/navbar_main.php';
-
 $k = $_SESSION['login_user'];
 $sql = "SELECT * FROM customer WHERE email='$k'";
 $result = $conn->query($sql);
@@ -17,6 +16,7 @@ $result = $conn->query($sql);
   <title>Profile</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 
 <body>
@@ -34,7 +34,24 @@ $result = $conn->query($sql);
       while ($row = mysqli_fetch_assoc($result)) {
         ?>
         <form method="post" action="user_profile_edit_process.php" enctype="multipart/form-data">
-          <!-- Add enctype attribute for file upload -->
+          <?php
+          if (isset ($_SESSION['error'])) {
+            echo '<script src="../js/sweetalert_error.js"></script>';
+            unset($_SESSION['error']);
+          }
+          ?>
+          <?php
+          if (isset ($_SESSION['success'])) {
+            echo '<script src="../js/sweetalert_successEdit.js"></script>';
+            unset($_SESSION['success']);
+          }
+          ?>
+          <?php
+          if (isset ($_SESSION['currentPassword'])) {
+            echo '<script src="../js/sweetalert_currentPassword.js"></script>';
+            unset($_SESSION['currentPassword']);
+          }
+          ?>
           <div class="btn-group">
             <img src="data:image/png;base64,<?php echo base64_encode($row['thumbnail']); ?>"
               class="img-fluid rounded-circle" style="width: 100px; height: 100px;" alt="Thumbnail">
@@ -75,13 +92,13 @@ $result = $conn->query($sql);
             <div class="card form-floating w-100 d-inline-block">
 
               <input type="password" class="form-control" name="new_password" placeholder="New Password">
-              <label for="password">รหัสผ่าน</label>
+              <label for="new_password">รหัสผ่าน</label>
             </div>
           </div>
           <div class="container text-center pt-5">
             <div class="card form-floating w-100 d-inline-block">
               <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password">
-              <label for="confirm password">ยืนยันรหัสผ่าน</label>
+              <label for="confirm_password">ยืนยันรหัสผ่าน</label>
             </div>
           </div>
           <div class="container text-center pt-5">
@@ -104,7 +121,7 @@ $result = $conn->query($sql);
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 

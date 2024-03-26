@@ -6,10 +6,10 @@ require_once "../../config/db.php";
 
 // Check if the database connection is established
 if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+    die ("Connection failed: " . mysqli_connect_error());
 }
 
-if (isset($_POST['submit'])) {
+if (isset ($_POST['submit'])) {
     // Retrieve user information from the form
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
@@ -28,52 +28,102 @@ if (isset($_POST['submit'])) {
         $file_tmp = $_FILES['profile_picture']['tmp_name'];
 
         // Read file content
-        $file_content = addslashes(file_get_contents($file_tmp));
+        $file_content = file_get_contents($file_tmp);
 
-        // Update profile picture in the database
-        $update_sql = "UPDATE customer SET firstname=?, lastname=?, address=?, phone=?, username=?, thumbnail=? WHERE email=?";
-        $params = array($firstname, $lastname, $address, $phone, $username, $file_content, $email);
+        // Update profile picture and other profile information in the database
+        $update_sql = "UPDATE customer SET firstname=?, lastname=?, address=?, phone=?, username=?, thumbnail=?";
+        $params = array($firstname, $lastname, $address, $phone, $username, $file_content);
+
+        $verifyPassword = "SELECT password FROM customer WHERE email = '$email'";
+        $stmt = $conn->prepare($verifyPassword);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows == 1) {
+            $stmt->bind_result($hashed_password);
+            $stmt->fetch();
+
+            // Compare hashed password from the database with the provided password
+            if (md5($confirm_password) === $hashed_password) {
+                $_SESSION["currentPassword"] = 'รหัสผ่านที่ใช้ในปัจจุบัน';
+                header('location: user_profile_edit.php');
+                exit();
+            }
+        }
+
+        if ($new_password !== $confirm_password) {
+            $_SESSION['error'] = 'รหัสผ่านไม่ตรงกัน';
+            header('location: user_profile_edit.php');
+            exit();
+
+        } elseif (!empty ($new_password) && $new_password === $confirm_password) {
+            // Encrypt new password with MD5
+            $encrypted_password = md5($new_password);
+            $update_sql .= ", password=?";
+            $params[] = $encrypted_password;
+        }
+
+        $update_sql .= " WHERE email=?";
+        $params[] = $email;
     } else {
         // Update other profile information except profile picture
-        $update_sql = "UPDATE customer SET firstname=?, lastname=?, address=?, phone=?, username=? WHERE email=?";
-        $params = array($firstname, $lastname, $address, $phone, $username, $email);
+        $update_sql = "UPDATE customer SET firstname=?, lastname=?, address=?, phone=?, username=?";
+        $params = array($firstname, $lastname, $address, $phone, $username);
+
+        $verifyPassword = "SELECT password FROM customer WHERE email = '$email'";
+        $stmt = $conn->prepare($verifyPassword);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows == 1) {
+            $stmt->bind_result($hashed_password);
+            $stmt->fetch();
+
+            // Compare hashed password from the database with the provided password
+            if (md5($confirm_password) === $hashed_password) {
+                $_SESSION["currentPassword"] = 'รหัสผ่านที่ใช้ในปัจจุบัน';
+                header('location: user_profile_edit.php');
+                exit();
+            }
+        }
+
+        if ($new_password !== $confirm_password) {
+            $_SESSION['error'] = 'รหัสผ่านไม่ตรงกัน';
+            header('location: user_profile_edit.php');
+            exit();
+
+        } elseif (!empty ($new_password) && $new_password === $confirm_password) {
+            // Encrypt new password with MD5
+            $encrypted_password = md5($new_password);
+            $update_sql .= ", password=?";
+            $params[] = $encrypted_password;
+        }
+
+        $update_sql .= " WHERE email=?";
+        $params[] = $email;
     }
 
-    // Check if new password and confirm password match
-    if ($new_password !== $confirm_password) {
-        echo '<script>alert("New password and confirm password do not match");</script>';
-        header("Location: user_profile.php");
-        exit();
-    }
+    // Prepare the statement
+    $stmt = $conn->prepare($update_sql);
 
-    // Check if new password is not empty
-    if (!empty($new_password)) {
-        // Encrypt new password with MD5
-        $encrypted_password = md5($new_password);
-        // Update password in the database
-        $update_sql = "UPDATE customer SET password=? WHERE email=?";
-        $params = array($encrypted_password, $email);
-    }
+    if ($stmt) {
+        $bind_count = count($params);
 
-// Prepare the statement
-$stmt = $conn->prepare($update_sql);
+        $types = str_repeat('s', $bind_count); // Assuming all parameters are strings
 
-if ($stmt) {
-    // Bind parameters
-    $types = 'ss'; // Two bind variables, both strings
-    $stmt->bind_param($types, ...$params);
+        $stmt->bind_param($types, ...$params);
 
-    // Execute the statement
-    if ($stmt->execute()) {
-        echo '<script>alert("อัปเดตข้อมูลสำเร็จ");</script>';
-        header("Location: user_profile.php");
-        exit();
+        // Execute the statement
+        if ($stmt->execute()) {
+            $_SESSION['success'] = 'แก้ไขข้อมูลเรียบร้อย';
+            header('location: user_profile_edit.php');
+            exit();
+        } else {
+            echo "Error updating record: " . $stmt->error;
+        }
+        $stmt->close();
     } else {
-        echo "Error updating record: " . $stmt->error;
+        echo "Error preparing statement: " . $conn->error;
     }
-    $stmt->close();
-} else {
-    echo "Error preparing statement: " . $conn->error;
-}
 }
 ?>
