@@ -69,7 +69,7 @@ $result = $conn->query($sql);
     ?>
 
     <div class="container pt-5">
-      <a href="user_profile_edit.php" target="_blank"><button class="btn w-25 py-2 fw-bold rounded-pill" type="submit"
+      <a href="user_profile_edit.php" ><button class="btn w-25 py-2 fw-bold rounded-pill" type="submit"
           name="signup" style="background-color: #EF959D; margin-bottom: 30px;">แก้ไขข้อมูลผู้ใช้</button></a>
     </div>
   </div>

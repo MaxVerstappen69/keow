@@ -1,26 +1,11 @@
 <?php
+require_once "../../config/db.php";
 include '../include/navbar_main.php';
+
 $k = $_SESSION['login_user'];
-$sql = "SELECT * FROM customer where email='$k'";
+$sql = "SELECT * FROM customer WHERE email='$k'";
 $result = $conn->query($sql);
 
-if (isset($_POST['submit'])) {
-  // รับค่าที่แก้ไขจากฟอร์ม
-  $firstname = $_POST['firstname'];
-  $lastname = $_POST['lastname'];
-  $address = $_POST['address'];
-  $email = $_POST['email'];
-  $phone = $_POST['phone'];
-  $username = $_POST['username'];
-
-  // อัปเดตข้อมูลในฐานข้อมูล
-  $update_sql = "UPDATE customer SET firstname='$firstname', lastname='$lastname', address='$address', phone='$phone', username='$username'  WHERE email='$email'";
-  if ($conn->query($update_sql) === TRUE) {
-    echo '<script>alert("อัปเดตข้อมูลสำเร็จ")</script>';
-  } else {
-    echo "Error updating record: " . $conn->error;
-  }
-}
 ?>
 
 <!DOCTYPE html>
@@ -32,9 +17,6 @@ if (isset($_POST['submit'])) {
   <title>Profile</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
 </head>
 
 <body>
@@ -51,16 +33,14 @@ if (isset($_POST['submit'])) {
     if (mysqli_num_rows($result) > 0) {
       while ($row = mysqli_fetch_assoc($result)) {
         ?>
-        <form method="post" action="">
-        <div class="btn-group">
-          <img src="data:image/png;base64,<?php echo base64_encode($row['thumbnail']); ?>" class="img-fluid rounded-circle"
-            style="width: 100px; height: 100px;" alt="Thumbnail">
-
-        </div>
+        <form method="post" action="user_profile_edit_process.php">
+          <div class="btn-group">
+            <img src="data:image/png;base64,<?php echo base64_encode($row['thumbnail']); ?>" class="img-fluid rounded-circle"
+              style="width: 100px; height: 100px;" alt="Thumbnail">
+          </div>
           <div class="container d-flex justify-content-between text-center pt-5">
             <div class="card form-floating d-inline-block" style="width: 45%">
               <input type="text" class="form-control" name="firstname" value="<?php echo $row['firstname']; ?>">
-
             </div>
             <div class="card form-floating d-inline-block" style="width: 45%">
               <input type="text" class="form-control" name="lastname" value="<?php echo $row['lastname']; ?>">
@@ -82,17 +62,18 @@ if (isset($_POST['submit'])) {
             </div>
             <div class="card form-floating d-inline-block" style="width: 45%">
               <input type="text" class="form-control" name="username" value="<?php echo $row['username']; ?>">
-            </div>0
+            </div>
           </div>
           <div class="container pt-5">
             <button class="btn w-25 py-2 fw-bold rounded-pill" type="submit" name="submit"
-              style="background-color: #EF959D">แก้ไขข้อมูลผู้ใช้</button>
+              style="background-color: #EF959D">ยืนยัน</button>
           </div>
         </form>
         <?php
       }
-    } else
+    } else {
       echo "0 results";
+    }
     ?>
 
   </div>
