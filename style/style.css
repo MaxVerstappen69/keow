@@ -73,3 +73,9 @@ body {
   border-radius:  30px;
   box-shadow: 0px 0px 2px;
 }
+
+.container-product .view-order{
+text-decoration: none;
+color: black;
+}
+
