@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
             </div>
             <div class="card form-floating d-inline-block" style="width: 45%">
               <input type="text" class="form-control" name="username" value="<?php echo $row['username']; ?>">
-            </div>0
+            </div>
           </div>
           <div class="container pt-5">
             <button class="btn w-25 py-2 fw-bold rounded-pill" type="submit" name="submit"
