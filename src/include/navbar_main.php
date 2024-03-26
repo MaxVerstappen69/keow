@@ -29,7 +29,7 @@ $result = $conn->query($sql);
                 </a>
             </div>
 
-            <div>
+            <div style='display: flex; align-items: center'>
                 <a href="#" class="btn border-0" style="color: #000000;">
                     <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
                 </a>
@@ -38,6 +38,14 @@ $result = $conn->query($sql);
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             ?>
+                            <div style="display: inline-block;">
+                                <div
+                                    style="display: flex; align-items: center; margin-right: 10px; background-color: #EF959D; border-radius: 30px; box-shadow: 0px 0px 3px; width: 130px; height: 30px;">
+                                    <h6 style="margin: 0 auto; text-align: center;">
+                                        <?php echo ($row['username']); ?>
+                                    </h6>
+                                </div>
+                            </div>
                             <div class="btn-group">
                                 <img src="data:image/png;base64,<?php echo base64_encode($row['thumbnail']); ?>"
                                     class="img-fluid rounded-circle" style="width: 40px; height: 40px;" alt="Thumbnail">
@@ -49,6 +57,11 @@ $result = $conn->query($sql);
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="user_profile.php">Profile</a></li>
                                     <li><a class="dropdown-item" href="order.php">Order</a></li>
+                                    <?php
+                                    if ($_SESSION['user_role'] === 'admin') {
+                                        echo '<li><a class="dropdown-item" href="admin_edit.php">admin</a></li>';
+                                    }
+                                    ?>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
