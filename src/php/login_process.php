@@ -20,9 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['login_user'] = $email; // เก็บค่าอีเมล์ผู้ใช้ใน session
         $_SESSION['user_role'] = $row['user_role'];
 
-        if ($_SESSION['user_role'] === 'user' && 'admin') {
+        if ($_SESSION['user_role'] === 'admin' || $_SESSION['user_role'] === 'user') {
             header("location: index.php");
         }
+        
     } else {
         $_SESSION['error'] = 'รหัสผ่านไม่ถูกต้อง';
         header('location: login.php');
