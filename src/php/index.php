@@ -1,10 +1,13 @@
 <?php
 require_once "../../config/db.php";
-if (isset ($_SESSION['login_user'])) {
+include '../include/navbar_main.php';
+if (isset($_SESSION['login_user'])) {
     // echo "ผู้ใช้เข้าสู่ระบบแล้ว";
 } else {
     // echo "ไม่มีการเข้าสู่ระบบ";
 }
+$sql = 'SELECT * FROM product';
+$result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,11 +23,10 @@ if (isset ($_SESSION['login_user'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../../style/style.css">
+    <!-- <link rel="stylesheet" href="../../style/style.css"> -->
 </head>
 
 <body>
-    <?php include '../include/navbar_main.php'; ?>
 
     <div id="carouselExampleIndicators" class="carousel slide w3-animate-bottom" data-bs-ride="carousel" style="">
         <div class="carousel-indicators">
@@ -101,118 +103,48 @@ if (isset ($_SESSION['login_user'])) {
     </div>
 
     <div class="container w3-animate-bottom" style=" justify-content: center; align-items: center; display: flex;">
-        <div class="name-pro">
-            <h3>สินค้าเข้าใหม่</h3>
+        <div class="my-5 p-2 px-5 rounded-pill shadow rounded" style='background-color: #EF959D'>
+            <h1>สินค้าเข้าใหม่</h1>
         </div>
     </div>
 
-    <div class="flex-container w3-animate-bottom" style=" justify-content: center; align-items: center; display: flex;">
-        <div class="container-product">
-            <a class="view-order" href="order.php" target="_blank">
-                <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-                <h3>RTX 4070</h3>
-                <p>ราคา ฿12,000</p>
-                <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-            </a>
-        </div>
-        <div class="container-product">
-            <a class="view-order" href="order.php" target="_blank">
-                <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-                <h3>RTX 4070</h3>
-                <p>ราคา ฿12,000</p>
-                <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-            </a>
-        </div>
-        <div class="container-product">
-            <a class="view-order" href="order.php" target="_blank">
-                <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-                <h3>RTX 4070</h3>
-                <p>ราคา ฿12,000</p>
-                <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-            </a>
-        </div>
-        <div class="container-product">
-            <a class="view-order" href="order.php" target="_blank">
-                <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-                <h3>RTX 4070</h3>
-                <p>ราคา ฿12,000</p>
-                <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-            </a>
-        </div>
-        <div class="container-product">
-            <a class="view-order" href="order.php" target="_blank">
-                <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-                <h3>RTX 4070</h3>
-                <p>ราคา ฿12,000</p>
-                <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-            </a>
-        </div>
-        <div class="container-product">
-            <a class="view-order" href="order.php" target="_blank">
-                <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-                <h3>RTX 4070</h3>
-                <p>ราคา ฿12,000</p>
-                <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-            </a>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
+            <?php
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    ?>
+                    <div class="col">
+                        <div class="card h-100 text-center">
+                            <img src="data:image/png;base64,<?php echo base64_encode($row['image']); ?>" class="card-img-top"
+                                style="height: 200px; object-fit: contain;" alt="Thumbnail">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <?php echo $row['product_name']; ?>
+                                </h5>
+                                <p class="card-text fw-bold text-danger">฿
+                                    <?php echo $row['price']; ?>
+                                </p>
+                                <a href="productDetail.php?id=<?php echo $row['product_id']; ?>" class="btn fw-bold"
+                                    style='background-color: #EF959D'>View Details</a>
+
+                                <a href="#" class="btn fw-bold" style='background-color: #EF959D'>Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+            } else {
+                echo 'no data';
+            }
+            ?>
         </div>
     </div>
 
-    <div class="container w3-animate-bottom" style=" justify-content: center; align-items: center; display: flex;">
-        <div class="name-pro">
-            <h3>อุปกรณ์เสริม</h3>
-        </div>
-    </div>
 
-    <div class="flex-container w3-animate-bottom" style=" justify-content: center; align-items: center; display: flex;">
-        <div class="container-product">
-            <a class="view-order" href="order.php" target="_blank">
-                <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-                <h3>RTX 4070</h3>
-                <p>ราคา ฿12,000</p>
-                <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-            </a>
-        </div>
-        <div class="container-product">
-            <a class="view-order" href="order.php" target="_blank">
-                <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-                <h3>RTX 4070</h3>
-                <p>ราคา ฿12,000</p>
-                <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-            </a>
-        </div>
-        <div class="container-product">
-            <a class="view-order" href="order.php" target="_blank">
-                <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-                <h3>RTX 4070</h3>
-                <p>ราคา ฿12,000</p>
-                <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-            </a>
-        </div>
-        <div class="container-product">
-            <a class="view-order" href="order.php" target="_blank">
-                <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-                <h3>RTX 4070</h3>
-                <p>ราคา ฿12,000</p>
-                <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-            </a>
-        </div>
-        <div class="container-product">
-            <a class="view-order" href="order.php" target="_blank">
-                <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-                <h3>RTX 4070</h3>
-                <p>ราคา ฿12,000</p>
-                <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-            </a>
-        </div>
-        <div class="container-product">
-            <a class="view-order" href="order.php" target="_blank">
-                <img src="../../public/image/rtx4070.png" width="170" height="170" alt="">
-                <h3>RTX 4070</h3>
-                <p>ราคา ฿12,000</p>
-                <a href="#" class="btn active">เพิ่มลงตะกร้า</a>
-            </a>
-        </div>
-    </div>
+
+
+
 
 
 </body>
