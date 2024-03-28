@@ -38,6 +38,11 @@ $result = $conn->query($sql);
 <body>
     <div class="container">
         <h2 class="mt-3 text-center">รายการสินค้า</h2>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="admin_add_product.php">
+    <button type="button" class="btn btn-primary shadow-sm">เพิ่มสินค้า</button>
+</a>
+    </div>
         <table class="table table-striped">
             <thead>
                 <tr>

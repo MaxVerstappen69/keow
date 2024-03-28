@@ -43,6 +43,12 @@
       unset($_SESSION['success1']);
     }
     ?>
+    <?php
+          if (isset ($_SESSION['success2'])) {
+      echo '<script src="../js/success_delete_employee.js"></script>';
+      unset($_SESSION['success2']);
+    }
+    ?>
           
 
           
@@ -95,7 +101,7 @@
 
                         <td>
     <a href='admin_profile_edit.php?id=" . $row["employee_id"] . "' class='btn btn-primary btn-sm'>แก้ไข</a>
-    <a href='delete_employee.php?delete_id=" . $row["employee_id"] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"คุณจะลบพนักงานคนนี้จริงหรือ?\")'>ลบ</a>
+    <a href='delete_employee_process.php?delete_id=" . $row["employee_id"] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"คุณจะลบพนักงานคนนี้จริงหรือ?\")'>ลบ</a>
 </td>
 
                       </tr>";
