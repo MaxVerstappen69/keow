@@ -16,6 +16,7 @@
 </head>
 <body>
     
+    
 <?php include '../include/navbar_admin.php'; ?>
 
           <?php
@@ -36,8 +37,23 @@
             unset($_SESSION['currentPassword']);
           }
           ?>
+          <?php
+          if (isset ($_SESSION['success1'])) {
+      echo '<script src="../js/suscess_add_employee.js"></script>';
+      unset($_SESSION['success1']);
+    }
+    ?>
+          
+
+          
+          
 <div class="container mt-5">
     <h2 class="mb-4 text-center">รายชื่อพนักงาน</h2>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="add_employee.php">
+    <button type="button" class="btn btn-primary shadow-sm">เพิ่มข้อมูล</button>
+</a>
+    </div>
     <div class="table-responsive">
         <hr>
         <?php
@@ -79,7 +95,7 @@
 
                         <td>
     <a href='admin_profile_edit.php?id=" . $row["employee_id"] . "' class='btn btn-primary btn-sm'>แก้ไข</a>
-    <a href='admin_profile_edit.php?id=" . $row["employee_id"] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"คุณจะลบพนักงานคนนี้จริงหรือ?\")'>ลบ</a>
+    <a href='delete_employee.php?delete_id=" . $row["employee_id"] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"คุณจะลบพนักงานคนนี้จริงหรือ?\")'>ลบ</a>
 </td>
 
                       </tr>";
