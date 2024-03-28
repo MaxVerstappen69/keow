@@ -36,6 +36,12 @@ $result = $conn->query($sql);
 </head>
 
 <body>
+<?php
+          if (isset ($_SESSION['success3'])) {
+            echo '<script src="../js/success_delete_product.js"></script>';
+            unset($_SESSION['success3']);
+          }
+          ?>
     <div class="container">
         <h2 class="mt-3 text-center">รายการสินค้า</h2>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -86,9 +92,9 @@ $result = $conn->query($sql);
                             </td>
                             <td><img src="data:image/png;base64,<?php echo base64_encode($row['image']); ?>" alt="Thumbnail">
                             </td>
-                            <td>
-                                <a href="edit_product.php?id=<?php echo $row['product_id']; ?>" class="btn btn-primary btn-sm">Edit</a>
-                                <a href="delete_product.php?id=<?php echo $row['product_id']; ?>" class="btn btn-danger btn-sm">Delete</a>
+                            <td><?php echo"  
+                            <a href='admin_product_edit.php?id=" . $row["product_id"] . "' class='btn btn-primary btn-sm'>แก้ไข</a>
+                           <a href='admin_product_delete_process.php?delete_id=" . $row["product_id"] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"คุณจะลบพนักงานคนนี้จริงหรือ?\")'>ลบ</a>" ?>
                             </td>
                         </tr>
                         <?php
