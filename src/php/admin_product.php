@@ -42,7 +42,7 @@ $result = $conn->query($sql);
             <thead>
                 <tr>
                     <th style="width: 150px;">Product ID</th>
-                    <th style="width: 150px;">Category ID</th>
+                    <th style="width: 150px;">Category Name</th>
                     <th style="width: 150px;">Employee ID</th>
                     <th>Product Name</th>
                     <th>Detail</th>

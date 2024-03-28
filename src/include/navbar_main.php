@@ -59,7 +59,7 @@ $result = $conn->query($sql);
                                     <li><a class="dropdown-item" href="order.php">Order</a></li>
                                     <?php
                                     if ($_SESSION['user_role'] === 'admin') {
-                                        echo '<li><a class="dropdown-item" href="admin_edit.php">admin</a></li>';
+                                        echo '<li><a class="dropdown-item" href="admin_employee.php">admin</a></li>';
                                     }
                                     ?>
                                     <li>

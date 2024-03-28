@@ -28,7 +28,7 @@ $result = $conn->query($sql);
                         alt="">
                 </a>
             </div>
-
+            
             <div class="d-flex justify-content-center py-3">
       <ul class="nav nav-pills">
         <li class="nav-item"><a href="../php/admin_employee.php" class="nav-link" style="color: black;">พนักงาน</a></li>
@@ -68,7 +68,7 @@ $result = $conn->query($sql);
                                     <li><a class="dropdown-item" href="order.php">Order</a></li>
                                     <?php
                                     if ($_SESSION['user_role'] === 'admin') {
-                                        echo '<li><a class="dropdown-item" href="admin_edit.php">admin</a></li>';
+                                        echo '<li><a class="dropdown-item" href="admin_employee.php">admin</a></li>';
                                     }
                                     ?>
                                     <li>

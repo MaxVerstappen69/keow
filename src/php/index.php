@@ -23,7 +23,7 @@ $result = $conn->query($sql);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <!-- <link rel="stylesheet" href="../../style/style.css"> -->
+    
 </head>
 
 <body>
@@ -60,42 +60,42 @@ $result = $conn->query($sql);
         </button>
     </div>
 
-    <div class="container w3-animate-bottom"
+    <div class="container w3-animate-bottom shadow"
         style="margin-top: 50px; width: 100%; border: 1px solid black; padding: 10px; box-shadow: 0px 0px 3px; border-radius: 30px;">
         <div class="pic" style="text-align: center; display: flex; justify-content: center;">
-            <a href="monitor.php" class="icon" style="margin-right: 80px;">
+            <a href="monitor.php" class="icon text-decoration-none text-dark" style="margin-right: 80px;">
                 <i class="bi bi-display" style="font-size: 50px;"></i>
                 <p>Monitor</p>
             </a>
-            <a href="cpu.php" class="icon" style="margin-right: 80px;">
+            <a href="cpu.php" class="icon text-decoration-none text-dark" style="margin-right: 80px;">
                 <i class="bi bi-cpu" style="font-size: 50px;"></i>
                 <p>CPU</p>
             </a>
-            <a href="motherboard.php" class="icon" style="margin-right: 80px;">
+            <a href="motherboard.php" class="icon text-decoration-none text-dark" style="margin-right: 80px;">
                 <i class="bi bi-motherboard" style="font-size: 50px;"></i>
                 <p>Motherboard</p>
             </a>
-            <a href="gpu.php" class="icon" style="margin-right: 80px;">
+            <a href="gpu.php" class="icon text-decoration-none text-dark" style="margin-right: 80px;">
                 <i class="bi bi-gpu-card" style="font-size: 50px;"></i>
                 <p>GPU</p>
             </a>
-            <a href="memory.php" class="icon" style="margin-right: 80px;">
+            <a href="memory.php" class="icon text-decoration-none text-dark" style="margin-right: 80px;">
                 <i class="bi bi-memory" style="font-size: 50px;"></i>
                 <p>Memory</p>
             </a>
-            <a href="memory.php" class="icon" style="margin-right: 80px; margin-top:auto;">
+            <a href="memory.php" class="icon text-decoration-none text-dark" style="margin-right: 80px; margin-top:auto;">
                 <img src="../../public/image/powersupply.png" alt="" style="width: 50px; height: 50px;">
                 <p>Power Supply</p>
             </a>
-            <a href="hdd.php" class="icon" style="margin-right: 80px;">
+            <a href="hdd.php" class="icon text-decoration-none text-dark" style="margin-right: 80px;">
                 <i class="bi bi-device-hdd" style="font-size: 50px;"></i>
                 <p>HDD</p>
             </a>
-            <a href="fan.php" class="icon" style="margin-right: 80px;">
+            <a href="fan.php" class="icon text-decoration-none text-dark" style="margin-right: 80px;">
                 <i class="bi bi-fan" style="font-size: 50px;"></i>
                 <p>Fan</p>
             </a>
-            <a href="keyboard.php" class="icon">
+            <a href="keyboard.php" class="icon text-decoration-none text-dark">
                 <i class="bi bi-keyboard" style="font-size: 50px;"></i>
                 <p>Accessories</p>
             </a>
@@ -115,7 +115,7 @@ $result = $conn->query($sql);
                 while ($row = mysqli_fetch_assoc($result)) {
                     ?>
                     <div class="col">
-                        <div class="card h-100 text-center">
+                        <div class="card h-100 text-center shadow rounded" style="background-color: #B8D8BA;" >
                             <img src="data:image/png;base64,<?php echo base64_encode($row['image']); ?>" class="card-img-top"
                                 style="height: 200px; object-fit: contain;" alt="Thumbnail">
                             <div class="card-body">

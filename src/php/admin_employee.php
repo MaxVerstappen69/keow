@@ -17,13 +17,32 @@
 <body>
     
 <?php include '../include/navbar_admin.php'; ?>
+
+          <?php
+          if (isset ($_SESSION['error'])) {
+            echo '<script src="../js/erorr_admin_edit.js"></script>';
+            unset($_SESSION['error']);
+          }
+          ?>
+          <?php
+          if (isset ($_SESSION['success'])) {
+            echo '<script src="../js/sucess_admin_edit.js"></script>';
+            unset($_SESSION['success']);
+          }
+          ?>
+          <?php
+          if (isset ($_SESSION['currentPassword'])) {
+            echo '<script src="../js/currentpass_admin_edit.js"></script>';
+            unset($_SESSION['currentPassword']);
+          }
+          ?>
 <div class="container mt-5">
     <h2 class="mb-4 text-center">รายชื่อพนักงาน</h2>
     <div class="table-responsive">
         <hr>
         <?php
-        
         require_once "../../config/db.php";
+        
 
         // Check if the user is logged in
         $id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
@@ -52,16 +71,17 @@
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>
                         <td>" . $row["employee_id"] . "</td>
-                        <td>" . $row["position"] . "</td>
+                        <td>" . $row["user_role"] . "</td>
                         <td>" . $row["em_firstname"] . "</td>
                         <td>" . $row["em_lastname"] . "</td>
-                        <td>" . $row["username"] . "</td>
-                        <td>" . $row["email"] . "</td>
+                        <td>" . $row["em_username"] . "</td>
+                        <td>" . $row["em_email"] . "</td>
 
                         <td>
-                            <a href='edit_employee.php?id=" . $row["employee_id"] . "' class='btn btn-primary btn-sm'>แก้ไข</a>
-                            <a href='delete_employee.php?id=" . $row["employee_id"] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"คุณจะลบพนักงานคนนี้จริงหรือ?\")'>ลบ</a>
-                        </td>
+    <a href='admin_profile_edit.php?id=" . $row["employee_id"] . "' class='btn btn-primary btn-sm'>แก้ไข</a>
+    <a href='admin_profile_edit.php?id=" . $row["employee_id"] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"คุณจะลบพนักงานคนนี้จริงหรือ?\")'>ลบ</a>
+</td>
+
                       </tr>";
             }
             echo "</tbody></table>";

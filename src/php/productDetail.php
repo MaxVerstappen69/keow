@@ -30,9 +30,10 @@ if (isset($_GET['id'])) {
 </head>
 
 <body>
+
     <!-- Display product details here -->
     <!-- Display product details here -->
-    <div class="container">
+    <div class="container mt-4">
         <div class="row">
             <div class="col-4"><img src="data:image/png;base64,<?php echo base64_encode($product['image']); ?>"
                     style="height: 70%;" alt="Thumbnail"></div>
@@ -43,7 +44,7 @@ if (isset($_GET['id'])) {
                 <p>฿
                     <?php echo $product['price']; ?>
                 </p>
-                <p>
+                <p>รายละเอียดสินค้า :
                     <?php echo $product['detail']; ?>
                 </p>
 
@@ -57,6 +58,7 @@ if (isset($_GET['id'])) {
                             <?php echo $product['quantity']; ?> ชิ้น
                         </span></p>
                 </div>
+                <a href="#" class="btn fw-bold mt-2 shadow-sm" style='background-color: #EF959D'>Add to Cart</a>
             </div>
         </div>
     </div>
