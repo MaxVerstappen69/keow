@@ -55,24 +55,24 @@ $result = $conn->query($sql);
                                 </button>
 
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="user_profile.php">Profile</a></li>
-                                    <li><a class="dropdown-item" href="order.php">Order</a></li>
+                                    <li><a class="dropdown-item" href="user_profile.php">โปรไฟล์</a></li>
+                                    <li><a class="dropdown-item" href="order.php">การสั่งซื้อ</a></li>
                                     <?php
                                     if ($_SESSION['user_role'] === 'admin') {
-                                        echo '<li><a class="dropdown-item" href="admin_employee.php">admin</a></li>';
+                                        echo '<li><a class="dropdown-item" href="admin_employee.php">ผู้ดูแล</a></li>';
                                     }
                                     ?>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                                    <li><a class="dropdown-item" href="logout.php">ออกจากระบบ</a></li>
                                 </ul>
                             </div>
                             <?php
                         }
                     }
                 } else {
-                    echo '<a class="btn btn-sm fw-bold" href="login.php" role="button" style="background-color: #EF959D; border-color: #EF959D; width: 100px; border-radius: 50px;">Sign In</a>';
+                    echo '<a class="btn btn-sm fw-bold" href="login.php" role="button" style="background-color: #EF959D; border-color: #EF959D; width: 100px; border-radius: 50px;">เข้าสู่ระบบ</a>';
                 }
                 ?>
             </div>

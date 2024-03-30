@@ -21,7 +21,7 @@ include '../include/navbar_admin.php';
   <div class="container text-center border rounded-4 shadow w-50 my-5">
     <div class="row">
       <div class="col fw-bold py-3 fs-3">
-        แก้ไขข้อมูลผู้ใช้
+        เพิ่มสินค้า
       </div>
       <hr class="hr" />
     </div>
@@ -29,55 +29,59 @@ include '../include/navbar_admin.php';
     <?php
         ?>
         <form method="post" action="admin_add_product_process.php" enctype="multipart/form-data">
-          <?php
+        <?php
           if (isset ($_SESSION['error'])) {
-            echo '<script src="../js/sweetalert_error.js"></script>';
+            echo '<script src="../js/erorr_admin_add_product.js"></script>';
             unset($_SESSION['error']);
           }
           ?>
           <?php
-          if (isset ($_SESSION['success'])) {
-            echo '<script src="../js/sweetalert_successEdit.js"></script>';
-            unset($_SESSION['success']);
+          if (isset ($_SESSION['error1'])) {
+            echo '<script src="../js/erorr1_admin_add_product.js"></script>';
+            unset($_SESSION['error1']);
           }
           ?>
           <?php
-          if (isset ($_SESSION['currentPassword'])) {
-            echo '<script src="../js/sweetalert_currentPassword.js"></script>';
-            unset($_SESSION['currentPassword']);
+          if (isset ($_SESSION['success1'])) {
+            echo '<script src="../js/success_admin_add_product.js"></script>';
+            unset($_SESSION['success1']);
           }
           ?>
+          <div class="container text-center pt-5">
+            <div class="card form-floating w-50 d-inline-block">
+              <input type="text" class="form-control" name="employee_id">
+              <label for="employee_id">รหัสพนักงาน</label>
+            </div>
+          </div>
           <div class="container d-flex justify-content-between text-center pt-5">
             <div class="card form-floating d-inline-block" style="width: 45%">
               <input type="text" class="form-control" name="category_id">
-              <label for="firstname">ประเภทสินค้า</label>
+              <label for="category_id">ประเภทสินค้า</label>
             </div>
             <div class="card form-floating d-inline-block" style="width: 45%">
-              <input type="text" class="form-control" name="employee_id">
-              <label for="lastname">รหัสพนักงาน</label>
-            </div>
-          </div>
-          <div class="container text-center pt-5">
-            <div class="card form-floating w-50 d-inline-block">
               <input type="text" class="form-control" name="product_name">
-              <label for="address">ชื่อสินค้า</label>
+              <label for="product_name">ชื่อสินค้า</label>
             </div>
           </div>
           <div class="container text-center pt-5">
             <div class="card form-floating w-100 d-inline-block">
-              <input type="email" class="form-control" name="detail">
-              <label for="email">รายละเอียดสินค้า</label>
+              <input type="text" class="form-control" name="detail">
+              <label for="detail">รายละเอียดสินค้า</label>
             </div>
           </div>
-          <div class="container text-center pt-5">
-            <div class="card form-floating w-50 d-inline-block">
+          <div class="container d-flex justify-content-between text-center pt-5">
+          <div class="card form-floating d-inline-block" style="width: 45%">
               <input type="text" class="form-control" name="price">
-              <label for="phone">ราคาสินค้า</label>
+              <label for="price">ราคาสินค้า</label>
+            </div>
+            <div class="card form-floating d-inline-block" style="width: 45%">
+              <input type="text" class="form-control" name="quantity">
+              <label for="quantity">จำนวนสินค้า</label>
             </div>
             </div>
           <div class="container text-center pt-5">
-            <label for="profile_picture" class="form-label">เลือกรูปภาพสินค้า</label>
-            <input type="file" class="form-control" id="profile_picture" name="image">
+            <label for="image" class="form-label">เลือกรูปภาพสินค้า</label>
+            <input type="file" class="form-control" id="image" name="image">
           </div>
           <div class="container pt-5">
             <button class="btn w-25 py-2 fw-bold rounded-pill" type="submit" name="submit"

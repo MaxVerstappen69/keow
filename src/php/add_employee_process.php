@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $em_firstname = $_POST['em_firstname'];
     $em_lastname = $_POST['em_lastname'];
     $em_email = $_POST['em_email'];
-    $em_username = md5($_POST['em_username']);
+    $em_username = $_POST['em_username'];
     $em_password = md5($_POST['em_password']); // ควรเข้ารหัสรหัสผ่านก่อนบันทึกลงฐานข้อมูล
     $user_role = 'admin';
 

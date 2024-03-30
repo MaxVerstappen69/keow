@@ -7,7 +7,9 @@ $id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
 // Fetch products associated with the logged-in user
 $sql = "SELECT product_id, category_name, employee_id, product_name, detail, price, quantity, image
 FROM product
-INNER JOIN category ON product.category_id=category.category_id;";
+INNER JOIN category ON product.category_id=category.category_id
+ORDER BY product_id ASC;";
+
 
 $result = $conn->query($sql);
 
@@ -42,8 +44,14 @@ $result = $conn->query($sql);
             unset($_SESSION['success3']);
           }
           ?>
-    <div class="container">
-        <h2 class="mt-3 text-center">รายการสินค้า</h2>
+           <?php
+          if (isset ($_SESSION['success4'])) {
+            echo '<script src="../js/success_admin_edit_product.js"></script>';
+            unset($_SESSION['success4']);
+          }
+          ?>
+    <div class="container mt-5">
+    <h2 class="mb-4 text-center">รายการสินค้า</h2>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <a href="admin_add_product.php">
     <button type="button" class="btn btn-primary shadow-sm">เพิ่มสินค้า</button>
@@ -93,8 +101,8 @@ $result = $conn->query($sql);
                             <td><img src="data:image/png;base64,<?php echo base64_encode($row['image']); ?>" alt="Thumbnail">
                             </td>
                             <td><?php echo"  
-                            <a href='admin_product_edit.php?id=" . $row["product_id"] . "' class='btn btn-primary btn-sm'>แก้ไข</a>
-                           <a href='admin_product_delete_process.php?delete_id=" . $row["product_id"] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"คุณจะลบพนักงานคนนี้จริงหรือ?\")'>ลบ</a>" ?>
+                            <a href='admin_edit_product.php?id=" . $row["product_id"] . "' class='btn btn-primary btn-sm'>แก้ไข</a>
+                           <a href='admin_product_delete_process.php?delete_id=" . $row["product_id"] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"คุณจะลบสินค้านี้จริงหรือ?\")'>ลบ</a>" ?>
                             </td>
                         </tr>
                         <?php
