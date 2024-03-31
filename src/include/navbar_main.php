@@ -1,7 +1,7 @@
 <?php
 session_start();
 include "../../config/db.php";
-$id = isset ($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
+$id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
 $sql = "SELECT * FROM customer WHERE email = '$id';";
 $result = $conn->query($sql);
 ?>
@@ -30,11 +30,11 @@ $result = $conn->query($sql);
             </div>
 
             <div style='display: flex; align-items: center'>
-                <a href="#" class="btn border-0" style="color: #000000;">
+                <a href="cart_page.php" class="btn border-0" style="color: #000000;">
                     <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
                 </a>
                 <?php
-                if (isset ($_SESSION['login_user'])) {
+                if (isset($_SESSION['login_user'])) {
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             ?>

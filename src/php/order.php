@@ -1,5 +1,32 @@
 <?php
 include '../include/navbar_main.php';
+
+// Check if any product data is sent
+if (isset($_POST['selected_products'])) {
+  // Connect to the database
+  require_once "../../config/db.php";
+
+  // Create an array to store selected product IDs
+  $selectedProducts = $_POST['selected_products'];
+
+  // Check if there are any products in the list
+  if (count($selectedProducts) > 0) {
+    // You can fetch additional data from the database or process as needed here
+    // For example:
+
+    // Create SQL query to retrieve selected products
+    $selectedProductsString = implode(",", $selectedProducts); // Convert array to string for SQL query
+    $sql = "SELECT * FROM product WHERE product_id IN ($selectedProductsString)";
+
+    // Execute the query
+    $result = $conn->query($sql);
+
+  } else {
+    echo "No products selected.";
+  }
+} else {
+  echo "No data received.";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,66 +38,56 @@ include '../include/navbar_main.php';
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
+  <style>
+    .product-card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
 
+    .product-image {
+      max-width: 100px;
+      max-height: 100px;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="container mt-5">
+    <h2 class="mb-4">รายการสั่งซื้อ</h2>
 
-  <div class="container text-center border rounded-4 shadow w-50 my-5">
-    <div class="row">
-      <div class="col fw-bold py-3 fs-3">
-        รายการสั่งซื้อ
-      </div>
-      <hr class="hr" />
-    </div>
-    <div class="container d-flex justify-content-between text-center pt-5">
-      <div class="form-floating d-inline-block" style="width: 45%">
-        <input type="text" class="form-control rounded-pill" name=" firstname" aria-describedby="firstname"
-          placeholder="Enter Firstname">
-        <label for="firstname">ชื่อจริง</label>
-      </div>
-      <div class="form-floating d-inline-block" style="width: 45%">
-        <input type="text" class="form-control rounded-pill" name=" lastname" aria-describedby="lastname"
-          placeholder="Enter Lastname">
-        <label for="lastname">นามสกุล</label>
-      </div>
-    </div>
-    <div class="container text-center pt-5">
-      <div class=" form-floating w-100 d-inline-block">
-        <input type="text" class="form-control rounded-pill" name=" address" aria-describedby="address"
-          placeholder="Enter Address">
-        <label for="address">ที่อยู่</label>
-      </div>
-    </div>
-    <div class="container text-center pt-5">
-      <div class=" form-floating w-100 d-inline-block">
-        <input type="text" class="form-control rounded-pill" name=" email" aria-describedby="address"
-          placeholder="Enter Address">
-        <label for="email">อีเมล์</label>
-      </div>
-    </div>
-    <div class="container d-flex justify-content-between text-center pt-5">
-      <div class="form-floating d-inline-block" style="width: 45%">
-        <input type="text" class="form-control rounded-pill" name="phone" aria-describedby="phone"
-          placeholder="Enter Phone number">
-        <label for="phone">เบอร์โทร</label>
-      </div>
-      <div class="form-floating d-inline-block" style="width: 45%">
-        <input type="text" class="form-control rounded-pill" name="username" placeholder="Password">
-        <label for="username">ชื่อผู้ใช้งาน</label>
-      </div>
-    </div>
+    <?php
+    if ($result->num_rows > 0) {
+      // Loop through and display selected product data
+      while ($row = $result->fetch_assoc()) {
+        ?>
+        <div class="product-card d-flex align-items-center">
+          <img src="data:image/png;base64,<?php echo base64_encode($row['image']); ?>" class="product-image me-3">
+          <div>
+            <h3>
+              <?php echo $row['product_name'] ?>
+            </h3>
+            <p>ราคา:
+              <?php echo $row['price'] ?> บาท
+            </p>
+            <p>จำนวน:
+              <?php echo $row['quantity'] ?>
+            </p>
+          </div>
+        </div>
+        <?php
+      }
+    } else {
+      echo "No selected products found.";
+    }
+    ?>
 
-
-    <div class="container pt-5">
-      <button class="btn w-25 py-2 fw-bold rounded-pill" type="submit" name="signup"
-        style="background-color: #EF959D">แก้ไข</button>
-    </div>
+    <!-- Add more HTML elements for order summary, payment form, etc. -->
   </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
