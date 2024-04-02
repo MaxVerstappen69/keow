@@ -33,16 +33,38 @@ if (isset($_POST['add_to_cart'])) {
         $customer_row = $customer_result->fetch_assoc();
         $customer_id = $customer_row['customer_id'];
 
-        // Prepare SQL query to insert into cart_items table
-        $sql_insert = "INSERT INTO cart_item (product_id, quantity, customer_id, created_date, update_date) VALUES ('$product_id', '$quantity', '$customer_id', NOW(), NOW())";
-        if ($conn->query($sql_insert) === TRUE) {
-            // echo "Product added to cart successfully.";
+        // Check if the product is already in the cart
+        $existing_item_sql = "SELECT * FROM cart_item WHERE product_id = '$product_id' AND customer_id = '$customer_id'";
+        $existing_item_result = $conn->query($existing_item_sql);
+
+        if ($existing_item_result->num_rows > 0) {
+            // Product already exists in the cart, update quantity
+            $existing_item_row = $existing_item_result->fetch_assoc();
+            $existing_quantity = $existing_item_row['quantity'];
+
+            // Calculate new quantity by adding the existing quantity with the quantity from the form
+            $new_quantity = $existing_quantity + $quantity;
+
+            // Update the existing cart item with the new quantity
+            $update_sql = "UPDATE cart_item SET quantity = '$new_quantity', update_date = NOW() WHERE product_id = '$product_id' AND customer_id = '$customer_id'";
+            if ($conn->query($update_sql) === TRUE) {
+                // Quantity updated successfully
+            } else {
+                echo "Error updating quantity: " . $conn->error;
+            }
         } else {
-            echo "Error: " . $sql_insert . "<br>" . $conn->error;
+            // Product doesn't exist in the cart, add new item
+            $sql_insert = "INSERT INTO cart_item (product_id, quantity, customer_id, created_date, update_date) VALUES ('$product_id', '$quantity', '$customer_id', NOW(), NOW())";
+            if ($conn->query($sql_insert) === TRUE) {
+                // echo "Product added to cart successfully.";
+            } else {
+                echo "Error: " . $sql_insert . "<br>" . $conn->error;
+            }
         }
     } else {
         echo "Customer not found.";
     }
+
 }
 ?>
 

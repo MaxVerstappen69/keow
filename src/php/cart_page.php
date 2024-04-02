@@ -6,6 +6,20 @@ include '../include/navbar_main.php';
 $selected_products = array();
 $id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
 
+$sql_update = "UPDATE cart_item
+               INNER JOIN product ON cart_item.product_id = product.product_id
+               INNER JOIN customer ON cart_item.customer_id = customer.customer_id
+               SET cart_item.quantity = product.quantity
+               WHERE cart_item.quantity > product.quantity
+                 AND customer.email = '$id';";
+
+$result_update = $conn->query($sql_update);
+
+if ($result_update === TRUE) {
+    // echo "จำนวนสินค้าในตะกร้าถูกปรับแล้ว";
+} else {
+    echo "เกิดข้อผิดพลาดในการปรับปรุงจำนวนสินค้าในตะกร้า: " . $conn->error;
+}
 // คำสั่ง SQL ที่เข้าถึงข้อมูลสินค้าในตะกร้าและจับคู่กับข้อมูลของผู้ใช้ที่ล็อกอินอยู่
 $sql = "SELECT product.product_id, product.product_name, product.price, product.image, product.quantity, cart_item.quantity as cart_quantity
 FROM cart_item
@@ -92,9 +106,8 @@ $result = $conn->query($sql);
                                 <div class="input-group mt-2">
                                     <span class="input-group-text">จำนวน</span>
                                     <input type="number" class="form-control"
-                                        name="quantity[<?php echo $product['product_id']; ?>]"
-                                        value="<?php echo min($product['cart_quantity'], $product['quantity']); ?>" min="1"
-                                        max="<?php echo $product['quantity']; ?>">
+                                        name="cart_quantity[<?php echo $product['product_id']; ?>]"
+                                        value="<?php echo $product['cart_quantity'] ?>" readonly>
                                 </div>
                                 <div class="input-group mt-2">
                                     <span class="input-group-text">ราคา</span>
@@ -142,6 +155,7 @@ $result = $conn->query($sql);
             }
         });
     </script>
+
 </body>
 
 </html>

@@ -1,4 +1,5 @@
 <?php
+
 include '../include/navbar_main.php';
 
 // Check if any product data is sent
@@ -11,22 +12,27 @@ if (isset($_POST['selected_products'])) {
 
   // Check if there are any products in the list
   if (count($selectedProducts) > 0) {
-    // You can fetch additional data from the database or process as needed here
-    // For example:
-
     // Create SQL query to retrieve selected products
     $selectedProductsString = implode(",", $selectedProducts); // Convert array to string for SQL query
-    $sql = "SELECT * FROM product WHERE product_id IN ($selectedProductsString)";
+    $sql = "SELECT product.image, product.product_name, product.price, cart_item.quantity as cart_quantity
+            FROM product
+            INNER JOIN cart_item ON product.product_id = cart_item.product_id
+            WHERE cart_item.product_id IN ($selectedProductsString)";
 
     // Execute the query
     $result = $conn->query($sql);
 
+    // Check if query was successful
+    if (!$result) {
+      die("Error retrieving selected products: " . $conn->error);
+    }
   } else {
     echo "No products selected.";
   }
 } else {
   echo "No data received.";
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,33 +62,36 @@ if (isset($_POST['selected_products'])) {
 <body>
   <div class="container mt-5">
     <h2 class="mb-4">รายการสั่งซื้อ</h2>
-
-    <?php
-    if ($result->num_rows > 0) {
-      // Loop through and display selected product data
-      while ($row = $result->fetch_assoc()) {
-        ?>
-        <div class="product-card d-flex align-items-center">
-          <img src="data:image/png;base64,<?php echo base64_encode($row['image']); ?>" class="product-image me-3">
-          <div>
-            <h3>
-              <?php echo $row['product_name'] ?>
-            </h3>
-            <p>ราคา:
-              <?php echo $row['price'] ?> บาท
-            </p>
-            <p>จำนวน:
-              <?php echo $row['quantity'] ?>
-            </p>
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
+      <?php
+      if (isset($result) && $result->num_rows > 0) {
+        // Loop through and display selected product data
+        while ($row = $result->fetch_assoc()) {
+          ?>
+          <div class="product-card d-flex align-items-center">
+            <div>
+              <img src="data:image/png;base64,<?php echo base64_encode($row['image']); ?>" class="product-image me-3">
+              <h3>
+                <?php echo $row['product_name'] ?>
+              </h3>
+              <p>ราคา:
+                <?php echo $row['price'] ?> บาท
+              </p>
+              <p>จำนวน:
+                <?php echo $row['cart_quantity'] ?>
+              </p>
+            </div>
           </div>
-        </div>
-        <?php
+          <?php
+        }
+      } else {
+        echo "No selected products found.";
       }
-    } else {
-      echo "No selected products found.";
-    }
-    ?>
-
+      ?>
+      <div class="mt-4">
+        <button type="submit" class="btn btn-primary">สั่งสินค้า</button>
+      </div>
+    </form>
     <!-- Add more HTML elements for order summary, payment form, etc. -->
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
