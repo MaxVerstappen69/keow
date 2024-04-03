@@ -53,22 +53,22 @@ if (isset($_POST['selected_products'])) {
     }
 
     .product-image {
-      max-width: 100px;
-      max-height: 100px;
+      max-width: 130px;
+      max-height: 130px;
     }
   </style>
 </head>
 
 <body>
   <div class="container mt-5">
-    <h2 class="mb-4">รายการสั่งซื้อ</h2>
+    <h2 class="mb-4 text-center">รายการสั่งซื้อ</h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
       <?php
       if (isset($result) && $result->num_rows > 0) {
         // Loop through and display selected product data
         while ($row = $result->fetch_assoc()) {
           ?>
-          <div class="product-card d-flex align-items-center">
+          <div class="product-card d-flex align-items-center ">
             <div>
               <img src="data:image/png;base64,<?php echo base64_encode($row['image']); ?>" class="product-image me-3">
               <h3>

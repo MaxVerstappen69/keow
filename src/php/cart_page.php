@@ -21,11 +21,12 @@ if ($result_update === TRUE) {
     echo "เกิดข้อผิดพลาดในการปรับปรุงจำนวนสินค้าในตะกร้า: " . $conn->error;
 }
 // คำสั่ง SQL ที่เข้าถึงข้อมูลสินค้าในตะกร้าและจับคู่กับข้อมูลของผู้ใช้ที่ล็อกอินอยู่
-$sql = "SELECT product.product_id, product.product_name, product.price, product.image, product.quantity, cart_item.quantity as cart_quantity
+$sql = "SELECT cart_item.cart_item_id, product.product_id, product.product_name, product.price, product.image, product.quantity, cart_item.quantity as cart_quantity
 FROM cart_item
 INNER JOIN product ON cart_item.product_id = product.product_id
 INNER JOIN customer ON cart_item.customer_id = customer.customer_id
 WHERE customer.email = '$id';";
+
 
 $result = $conn->query($sql);
 
@@ -50,10 +51,10 @@ $result = $conn->query($sql);
         }
 
         .product-image {
-            width: 80px;
-            height: 80px;
+            width: 130px;
+            height: 130px;
             object-fit: cover;
-            border-radius: 50%;
+            
         }
 
         .form-check-input-custom {
@@ -64,10 +65,17 @@ $result = $conn->query($sql);
 </head>
 
 <body>
+    <?php
+    if (isset($_SESSION['success5'])) {
+        echo '<script src="../js/success_delete_cart.js"></script>';
+        unset($_SESSION['success5']);
+    }
+    ?>
     <div class="container mt-5">
-        <h2 class="mb-4">Shopping Cart</h2>
+        <h2 class="mb-4 text-center">Shopping Cart</h2>
         <form id="orderForm" method="post" action="order.php" enctype="multipart/form-data">
-            <div class="row">
+            <div class="container d-flex justify-content-center">
+            <div class="row w-75">
                 <?php
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
@@ -103,16 +111,21 @@ $result = $conn->query($sql);
                                         <?php echo $product['product_name']; ?>
                                     </label>
                                 </div>
-                                <div class="input-group mt-2">
+                                <div class="input-group mt-2 w-25">
                                     <span class="input-group-text">จำนวน</span>
                                     <input type="number" class="form-control"
                                         name="cart_quantity[<?php echo $product['product_id']; ?>]"
                                         value="<?php echo $product['cart_quantity'] ?>" readonly>
                                 </div>
-                                <div class="input-group mt-2">
+                                <div class="input-group mt-2 w-25">
                                     <span class="input-group-text">ราคา</span>
                                     <input type="text" class="form-control" name="category_id"
                                         value="<?php echo $product['price'] ?>" readonly>
+                                </div>
+                                <div class="mt-2">
+                                    <a href='cart_delete_process.php?delete_id=<?php echo $row["cart_item_id"]; ?>'
+                                        class='btn btn-danger btn-sm'
+                                        onclick='return confirm("คุณจะลบสินค้านี้จริงหรือ?")'>ลบ</a>
                                 </div>
                             </div>
                         </div>
@@ -120,14 +133,15 @@ $result = $conn->query($sql);
                     <?php
                 }
                 ?>
-            </div>
+            
 
-            <div class="mt-4">
+            <div class="mt-4 d-flex justify-content-end">
                 <button type="button" id="orderButton" class="btn btn-primary">สั่งสินค้า</button>
             </div>
         </form>
     </div>
-
+</div>
+            </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
