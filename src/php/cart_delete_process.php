@@ -1,37 +1,29 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['login_user'])) {
-    // Redirect to login page if user is not logged in
-    header("Location: login.php");
-    exit();
-}
-
-// Check if ID is provided
-if (!isset($_GET['delete_id'])) {
-    // Redirect to employee list page if ID is not provided
-    header("Location: cart_page.php");
-    exit();
-}
-
-// Include database connection
+// เชื่อมต่อกับฐานข้อมูล
 require_once "../../config/db.php";
 
-// Get the ID of the employee to be deleted
-$cart_item_id = $_GET['delete_id'];
+// ตรวจสอบว่ามีค่า delete_id ที่ถูกส่งมาหรือไม่
+if (isset($_GET['delete_id'])) {
+    // รับค่าไอดีของไอเท็มที่ต้องการลบ
+    $delete_id = $_GET['delete_id'];
 
-// Prepare and execute SQL statement to delete the employee
-$sql = "DELETE FROM cart_item WHERE cart_item_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $cart_item_id);
-$stmt->execute();
-$stmt->close();
+    // สร้างคำสั่ง SQL เพื่อลบไอเท็มออกจากตะกร้า
+    $sql = "DELETE FROM cart_item WHERE cart_item_id = $delete_id";
 
-// Close database connection
+    // ทำการลบข้อมูล
+    if ($conn->query($sql) === TRUE) {
+        // ถ้าสำเร็จให้ Redirect กลับไปยังหน้าตะกร้า
+        header("Location: cart_page.php");
+        exit(); // ออกจากสคริปต์
+    } else {
+        // ถ้าเกิดข้อผิดพลาดในการลบ
+        echo "เกิดข้อผิดพลาดในการลบ: " . $conn->error;
+    }
+} else {
+    // ถ้าไม่มี delete_id ที่ถูกส่งมา
+    echo "ไม่พบไอดีที่ต้องการลบ";
+}
+
+// ปิดการเชื่อมต่อฐานข้อมูล
 $conn->close();
-
-// Redirect back to employee list page after deletion
-$_SESSION['success5'] = 'ลบข้อมูลสำเร็จ';
-header('location: cart_page.php');
-exit();
 ?>

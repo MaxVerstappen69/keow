@@ -9,9 +9,8 @@ $id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
 $sql_update = "UPDATE cart_item
                INNER JOIN product ON cart_item.product_id = product.product_id
                INNER JOIN customer ON cart_item.customer_id = customer.customer_id
-               SET cart_item.quantity = product.quantity
-               WHERE cart_item.quantity > product.quantity
-                 AND customer.email = '$id';";
+               SET cart_item.quantity = LEAST(product.quantity, cart_item.quantity)
+               WHERE customer.email = '$id';";
 
 $result_update = $conn->query($sql_update);
 
@@ -26,7 +25,6 @@ FROM cart_item
 INNER JOIN product ON cart_item.product_id = product.product_id
 INNER JOIN customer ON cart_item.customer_id = customer.customer_id
 WHERE customer.email = '$id';";
-
 
 $result = $conn->query($sql);
 
@@ -54,7 +52,7 @@ $result = $conn->query($sql);
             width: 130px;
             height: 130px;
             object-fit: cover;
-            
+
         }
 
         .form-check-input-custom {
@@ -75,73 +73,76 @@ $result = $conn->query($sql);
         <h2 class="mb-4 text-center">Shopping Cart</h2>
         <form id="orderForm" method="post" action="order.php" enctype="multipart/form-data">
             <div class="container d-flex justify-content-center">
-            <div class="row w-75">
-                <?php
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        $product_id = $row['product_id'];
+                <div class="row w-75">
+                    <?php
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            $product_id = $row['product_id'];
 
-                        if (array_key_exists($product_id, $selected_products)) {
-                            $selected_products[$product_id]['cart_quantity'] += $row['cart_quantity'];
-                        } else {
-                            $selected_products[$product_id] = array(
-                                'product_id' => $product_id,
-                                'product_name' => $row['product_name'],
-                                'price' => $row['price'],
-                                'image' => $row['image'],
-                                'quantity' => $row['quantity'],
-                                'cart_quantity' => $row['cart_quantity']
-                            );
+                            if (array_key_exists($product_id, $selected_products)) {
+                                $selected_products[$product_id]['cart_quantity'] += $row['cart_quantity'];
+                            } else {
+                                $selected_products[$product_id] = array(
+                                    'product_id' => $product_id,
+                                    'cart_item_id' => $row['cart_item_id'],
+                                    'product_name' => $row['product_name'],
+                                    'price' => $row['price'],
+                                    'image' => $row['image'],
+                                    'quantity' => $row['quantity'],
+                                    'cart_quantity' => $row['cart_quantity']
+                                );
+                            }
                         }
                     }
-                }
 
-                foreach ($selected_products as $product) {
-                    ?>
-                    <div class="col-md-12">
-                        <div class="product-card d-flex align-items-center">
-                            <img src="data:image/png;base64,<?php echo base64_encode($product['image']); ?>"
-                                class="product-image me-3">
-                            <div class="flex-grow-1">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input form-check-input-custom"
-                                        name="selected_products[]" id="product_<?php echo $product['product_id']; ?>"
-                                        value="<?php echo $product['product_id']; ?>" checked>
-                                    <label class="form-check-label" for="product_<?php echo $product['product_id']; ?>">
-                                        <?php echo $product['product_name']; ?>
-                                    </label>
-                                </div>
-                                <div class="input-group mt-2 w-25">
-                                    <span class="input-group-text">จำนวน</span>
-                                    <input type="number" class="form-control"
-                                        name="cart_quantity[<?php echo $product['product_id']; ?>]"
-                                        value="<?php echo $product['cart_quantity'] ?>" readonly>
-                                </div>
-                                <div class="input-group mt-2 w-25">
-                                    <span class="input-group-text">ราคา</span>
-                                    <input type="text" class="form-control" name="category_id"
-                                        value="<?php echo $product['price'] ?>" readonly>
-                                </div>
-                                <div class="mt-2">
-                                    <a href='cart_delete_process.php?delete_id=<?php echo $row["cart_item_id"]; ?>'
-                                        class='btn btn-danger btn-sm'
-                                        onclick='return confirm("คุณจะลบสินค้านี้จริงหรือ?")'>ลบ</a>
+                    foreach ($selected_products as $product) {
+                        ?>
+                        <div class="col-md-12">
+                            <div class="product-card d-flex align-items-center">
+                                <img src="data:image/png;base64,<?php echo base64_encode($product['image']); ?>"
+                                    class="product-image me-3">
+                                <div class="flex-grow-1">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input form-check-input-custom"
+                                            name="selected_products[]" id="product_<?php echo $product['product_id']; ?>"
+                                            value="<?php echo $product['product_id']; ?>" checked>
+                                        <label class="form-check-label" for="product_<?php echo $product['product_id']; ?>">
+                                            <?php echo $product['product_name']; ?>
+                                        </label>
+                                    </div>
+                                    <div class="input-group mt-2 w-25">
+                                        <span class="input-group-text">จำนวน</span>
+                                        <input type="number" class="form-control"
+                                            name="cart_quantity[<?php echo $product['product_id']; ?>]"
+                                            value="<?php echo $product['cart_quantity'] ?>" readonly>
+                                    </div>
+                                    <div class="input-group mt-2 w-25">
+                                        <span class="input-group-text">ราคา</span>
+                                        <input type="text" class="form-control" name="category_id"
+                                            value="<?php echo $product['price'] ?>" readonly>
+                                    </div>
+                                    <div class="mt-2">
+                                        <a href='cart_delete_process.php?delete_id=<?php echo $product["cart_item_id"]; ?>'
+                                            class='btn btn-danger btn-sm'
+                                            onclick='return confirm("คุณจะลบสินค้านี้จริงหรือ?")'>ลบ</a>
+                                    </div>
+
+
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <?php
-                }
-                ?>
-            
+                        <?php
+                    }
+                    ?>
 
-            <div class="mt-4 d-flex justify-content-end">
-                <button type="button" id="orderButton" class="btn btn-primary">สั่งสินค้า</button>
-            </div>
+
+                    <div class="mt-4 d-flex justify-content-end">
+                        <button type="button" id="orderButton" class="btn btn-primary">สั่งสินค้า</button>
+                    </div>
         </form>
     </div>
-</div>
-            </div>
+    </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
