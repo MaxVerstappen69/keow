@@ -14,7 +14,7 @@ if (isset($_POST['selected_products'])) {
   if (count($selectedProducts) > 0) {
     // Create SQL query to retrieve selected products
     $selectedProductsString = implode(",", $selectedProducts); // Convert array to string for SQL query
-    $sql = "SELECT product.image, product.product_name, product.price, cart_item.quantity as cart_quantity
+    $sql = "SELECT cart_item.cart_item_id, product.image, product.product_name, product.price, cart_item.quantity as cart_quantity
             FROM product
             INNER JOIN cart_item ON product.product_id = cart_item.product_id
             WHERE cart_item.product_id IN ($selectedProductsString)";
@@ -29,6 +29,7 @@ if (isset($_POST['selected_products'])) {
   } else {
     echo "No products selected.";
   }
+
 } else {
   echo "No data received.";
 }
@@ -62,25 +63,28 @@ if (isset($_POST['selected_products'])) {
 <body>
   <div class="container mt-5">
     <h2 class="mb-4 text-center">รายการสั่งซื้อ</h2>
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
+    <form method="post" action="add_to_cart.php"> <!-- ย้ายการกำหนด method และ action ไปที่ form รวม -->
       <?php
       if (isset($result) && $result->num_rows > 0) {
         // Loop through and display selected product data
         while ($row = $result->fetch_assoc()) {
           ?>
           <div class="product-card d-flex align-items-center ">
-            <div>
-              <img src="data:image/png;base64,<?php echo base64_encode($row['image']); ?>" class="product-image me-3">
-              <h3>
-                <?php echo $row['product_name'] ?>
-              </h3>
-              <p>ราคา:
-                <?php echo $row['price'] ?> บาท
-              </p>
-              <p>จำนวน:
-                <?php echo $row['cart_quantity'] ?>
-              </p>
-            </div>
+            <input type='hidden' name="selected_products[]" value="<?php echo $row['cart_item_id']; ?>">
+            <!-- Add hidden input field for cart_item_id -->
+            <img src="data:image/png;base64,<?php echo base64_encode($row['image']); ?>" class="product-image me-3">
+            <h3>
+              <?php echo $row['product_name'] ?>
+            </h3>
+            <h3>
+              <?php echo $row['cart_item_id'] ?>
+            </h3>
+            <p>ราคา:
+              <?php echo $row['price'] ?> บาท
+            </p>
+            <p>จำนวน:
+              <?php echo $row['cart_quantity'] ?>
+            </p>
           </div>
           <?php
         }
@@ -90,8 +94,10 @@ if (isset($_POST['selected_products'])) {
       ?>
       <div class="mt-4">
         <button type="submit" class="btn btn-primary">สั่งสินค้า</button>
+        <!-- Submit button to add all selected products to cart -->
       </div>
     </form>
+
     <!-- Add more HTML elements for order summary, payment form, etc. -->
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
