@@ -6,6 +6,7 @@ include '../include/navbar_main.php';
 if (isset($_POST['selected_products'])) {
   // Connect to the database
   require_once "../../config/db.php";
+  $id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
 
   // Create an array to store selected product IDs
   $selectedProducts = $_POST['selected_products'];
@@ -14,15 +15,25 @@ if (isset($_POST['selected_products'])) {
   if (count($selectedProducts) > 0) {
     // Create SQL query to retrieve selected products
     $selectedProductsString = implode(",", $selectedProducts); // Convert array to string for SQL query
-    $sql = "SELECT cart_item.cart_item_id, product.image, product.product_name, product.price, cart_item.quantity as cart_quantity
-            FROM product
-            INNER JOIN cart_item ON product.product_id = cart_item.product_id
-            WHERE cart_item.product_id IN ($selectedProductsString)";
+    $sql = "SELECT
+            product.product_id,
+            cart_item.customer_id,
+            cart_item.quantity as cart_quantity,
+            product.image,
+            product.product_name, 
+            product.price,
+            cart_item.cart_item_id
+        FROM
+            product
+        INNER JOIN 
+            cart_item ON product.product_id = cart_item.product_id
+        INNER JOIN 
+            customer ON customer.customer_id = cart_item.customer_id
+        WHERE 
+            cart_item.product_id IN ($selectedProductsString) AND customer.email = '$id';";
 
-    // Execute the query
     $result = $conn->query($sql);
 
-    // Check if query was successful
     if (!$result) {
       die("Error retrieving selected products: " . $conn->error);
     }
@@ -66,24 +77,33 @@ if (isset($_POST['selected_products'])) {
     <form method="post" action="add_to_cart.php"> <!-- ย้ายการกำหนด method และ action ไปที่ form รวม -->
       <?php
       if (isset($result) && $result->num_rows > 0) {
-        // Loop through and display selected product data
+
+        $totalPrice = 0;
         while ($row = $result->fetch_assoc()) {
+
+          $product_id = $row['product_id'];
+          $product_name = $row['product_name'];
+          $quantity = $row['cart_quantity'];
+          $customer_id = $row['customer_id'];
+          $price = $row['price'];
+          $cart_item_id = $row['cart_item_id'];
+          $subtotal = $price * $quantity;
+          // Add subtotal to total price
+          $totalPrice += $subtotal;
+          // echo $quantity;
           ?>
           <div class="product-card d-flex align-items-center ">
-            <input type='hidden' name="selected_products[]" value="<?php echo $row['cart_item_id']; ?>">
+            <input type='hidden' name="selected_products[]" value="<?php echo $product_id; ?>">
             <!-- Add hidden input field for cart_item_id -->
             <img src="data:image/png;base64,<?php echo base64_encode($row['image']); ?>" class="product-image me-3">
             <h3>
-              <?php echo $row['product_name'] ?>
-            </h3>
-            <h3>
-              <?php echo $row['cart_item_id'] ?>
+              <?php echo $product_name ?>
             </h3>
             <p>ราคา:
-              <?php echo $row['price'] ?> บาท
+              <?php echo $price ?> บาท
             </p>
             <p>จำนวน:
-              <?php echo $row['cart_quantity'] ?>
+              <?php echo $quantity ?>
             </p>
           </div>
           <?php
@@ -93,6 +113,13 @@ if (isset($_POST['selected_products'])) {
       }
       ?>
       <div class="mt-4">
+        <input type="hidden" name="totalPrice" value="<?php echo $totalPrice; ?>">
+        Total Price:
+        <?php echo number_format($totalPrice, 2); ?> บาท
+      </div>
+      <div class="my-4">
+
+        <!-- Display total price -->
         <button type="submit" class="btn btn-primary">สั่งสินค้า</button>
         <!-- Submit button to add all selected products to cart -->
       </div>
