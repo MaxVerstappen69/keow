@@ -69,7 +69,7 @@ if (isset($_POST['add_to_cart'])) {
                 }
             }
         } else {
-            echo '<script src="../js/error_addcartnotcustomer.js"></script>';
+            echo '<script src="../js/error_admin_addcart.js"></script>';
         }
     } else {
         echo '<script src="../js/error_addcartnotcustomer.js"></script>';
