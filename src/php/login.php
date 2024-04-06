@@ -54,7 +54,7 @@ if (isset ($_SESSION['login_user'])) {
                 <div class="form-floating w-50 d-inline-block">
                     <input type="text" name="email" class="form-control rounded-pill" id="floatingInput"
                         placeholder="name@example.com">
-                    <label for="floatingInput">อีเมล์ผู้ใช้</label>
+                    <label for="floatingInput">อีเมล์หรือชื่อผู้ใช้</label>
                 </div>
             </div>
             <div class="container text-center pt-3">
@@ -65,14 +65,7 @@ if (isset ($_SESSION['login_user'])) {
                 </div>
             </div>
 
-            <div class="container text-center w-50">
-                <div class="form-check text-start my-3 ">
-                    <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault"
-                        name="remember_me">
-                    <label class="form-check-label" for="flexCheckDefault">จดจำฉันไว้</label>
-                </div>
-            </div>
-            <button class="btn w-25 py-2 fw-bold rounded-pill" type="submit"
+            <button class="btn w-25 py-2 fw-bold rounded-pill mt-5" type="submit"
                 style="background-color: #EF959D">ลงชื่อเข้าใช้</button>
             <p class="mt-5 mb-5 text-body-secondary">ยังไม่มีบัญชี?<a href="register.php">สมัครบัญชี</a></p>
         </div>
