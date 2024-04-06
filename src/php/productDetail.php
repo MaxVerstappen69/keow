@@ -113,7 +113,7 @@ if (isset($_POST['add_to_cart'])) {
 
                         <div class="input-group">
                             <p class='pe-4 opacity-50'>จำนวน</p>
-                            <input type="number" class="form-control" name="quantity" id="quantity" value="1" min="1"
+                            <input type="number" class="rounded text-center " name="quantity" id="quantity" value="1" min="1"
                                 max="<?php echo $product['quantity']; ?>">
                             <p class='ps-4 opacity-50'>มีสินค้าทั้งหมด
                                 <span id="quantity">
