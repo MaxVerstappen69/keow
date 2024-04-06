@@ -23,15 +23,15 @@
         </div>
 
         <form method="post" action="add_employee_process.php" enctype="multipart/form-data">
-        <?php if (isset ($_SESSION['error'])) { ?>
-      <div class="alert alert-danger" role="alert">
-        <?php
-        echo $_SESSION['error'];
-        unset($_SESSION['error']);
-        ?>
-      </div>
-      <?php } ?>
-        
+            <?php if (isset($_SESSION['error'])) { ?>
+                <div class="alert alert-danger" role="alert">
+                    <?php
+                    echo $_SESSION['error'];
+                    unset($_SESSION['error']);
+                    ?>
+                </div>
+            <?php } ?>
+
             <div class="container d-flex justify-content-between text-center pt-5">
                 <div class="card form-floating d-inline-block" style="width: 45%">
                     <input type="text" class="form-control" name="em_firstname" required>
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="container text-center pt-5">
-            <div class="card form-floating d-inline-block" style="width: 45%">
+                <div class="card form-floating d-inline-block" style="width: 45%">
                     <input type="email" class="form-control" name="em_email" required>
                     <label for="email">อีเมล์</label>
                 </div>
@@ -60,12 +60,16 @@
             </div>
             <div class="container text-center pt-5">
 
-        <div class="card form-floating d-inline-block" style="width: 45%">
+                <div class="card form-floating d-inline-block" style="width: 45%">
+                    <input type="text" class="form-control" name="em_phone" required>
+                    <label for="username">เบอร์โทรศัพท์</label>
+                </div>
+                <div class="card form-floating d-inline-block" style="width: 45%">
                     <input type="text" class="form-control" name="em_username" required>
                     <label for="username">ชื่อพนักงาน</label>
                 </div>
 
-                
+
             </div>
             <div class="container pt-5">
                 <button class="btn w-25 py-2 fw-bold rounded-pill" type="submit" name="submit"

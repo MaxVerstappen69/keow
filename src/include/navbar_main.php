@@ -4,6 +4,9 @@ include "../../config/db.php";
 $id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
 $sql = "SELECT * FROM customer WHERE email = '$id';";
 $result = $conn->query($sql);
+$sqladmid = "SELECT * FROM employee WHERE em_email = '$id';";
+$resultadmin = $conn->query($sqladmid);
+
 ?>
 
 <!DOCTYPE html>
@@ -57,11 +60,38 @@ $result = $conn->query($sql);
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="user_profile.php">โปรไฟล์</a></li>
                                     <li><a class="dropdown-item" href="user_order.php">การสั่งซื้อ</a></li>
-                                    <?php
-                                    if ($_SESSION['user_role'] === 'admin') {
-                                        echo '<li><a class="dropdown-item" href="admin_employee.php">ผู้ดูแล</a></li>';
-                                    }
-                                    ?>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="logout.php">ออกจากระบบ</a></li>
+                                </ul>
+                            </div>
+                            <?php
+                        }
+                    }
+                    if (mysqli_num_rows($resultadmin) > 0) {
+                        while ($rowAdmin = mysqli_fetch_assoc($resultadmin)) {
+                            ?>
+                            <div style="display: inline-block;">
+                                <div
+                                    style="display: flex; align-items: center; margin-right: 10px; background-color: #EF959D; border-radius: 30px; box-shadow: 0px 0px 3px; width: 130px; height: 30px;">
+                                    <h6 style="margin: 0 auto; text-align: center;">
+                                        <?php echo ($rowAdmin['em_username']); ?>
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="btn-group">
+                                <img src="data:image/png;base64,<?php echo base64_encode($rowAdmin['em_thumbnail']); ?>"
+                                    class="img-fluid rounded-circle" style="width: 40px; height: 40px;" alt="Thumbnail">
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split border-0"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="user_profile.php">โปรไฟล์</a></li>
+                                    <li><a class="dropdown-item" href="user_order.php">การสั่งซื้อ</a></li>
+                                    <li><a class="dropdown-item" href="admin_employee.php">ผู้ดูแล</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
@@ -74,6 +104,7 @@ $result = $conn->query($sql);
                 } else {
                     echo '<a class="btn btn-sm fw-bold" href="login.php" role="button" style="background-color: #EF959D; border-color: #EF959D; width: 100px; border-radius: 50px;">เข้าสู่ระบบ</a>';
                 }
+
                 ?>
             </div>
         </div>

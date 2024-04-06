@@ -73,7 +73,7 @@ if (isset($_POST['selected_products'])) {
         $_SESSION['cart_no'] = $cart_no;
 
         // Redirect the user to indicate that the products are added to the cart
-        header("Location: index.php");
+        header("Location: user_order.php");
         exit();
     } else {
         echo "No products selected.";

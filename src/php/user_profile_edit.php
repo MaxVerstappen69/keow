@@ -4,7 +4,8 @@ include '../include/navbar_main.php';
 $k = $_SESSION['login_user'];
 $sql = "SELECT * FROM customer WHERE email='$k'";
 $result = $conn->query($sql);
-
+$sqladmid = "SELECT * FROM employee WHERE em_email = '$k';";
+$resultadmin = $conn->query($sqladmid);
 ?>
 
 <!DOCTYPE html>
@@ -29,25 +30,24 @@ $result = $conn->query($sql);
       <hr class="hr" />
     </div>
 
-    <?php
-    if (mysqli_num_rows($result) > 0) {
+    <?php if (mysqli_num_rows($result) > 0) {
       while ($row = mysqli_fetch_assoc($result)) {
         ?>
         <form method="post" action="user_profile_edit_process.php" enctype="multipart/form-data">
           <?php
-          if (isset ($_SESSION['error'])) {
+          if (isset($_SESSION['error'])) {
             echo '<script src="../js/sweetalert_error.js"></script>';
             unset($_SESSION['error']);
           }
           ?>
           <?php
-          if (isset ($_SESSION['success'])) {
+          if (isset($_SESSION['success'])) {
             echo '<script src="../js/sweetalert_successEdit.js"></script>';
             unset($_SESSION['success']);
           }
           ?>
           <?php
-          if (isset ($_SESSION['currentPassword'])) {
+          if (isset($_SESSION['currentPassword'])) {
             echo '<script src="../js/sweetalert_currentPassword.js"></script>';
             unset($_SESSION['currentPassword']);
           }
@@ -90,7 +90,6 @@ $result = $conn->query($sql);
           </div>
           <div class="container text-center pt-5">
             <div class="card form-floating w-100 d-inline-block">
-
               <input type="password" class="form-control" name="new_password" placeholder="New Password">
               <label for="new_password">รหัสผ่าน</label>
             </div>
@@ -112,10 +111,87 @@ $result = $conn->query($sql);
         </form>
         <?php
       }
+    } ?>
+
+    <?php if (mysqli_num_rows($resultadmin) > 0) {
+      while ($rowAdmin = mysqli_fetch_assoc($resultadmin)) {
+        ?>
+        <form method="post" action="user_profile_edit_process.php" enctype="multipart/form-data">
+          <?php
+          if (isset($_SESSION['error'])) {
+            echo '<script src="../js/sweetalert_error.js"></script>';
+            unset($_SESSION['error']);
+          }
+          ?>
+          <?php
+          if (isset($_SESSION['success'])) {
+            echo '<script src="../js/sweetalert_successEdit.js"></script>';
+            unset($_SESSION['success']);
+          }
+          ?>
+          <?php
+          if (isset($_SESSION['currentPassword'])) {
+            echo '<script src="../js/sweetalert_currentPassword.js"></script>';
+            unset($_SESSION['currentPassword']);
+          }
+          ?>
+          <div class="btn-group">
+            <img src="data:image/png;base64,<?php echo base64_encode($rowAdmin['em_thumbnail']); ?>"
+              class="img-fluid rounded-circle" style="width: 100px; height: 100px;" alt="Thumbnail">
+          </div>
+          <div class="container d-flex justify-content-between text-center pt-5">
+            <div class="card form-floating d-inline-block" style="width: 45%">
+              <input type="text" class="form-control" name="em_firstname" value="<?php echo $rowAdmin['em_firstname']; ?>">
+              <label for="firstname">ชื่อจริง</label>
+            </div>
+            <div class="card form-floating d-inline-block" style="width: 45%">
+              <input type="text" class="form-control" name="em_lastname" value="<?php echo $rowAdmin['em_lastname']; ?>">
+              <label for="lastname">นามสกุล</label>
+            </div>
+          </div>
+          <div class="container text-center pt-5">
+            <div class="card form-floating w-100 d-inline-block">
+              <input type="email" class="form-control" name="em_email" value="<?php echo $rowAdmin['em_email']; ?>"
+                readonly>
+              <label for="email">อีเมล์ (ไม่สามารถแก้ได้)</label>
+            </div>
+          </div>
+          <div class="container d-flex justify-content-between text-center pt-5">
+            <div class="card form-floating d-inline-block" style="width: 45%">
+              <input type="text" class="form-control" name="em_phone" value="<?php echo $rowAdmin['em_phone']; ?>">
+              <label for="phone">เบอร์โทรศัพท์</label>
+            </div>
+            <div class="card form-floating d-inline-block" style="width: 45%">
+              <input type="text" class="form-control" name="em_username" value="<?php echo $rowAdmin['em_username']; ?>">
+              <label for="username">ชื่อผู้ใช้งาน</label>
+            </div>
+          </div>
+          <div class="container text-center pt-5">
+            <div class="card form-floating w-100 d-inline-block">
+              <input type="password" class="form-control" name="new_password" placeholder="New Password">
+              <label for="new_password">รหัสผ่าน</label>
+            </div>
+          </div>
+          <div class="container text-center pt-5">
+            <div class="card form-floating w-100 d-inline-block">
+              <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password">
+              <label for="confirm_password">ยืนยันรหัสผ่าน</label>
+            </div>
+          </div>
+          <div class="container text-center pt-5">
+            <label for="profile_picture" class="form-label">เลือกรูปภาพโปรไฟล์ใหม่</label>
+            <input type="file" class="form-control" id="profile_picture" name="profile_picture">
+          </div>
+          <div class="container pt-5">
+            <button class="btn w-25 py-2 fw-bold rounded-pill" type="submit" name="submit_admin"
+              style="background-color: #EF959D; margin-bottom:30px;">ยืนยัน</button>
+          </div>
+        </form>
+        <?php
+      }
     } else {
       echo "0 results";
-    }
-    ?>
+    } ?>
 
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

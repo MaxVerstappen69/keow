@@ -22,13 +22,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $em_lastname = $_POST['em_lastname'];
     $em_email = $_POST['em_email'];
     $em_username = $_POST['em_username'];
+    $em_phone = $_POST['em_phone'];
     $em_password = md5($_POST['em_password']); // ควรเข้ารหัสรหัสผ่านก่อนบันทึกลงฐานข้อมูล
     $user_role = 'admin';
     $bank_id = '1';
 
     // เพิ่มข้อมูลลงในฐานข้อมูล
-    $sql = "INSERT INTO employee (bank_id, em_firstname, em_lastname, em_email, em_username, em_password, user_role)
-            VALUES ('$bank_id', '$em_firstname', '$em_lastname', '$em_email', '$em_username', '$em_password','$user_role')";
+    $sql = "INSERT INTO employee (bank_id, em_firstname, em_lastname, em_email, em_username, em_phone, em_password, user_role)
+            VALUES ('$bank_id', '$em_firstname', '$em_lastname', '$em_email', '$em_username', '$em_phone', '$em_password','$user_role')";
 
     if ($conn->query($sql) === TRUE) {
         $_SESSION['success1'] = 'เพิ่มข้อมูลเรียบร้อย.';

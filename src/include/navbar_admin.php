@@ -1,8 +1,8 @@
 <?php
 session_start();
 include "../../config/db.php";
-$id = isset ($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
-$sql = "SELECT * FROM customer WHERE email = '$id';";
+$id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
+$sql = "SELECT * FROM employee WHERE em_email = '$id';";
 $result = $conn->query($sql);
 ?>
 
@@ -28,22 +28,26 @@ $result = $conn->query($sql);
                         alt="">
                 </a>
             </div>
-            
+
             <div class="d-flex justify-content-center py-3">
-      <ul class="nav nav-pills">
-        <li class="nav-item"><a href="../php/admin_employee.php" class="nav-link" style="color: black;">พนักงาน</a></li>
-        <li class="nav-item"><a href="../php/admin_order.php" class="nav-link" style="color: black;">รายการสั่งซื้อ</a></li>
-        <li class="nav-item"><a href="../php/admin_product.php" class="nav-link" style="color: black;">รายการสินค้า</a></li>
-        <li class="nav-item"><a href="../php/admin_employee_payment.php" class="nav-link" style="color: black;">ธุรกรรม</a></li>
-      </ul>
-    </div>
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a href="../php/admin_employee.php" class="nav-link"
+                            style="color: black;">พนักงาน</a></li>
+                    <li class="nav-item"><a href="../php/admin_order.php" class="nav-link"
+                            style="color: black;">รายการสั่งซื้อ</a></li>
+                    <li class="nav-item"><a href="../php/admin_product.php" class="nav-link"
+                            style="color: black;">รายการสินค้า</a></li>
+                    <li class="nav-item"><a href="../php/admin_employee_payment.php" class="nav-link"
+                            style="color: black;">ธุรกรรม</a></li>
+                </ul>
+            </div>
 
             <div style='display: flex; align-items: center'>
                 <a href="cart_page.php" class="btn border-0" style="color: #000000;">
                     <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
                 </a>
                 <?php
-                if (isset ($_SESSION['login_user'])) {
+                if (isset($_SESSION['login_user'])) {
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             ?>
@@ -51,12 +55,12 @@ $result = $conn->query($sql);
                                 <div
                                     style="display: flex; align-items: center; margin-right: 10px; background-color: #EF959D; border-radius: 30px; box-shadow: 0px 0px 3px; width: 130px; height: 30px;">
                                     <h6 style="margin: 0 auto; text-align: center;">
-                                        <?php echo ($row['username']); ?>
+                                        <?php echo ($row['em_username']); ?>
                                     </h6>
                                 </div>
                             </div>
                             <div class="btn-group">
-                                <img src="data:image/png;base64,<?php echo base64_encode($row['thumbnail']); ?>"
+                                <img src="data:image/png;base64,<?php echo base64_encode($row['em_thumbnail']); ?>"
                                     class="img-fluid rounded-circle" style="width: 40px; height: 40px;" alt="Thumbnail">
                                 <button type="button" class="btn dropdown-toggle dropdown-toggle-split border-0"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -66,11 +70,7 @@ $result = $conn->query($sql);
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="user_profile.php">โปรไฟล์</a></li>
                                     <li><a class="dropdown-item" href="user_order.php">การสั่งซื้อ</a></li>
-                                    <?php
-                                    if ($_SESSION['user_role'] === 'admin') {
-                                        echo '<li><a class="dropdown-item" href="admin_employee.php">ผู้ดูแล</a></li>';
-                                    }
-                                    ?>
+                                    <li><a class="dropdown-item" href="admin_employee.php">ผู้ดูแล</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
