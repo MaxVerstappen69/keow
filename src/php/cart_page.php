@@ -1,4 +1,5 @@
 <?php
+// เชื่อมต่อกับฐานข้อมูล
 require_once "../../config/db.php";
 include '../include/navbar_main.php';
 
@@ -63,25 +64,23 @@ $result = $conn->query($sql);
 </head>
 
 <body>
-    <?php
-    if (isset($_SESSION['success5'])) {
-        echo '<script src="../js/success_delete_cart.js"></script>';
-        unset($_SESSION['success5']);
-    }
-    ?>
+    
     <div class="container mt-5">
         <h2 class="mb-4 text-center">Shopping Cart</h2>
         <form id="orderForm" method="post" action="order.php" enctype="multipart/form-data">
             <div class="container d-flex justify-content-center">
                 <div class="row w-75">
                     <?php
+                    // ตรวจสอบผลลัพธ์การคิวรี่
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             $product_id = $row['product_id'];
-
+                            // ตรวจสอบว่าสินค้ามีอยู่ในอาร์เรย์ $selected_products หรือไม่
                             if (array_key_exists($product_id, $selected_products)) {
+                                // ถ้ามี ให้เพิ่มจำนวนสินค้า
                                 $selected_products[$product_id]['cart_quantity'] += $row['cart_quantity'];
                             } else {
+                                // ถ้าไม่มี ให้เพิ่มสินค้าเข้าไปในอาร์เรย์
                                 $selected_products[$product_id] = array(
                                     'product_id' => $product_id,
                                     'cart_item_id' => $row['cart_item_id'],
@@ -95,8 +94,18 @@ $result = $conn->query($sql);
                         }
                     }
 
+                    $subtotal_by_product = array();
+
+                    // วน loop เพื่อแสดงข้อมูลสินค้าในตะกร้า
                     foreach ($selected_products as $product) {
-                        ?>
+                        // คำนวณราคารวมของแต่ละสินค้า
+                        $subtotal = $product['price'] * $product['cart_quantity'];
+                        // เพิ่มราคารวมลงใน array โดยใช้ id สินค้าเป็น index
+                        if (!isset($subtotal_by_product[$product['product_id']])) {
+                            $subtotal_by_product[$product['product_id']] = 0;
+                        }
+                        $subtotal_by_product[$product['product_id']] += $subtotal;
+                    ?>
                         <div class="col-md-12">
                             <div class="product-card d-flex align-items-center">
                                 <img src="data:image/png;base64,<?php echo base64_encode($product['image']); ?>"
@@ -106,7 +115,8 @@ $result = $conn->query($sql);
                                         <input type="checkbox" class="form-check-input form-check-input-custom"
                                             name="selected_products[]" id="product_<?php echo $product['product_id']; ?>"
                                             value="<?php echo $product['product_id']; ?>" checked>
-                                        <label class="form-check-label" for="product_<?php echo $product['product_id']; ?>">
+                                        <label class="form-check-label"
+                                            for="product_<?php echo $product['product_id']; ?>">
                                             <?php echo $product['product_name']; ?>
                                         </label>
                                     </div>
@@ -121,21 +131,23 @@ $result = $conn->query($sql);
                                         <input type="text" class="form-control" name="category_id"
                                             value="<?php echo $product['price'] ?>" readonly>
                                     </div>
-                                    <div class="mt-2">
-                                        <a href='cart_delete_process.php?delete_id=<?php echo $product["cart_item_id"]; ?>'
-                                            class='btn btn-danger btn-sm'
-                                            onclick='return confirm("คุณจะลบสินค้านี้จริงหรือ?")'>ลบ</a>
+                                    <div class="input-group mt-2 w-25">
+                                        <span class="input-group-text">ราคารวม</span>
+                                        <input type="text" class="form-control"
+                                            value="<?php echo $subtotal_by_product[$product['product_id']]; ?>"
+                                            readonly>
                                     </div>
-
-
+                                    <div class="mt-2">
+    <a href='cart_delete_process.php?delete_id=<?php echo $product["cart_item_id"]; ?>'
+        class='btn btn-danger btn-sm'
+        onclick='confirmDelete(event)'>ลบ</a>
+</div>
                                 </div>
                             </div>
                         </div>
-                        <?php
+                    <?php
                     }
                     ?>
-
-
                     <div class="mt-4 d-flex justify-content-end">
                         <button type="button" id="orderButton" class="btn btn-primary">สั่งสินค้า</button>
                     </div>
@@ -170,6 +182,25 @@ $result = $conn->query($sql);
             }
         });
     </script>
+    <script>
+    function confirmDelete(event) {
+        event.preventDefault(); // หยุดการทำงานของลิงก์เพื่อให้โค้ดด้านล่างทำงาน
+
+        Swal.fire({
+            title: 'คุณต้องการลบสินค้านี้ใช่หรือไม่?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'ใช่, ลบทิ้ง',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // ถ้าผู้ใช้คลิก "ใช่, ลบทิ้ง" ให้เรียกใช้ลิงก์
+                window.location.href = event.target.href;
+            }
+        });
+    }
+</script>
+
 
 </body>
 

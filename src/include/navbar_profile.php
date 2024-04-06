@@ -30,7 +30,7 @@ if (!isset ($_SESSION)) {
                 // Check if the user is logged in
                 if (isset ($_SESSION['login_user'])) {
                     // If logged in, show logout button
-                    echo '<a class="btn btn-sm fw-bold" href="order.php" role="button" style="background-color: #EF959D; border-color: #EF959D; width: 100px; border-radius: 50px;">Order</a>';
+                    echo '<a class="btn btn-sm fw-bold" href="user_order.php" role="button" style="background-color: #EF959D; border-color: #EF959D; width: 100px; border-radius: 50px;">Order</a>';
                     echo '<a class="btn btn-sm fw-bold" href="user_profile.php" role="button" style="background-color: #EF959D; border-color: #EF959D; width: 100px; border-radius: 50px;">profile</a>';
                     echo '<a class="btn btn-sm fw-bold" href="logout.php" role="button" style="background-color: #EF959D; border-color: #EF959D; width: 100px; border-radius: 50px;">Logout</a>';
                 } else {}    

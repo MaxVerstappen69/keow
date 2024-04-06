@@ -34,12 +34,12 @@ $result = $conn->query($sql);
         <li class="nav-item"><a href="../php/admin_employee.php" class="nav-link" style="color: black;">พนักงาน</a></li>
         <li class="nav-item"><a href="../php/admin_order.php" class="nav-link" style="color: black;">รายการสั่งซื้อ</a></li>
         <li class="nav-item"><a href="../php/admin_product.php" class="nav-link" style="color: black;">รายการสินค้า</a></li>
-        <li class="nav-item"><a href="#" class="nav-link" style="color: black;">ธุรกรรม</a></li>
+        <li class="nav-item"><a href="../php/admin_employee_payment.php" class="nav-link" style="color: black;">ธุรกรรม</a></li>
       </ul>
     </div>
 
             <div style='display: flex; align-items: center'>
-                <a href="#" class="btn border-0" style="color: #000000;">
+                <a href="cart_page.php" class="btn border-0" style="color: #000000;">
                     <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
                 </a>
                 <?php
@@ -65,7 +65,7 @@ $result = $conn->query($sql);
 
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="user_profile.php">โปรไฟล์</a></li>
-                                    <li><a class="dropdown-item" href="order.php">การสั่งซื้อ</a></li>
+                                    <li><a class="dropdown-item" href="user_order.php">การสั่งซื้อ</a></li>
                                     <?php
                                     if ($_SESSION['user_role'] === 'admin') {
                                         echo '<li><a class="dropdown-item" href="admin_employee.php">ผู้ดูแล</a></li>';

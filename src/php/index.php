@@ -128,7 +128,6 @@ $result = $conn->query($sql);
                                 <a href="productDetail.php?id=<?php echo $row['product_id']; ?>" class="btn fw-bold"
                                     style='background-color: #EF959D'>View Details</a>
 
-                                <a href="#" class="btn fw-bold" style='background-color: #EF959D'>Add to Cart</a>
                             </div>
                         </div>
                     </div>

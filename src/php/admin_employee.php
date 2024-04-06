@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,68 +15,69 @@
         }
     </style>
 </head>
-<body>
-    
-    
-<?php include '../include/navbar_admin.php'; ?>
 
-          <?php
-          if (isset ($_SESSION['error'])) {
-            echo '<script src="../js/erorr_admin_edit.js"></script>';
-            unset($_SESSION['error']);
-          }
-          ?>
-          <?php
-          if (isset ($_SESSION['success'])) {
-            echo '<script src="../js/sucess_admin_edit.js"></script>';
-            unset($_SESSION['success']);
-          }
-          ?>
-          <?php
-          if (isset ($_SESSION['currentPassword'])) {
-            echo '<script src="../js/currentpass_admin_edit.js"></script>';
-            unset($_SESSION['currentPassword']);
-          }
-          ?>
-          <?php
-          if (isset ($_SESSION['success1'])) {
-      echo '<script src="../js/suscess_add_employee.js"></script>';
-      unset($_SESSION['success1']);
+<body>
+
+
+    <?php include '../include/navbar_admin.php'; ?>
+
+    <?php
+    if (isset($_SESSION['error'])) {
+        echo '<script src="../js/erorr_admin_edit.js"></script>';
+        unset($_SESSION['error']);
     }
     ?>
     <?php
-          if (isset ($_SESSION['success2'])) {
-      echo '<script src="../js/success_delete_employee.js"></script>';
-      unset($_SESSION['success2']);
+    if (isset($_SESSION['success'])) {
+        echo '<script src="../js/sucess_admin_edit.js"></script>';
+        unset($_SESSION['success']);
     }
     ?>
-          
+    <?php
+    if (isset($_SESSION['currentPassword'])) {
+        echo '<script src="../js/currentpass_admin_edit.js"></script>';
+        unset($_SESSION['currentPassword']);
+    }
+    ?>
+    <?php
+    if (isset($_SESSION['success1'])) {
+        echo '<script src="../js/suscess_add_employee.js"></script>';
+        unset($_SESSION['success1']);
+    }
+    ?>
+    <?php
+    if (isset($_SESSION['success2'])) {
+        echo '<script src="../js/success_delete_employee.js"></script>';
+        unset($_SESSION['success2']);
+    }
+    ?>
 
-          
-          
-<div class="container mt-5">
-    <h2 class="mb-4 text-center">รายชื่อพนักงาน</h2>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a href="add_employee.php">
-    <button type="button" class="btn btn-primary shadow-sm">เพิ่มข้อมูล</button>
-</a>
-    </div>
-    <div class="table-responsive">
-        <hr>
-        <?php
-        require_once "../../config/db.php";
-        
 
-        // Check if the user is logged in
-        $id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
 
-        // Fetching employee data from the database
-        $sql = "SELECT * FROM employee";
-        $result = $conn->query($sql);
 
-        // Check if there are any employees
-        if ($result->num_rows > 0) {
-            echo "<table class='table table-striped'>
+    <div class="container mt-5">
+        <h2 class="mb-4 text-center">รายชื่อพนักงาน</h2>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="add_employee.php">
+                <button type="button" class="btn btn-primary shadow-sm">เพิ่มข้อมูล</button>
+            </a>
+        </div>
+        <div class="table-responsive">
+            <hr>
+            <?php
+            require_once "../../config/db.php";
+
+
+            // Check if the user is logged in
+            $id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
+
+            // Fetching employee data from the database
+            $sql = "SELECT * FROM employee";
+            $result = $conn->query($sql);
+
+            // Check if there are any employees
+            if ($result->num_rows > 0) {
+                echo "<table class='table table-striped'>
                     <thead>
                         <tr>
                             <th>รหัสพนักงาน</th>
@@ -88,10 +90,10 @@
                         </tr>
                     </thead>
                     <tbody>";
-            
-            // Output data of each row
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr>
+
+                // Output data of each row
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>
                         <td>" . $row["employee_id"] . "</td>
                         <td>" . $row["user_role"] . "</td>
                         <td>" . $row["em_firstname"] . "</td>
@@ -105,17 +107,18 @@
 </td>
 
                       </tr>";
+                }
+                echo "</tbody></table>";
+            } else {
+                echo "<p class='text-muted'>No employees found.</p>";
             }
-            echo "</tbody></table>";
-        } else {
-            echo "<p class='text-muted'>No employees found.</p>";
-        }
-        $conn->close();
-        ?>
+            $conn->close();
+            ?>
+        </div>
     </div>
-</div>
 
-<!-- Bootstrap JS (optional if you need it) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS (optional if you need it) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

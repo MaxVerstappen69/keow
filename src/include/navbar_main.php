@@ -56,7 +56,7 @@ $result = $conn->query($sql);
 
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="user_profile.php">โปรไฟล์</a></li>
-                                    <li><a class="dropdown-item" href="order.php">การสั่งซื้อ</a></li>
+                                    <li><a class="dropdown-item" href="user_order.php">การสั่งซื้อ</a></li>
                                     <?php
                                     if ($_SESSION['user_role'] === 'admin') {
                                         echo '<li><a class="dropdown-item" href="admin_employee.php">ผู้ดูแล</a></li>';

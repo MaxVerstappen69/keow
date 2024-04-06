@@ -92,36 +92,33 @@ if (isset($_POST['selected_products'])) {
           $totalPrice += $subtotal;
           // echo $quantity;
           ?>
-          <div class="product-card d-flex align-items-center ">
-            <input type='hidden' name="selected_products[]" value="<?php echo $product_id; ?>">
-            <!-- Add hidden input field for cart_item_id -->
-            <img src="data:image/png;base64,<?php echo base64_encode($row['image']); ?>" class="product-image me-3">
-            <h3>
-              <?php echo $product_name ?>
-            </h3>
-            <p>ราคา:
-              <?php echo $price ?> บาท
-            </p>
-            <p>จำนวน:
-              <?php echo $quantity ?>
-            </p>
-          </div>
+          <div class="container d-flex justify-content-center">
+          <div class="product-card d-flex align-items-center w-75">
+    <input type='hidden' name="selected_products[]" value="<?php echo $product_id; ?>">
+    <!-- Add hidden input field for cart_item_id -->
+    <img src="data:image/png;base64,<?php echo base64_encode($row['image']); ?>" class="product-image me-3">
+    <div>
+        <h3><?php echo $product_name ?></h3>
+        <p>ราคา:<?php echo $price ?> บาท</p>
+        <p>จำนวน:<?php echo $quantity ?></p>
+    </div>
+</div>
+</div>
           <?php
         }
       } else {
         echo "No selected products found.";
       }
       ?>
-      <div class="mt-4">
-        <input type="hidden" name="totalPrice" value="<?php echo $totalPrice; ?>">
-        Total Price:
-        <?php echo number_format($totalPrice, 2); ?> บาท
+      <div class="container d-flex justify-content-center">
+      <div class="product-card text-center w-25">
+        <h5><input type="hidden" name="totalPrice" value="<?php echo $totalPrice; ?>">
+        ราคารวมทั้งหมด:
+        <?php echo number_format($totalPrice, 2); ?> บาท</h5>
+        <button type="submit" class="btn btn-primary mt-2">สั่งสินค้า</button>
       </div>
-      <div class="my-4">
-
-        <!-- Display total price -->
-        <button type="submit" class="btn btn-primary">สั่งสินค้า</button>
-        <!-- Submit button to add all selected products to cart -->
+        
+      </div>
       </div>
     </form>
 
