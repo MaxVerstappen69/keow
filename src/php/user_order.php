@@ -17,6 +17,27 @@ $result = $conn->query($sql);
 
 ?>
 
+<?php
+// Function to convert status code to text
+function getStatusText($statusCode) {
+    switch ($statusCode) {
+        case 1:
+            return 'รอชำระเงิน';
+        case 2:
+            return 'ชำระเงินเสร็จสิ้น รอการยืนยัน';
+        case 3:
+            return 'กำลังจัดส่ง';
+        case 4:
+            return 'จัดส่งสำเร็จ';
+        case 5:
+            return 'ยกเลิกคำสั่งซื้อ';
+        default:
+            return 'สถานะไม่ระบุ';
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -103,7 +124,7 @@ $result = $conn->query($sql);
                                         <?php echo $row['total_amount'] ?>
                                     </td>
                                     <td>
-                                        <?php echo $row['status_delivery'] ?>
+                                        <?php echo getStatusText($row['status_delivery']) ?>
                                     </td>
                                     <td>
                                         <?php echo $row['created_date'] ?>
