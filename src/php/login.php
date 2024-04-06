@@ -52,7 +52,7 @@ if (isset ($_SESSION['login_user'])) {
             </div>
             <div class="container text-center pt-5">
                 <div class="form-floating w-50 d-inline-block">
-                    <input type="email" name="email" class="form-control rounded-pill" id="floatingInput"
+                    <input type="text" name="email" class="form-control rounded-pill" id="floatingInput"
                         placeholder="name@example.com">
                     <label for="floatingInput">อีเมล์ผู้ใช้</label>
                 </div>
