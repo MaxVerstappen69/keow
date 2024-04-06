@@ -83,7 +83,7 @@ $result = $conn->query($sql);
                 <i class="bi bi-memory" style="font-size: 50px;"></i>
                 <p>Memory</p>
             </a>
-            <a href="memory.php" class="icon text-decoration-none text-dark" style="margin-right: 80px; margin-top:auto;">
+            <a href="powersupply.php" class="icon text-decoration-none text-dark" style="margin-right: 80px; margin-top:auto;">
                 <img src="../../public/image/powersupply.png" alt="" style="width: 50px; height: 50px;">
                 <p>Power Supply</p>
             </a>
@@ -95,7 +95,7 @@ $result = $conn->query($sql);
                 <i class="bi bi-fan" style="font-size: 50px;"></i>
                 <p>Fan</p>
             </a>
-            <a href="keyboard.php" class="icon text-decoration-none text-dark">
+            <a href="Accessories.php" class="icon text-decoration-none text-dark">
                 <i class="bi bi-keyboard" style="font-size: 50px;"></i>
                 <p>Accessories</p>
             </a>
@@ -108,7 +108,7 @@ $result = $conn->query($sql);
         </div>
     </div>
 
-    <div class="container">
+    <div class="container w3-animate-bottom">
         <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
             <?php
             if (mysqli_num_rows($result) > 0) {
@@ -125,7 +125,7 @@ $result = $conn->query($sql);
                                 <p class="card-text fw-bold text-danger">฿
                                     <?php echo $row['price']; ?>
                                 </p>
-                                <a href="productDetail.php?id=<?php echo $row['product_id']; ?>" class="btn fw-bold"
+                                <a href="productDetail.php?id=<?php echo $row['product_id']; ?>" class="btn fw-bold" target="_blank"
                                     style='background-color: #EF959D'>View Details</a>
 
                             </div>

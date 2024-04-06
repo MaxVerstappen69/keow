@@ -7,19 +7,6 @@ include '../include/navbar_main.php';
 $selected_products = array();
 $id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
 
-$sql_update = "UPDATE cart_item
-               INNER JOIN product ON cart_item.product_id = product.product_id
-               INNER JOIN customer ON cart_item.customer_id = customer.customer_id
-               SET cart_item.quantity = LEAST(product.quantity, cart_item.quantity)
-               WHERE customer.email = '$id';";
-
-$result_update = $conn->query($sql_update);
-
-if ($result_update === TRUE) {
-    // echo "จำนวนสินค้าในตะกร้าถูกปรับแล้ว";
-} else {
-    echo "เกิดข้อผิดพลาดในการปรับปรุงจำนวนสินค้าในตะกร้า: " . $conn->error;
-}
 // คำสั่ง SQL ที่เข้าถึงข้อมูลสินค้าในตะกร้าและจับคู่กับข้อมูลของผู้ใช้ที่ล็อกอินอยู่
 $sql = "SELECT cart_item.cart_item_id, product.product_id, product.product_name, product.price, product.image, product.quantity, cart_item.quantity as cart_quantity
 FROM cart_item
@@ -124,18 +111,13 @@ $result = $conn->query($sql);
                                         <span class="input-group-text">จำนวน</span>
                                         <input type="number" class="form-control"
                                             name="cart_quantity[<?php echo $product['product_id']; ?>]"
-                                            value="<?php echo $product['cart_quantity'] ?>" readonly>
+                                            value="<?php echo $product['cart_quantity']; ?>" min="1"
+                                            max="<?php echo $product['quantity']; ?>">                                          
                                     </div>
                                     <div class="input-group mt-2 w-25">
                                         <span class="input-group-text">ราคา</span>
                                         <input type="text" class="form-control" name="category_id"
                                             value="<?php echo $product['price'] ?>" readonly>
-                                    </div>
-                                    <div class="input-group mt-2 w-25">
-                                        <span class="input-group-text">ราคารวม</span>
-                                        <input type="text" class="form-control"
-                                            value="<?php echo $subtotal_by_product[$product['product_id']]; ?>"
-                                            readonly>
                                     </div>
                                     <div class="mt-2">
     <a href='cart_delete_process.php?delete_id=<?php echo $product["cart_item_id"]; ?>'

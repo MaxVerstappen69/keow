@@ -41,9 +41,14 @@ if (isset($_POST['add_to_cart'])) {
             // Product already exists in the cart, update quantity
             $existing_item_row = $existing_item_result->fetch_assoc();
             $existing_quantity = $existing_item_row['quantity'];
-
-            // Calculate new quantity by adding the existing quantity with the quantity from the form
+            $existing_stock_quantity = $product['quantity']; // Quantity in stock
             $new_quantity = $existing_quantity + $quantity;
+
+            // Check if the new quantity exceeds the stock quantity
+            if ($new_quantity > $existing_stock_quantity) {
+                // If exceeds, set the quantity to the maximum available stock quantity
+                $new_quantity = $existing_stock_quantity;
+            }
 
             // Update the existing cart item with the new quantity
             $update_sql = "UPDATE cart_item SET quantity = '$new_quantity', update_date = NOW() WHERE product_id = '$product_id' AND customer_id = '$customer_id'";
@@ -64,7 +69,6 @@ if (isset($_POST['add_to_cart'])) {
     } else {
         echo "Customer not found.";
     }
-
 }
 ?>
 
