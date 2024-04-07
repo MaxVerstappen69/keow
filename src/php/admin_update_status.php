@@ -4,20 +4,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Include database connection
     require_once "../../config/db.php";
 
-    // Get status and order_no from POST data
+    // Get status, order_no, and customer_id from POST data
     $status = $_POST['status'];
     $order_no = $_POST['order_no'];
+    $customer_id = $_POST['customer_id'];
 
-    // Update status in the database for all orders with the same order_no
-    $sql = "UPDATE orders SET status_delivery = '$status' WHERE cart_id IN (
-                SELECT cart_id FROM orders WHERE order_no = '$order_no'
-            )";
+    // Update status in the database
+    $sql = "UPDATE orders SET status_delivery = '$status' WHERE order_no = '$order_no' AND customer_id = '$customer_id'";
     if ($conn->query($sql) === TRUE) {
-        // If successful, you may echo a success message or perform other actions
-        echo "Status updated successfully";
+        // If successful, return the updated status
+        $response = array('success' => true, 'newStatus' => $status);
+        echo json_encode($response);
     } else {
-        // If failed, you may echo an error message or perform other actions
-        echo "Error updating status: " . $conn->error;
+        // If failed, return an error message
+        $response = array('success' => false, 'error' => 'Error updating status: ' . $conn->error);
+        echo json_encode($response);
     }
 
     // Close database connection

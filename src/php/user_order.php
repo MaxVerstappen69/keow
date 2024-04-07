@@ -3,39 +3,43 @@ require_once "../../config/db.php";
 include '../include/navbar_main.php';
 // Check if user is logged in
 $id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
-// Fetch products associated with the logged-in user
-$sql = "SELECT customer.email, orders.order_id, cart.cart_no, product.image, product.product_name, cart.quantity, orders.total_amount, orders.status_delivery, orders.created_date 
+// Fetch orders associated with the logged-in user
+$sql = "SELECT customer.email, orders.order_id, cart.cart_no, product.image, product.product_name, cart.quantity, orders.total_amount, orders.status_delivery, orders.created_date , orders.transaction
         FROM orders
         INNER JOIN cart ON orders.cart_id = cart.cart_id
         INNER JOIN customer ON cart.customer_id = customer.customer_id
         JOIN product ON cart.product_id = product.product_id
-        WHERE customer.email = '$id'
+        WHERE customer.email = ?
         ORDER BY orders.order_id";
 
-
-$result = $conn->query($sql);
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $id);
+$stmt->execute();
+$result = $stmt->get_result();
 
 ?>
 
 <?php
 // Function to convert status code to text
-function getStatusText($statusCode) {
+function getStatusText($statusCode)
+{
     switch ($statusCode) {
         case 1:
-            return 'รอชำระเงิน';
-        case 2:
             return 'ชำระเงินเสร็จสิ้น รอการยืนยัน';
+        case 2:
+            return 'ยืนยันสำเร็จ กำลังจัดส่ง';
         case 3:
-            return 'กำลังจัดส่ง';
-        case 4:
             return 'จัดส่งสำเร็จ';
+        case 4:
+            return 'ขอยกเลิกรายการ';
         case 5:
-            return 'ยกเลิกคำสั่งซื้อ';
+            return 'ยกเลิกรายการสำเร็จ';
+        case 6:
+            return 'ยกเลิกรายการล้มเหลว';
         default:
             return 'สถานะไม่ระบุ';
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -103,7 +107,7 @@ function getStatusText($statusCode) {
                         if ($row['cart_no'] !== $previous_cart_no) {
                             // ถ้า cart_no เปลี่ยน แสดงข้อมูลและปุ่มแก้ไขเฉพาะครั้งเดียว
                             ?>
-                            <form id="uploadForm" action="upload_image_slip.php" method="post" enctype="multipart/form-data">
+                            <form action="user_cancel_order.php" method="post">
                                 <tr style="background-color: #EF959D;">
                                     <td colspan="9" class="text-center"><strong>รายการที่ :
                                             <?php echo $row['cart_no']; ?>
@@ -129,57 +133,37 @@ function getStatusText($statusCode) {
                                     <td>
                                         <?php echo $row['created_date'] ?>
                                     </td>
-                                    <td>
-
-                                        <div class="input-group">
-                                            <input type="file" class="form-control" name="fileToUpload" id="fileToUpload"
-                                                aria-describedby="uploadButton">
-                                        </div>
-
-                                        <script>
-                                            // Listen for changes in the file input field
-                                            document.getElementById("fileToUpload").addEventListener("change", function () {
-                                                // Trigger form submission when a file is selected
-                                                document.getElementById("uploadForm").submit();
-                                            });
-                                        </script>
-
-
-                                    </td>
-                                    <td>
-                                        <button class=" btn btn-primary btn-sm"
-                                            onclick="loadScript('../js/selectBank.js')">เลือกธนาคาร</button>
-
-                                        <a href='admin_product_delete_process.php?delete_id=" . $row["order_id"] . "'
-                                            class='btn btn-danger btn-sm'
-                                            onclick='return confirm(\"คุณจะลบสินค้านี้จริงหรือ?\")'>ยกเลิก</a>
-                                    </td>
-                                </tr>
-                                <?php
-                                // กำหนดค่าเลข cart_no เป็นค่าปัจจุบัน
-                                $previous_cart_no = $row['cart_no'];
-                                // รวมจำนวนสินค้าใน cart_no นั้น
-                                $total_quantity += $row['quantity'];
-                        } else {
-                            // ถ้า cart_no เป็นค่าเดิม ให้แสดงเฉพาะรายการที่เป็นสินค้าเท่านั้น
-                            ?>
-                                <tr>
-                                    <td><img src="data:image/png;base64,<?php echo base64_encode($row['image']); ?>"
+                                    <td><img src="data:image/png;base64,<?php echo base64_encode($row['transaction']); ?>"
                                             alt="Thumbnail">
                                     </td>
                                     <td>
-                                        <?php echo $row['product_name'] ?>
+                                        <?php if ($row['status_delivery'] == 1) { ?>
+                                            <input type="hidden" name="order_id" value="<?php echo $row['order_id']; ?>">
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                onclick="return confirm('คุณต้องการยกเลิกรายการสั่งซื้อนี้ใช่หรือไม่?')">ยกเลิกรายการสั่งซื้อ</button>
+                                        <?php } ?>
                                     </td>
-                                    <td>
-                                        <?php echo $row['quantity'] ?>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
                                 </tr>
                             </form>
-
+                            <?php
+                            // กำหนดค่าเลข cart_no เป็นค่าปัจจุบัน
+                            $previous_cart_no = $row['cart_no'];
+                            // รวมจำนวนสินค้าใน cart_no นั้น
+                            $total_quantity += $row['quantity'];
+                        } else {
+                            // ถ้า cart_no เป็นค่าเดิม ให้แสดงเฉพาะรายการที่เป็นสินค้าเท่านั้น
+                            ?>
+                            <tr>
+                                <td><img src="data:image/png;base64,<?php echo base64_encode($row['image']); ?>"
+                                        alt="Thumbnail">
+                                </td>
+                                <td>
+                                    <?php echo $row['product_name'] ?>
+                                </td>
+                                <td>
+                                    <?php echo $row['quantity'] ?>
+                                </td>
+                            </tr>
                             <?php
                             // รวมจำนวนสินค้าใน cart_no นั้น
                             $total_quantity += $row['quantity'];
@@ -189,23 +173,10 @@ function getStatusText($statusCode) {
                     echo "<tr><td colspan='8'>No products found</td></tr>";
                 }
                 ?>
-
-
-
             </tbody>
         </table>
     </div>
     <!-- Bootstrap JS (Optional) -->
-    <script>
-        function loadScript(scriptPath) {
-            var script = document.createElement('script');
-            script.src = scriptPath;
-            document.body.appendChild(script);
-        }
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

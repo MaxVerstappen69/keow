@@ -4,14 +4,15 @@ include '../include/navbar_admin.php';
 // Check if user is logged in
 $id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
 // Fetch products associated with the logged-in user
-$sql = "SELECT customer.email, orders.order_id, cart.cart_no, product.image, product.product_name, cart.quantity, orders.total_amount, orders.status_delivery, orders.created_date, orders.transaction 
+$sql = "SELECT customer.email,customer.firstname,customer.lastname,customer.address,customer.phone,customer.customer_id, orders.order_id, cart.cart_no, product.image, product.product_name, cart.quantity, orders.total_amount, orders.status_delivery, orders.created_date, orders.transaction,
+        CONCAT(firstname, ' ', lastname) AS fullname
         FROM orders
         INNER JOIN cart ON orders.cart_id = cart.cart_id
         INNER JOIN customer ON cart.customer_id = customer.customer_id
         JOIN product ON cart.product_id = product.product_id
+        
         WHERE 1
         ORDER BY orders.order_id";
-
 
 $result = $conn->query($sql);
 
@@ -57,21 +58,25 @@ $result = $conn->query($sql);
         unset($_SESSION['success4']);
     }
     ?>
-    <div class="container mt-5">
+    <div class=" mt-5">
         <h2 class="mb-4 text-center">รายการสั่งซื้อ</h2>
 
         <table class="table table">
             <hr>
             <thead>
                 <tr>
+                    
                     <th>รูปสินค้า</th>
-                    <th style="width: 150px;">ชื่อสินค้า</th>
-                    <th>จำนวนสินค้า</th>
+                    <th>ชื่อสินค้า</th>
+                    <th style="width: 110px;">จำนวนสินค้า</th>
+                    <th style="width: 110px;">รหัสลูกค้า</th>
+                    <th>ชื่อลูกค้า</th>
+                    <th style="width: 110px;">เบอร์โทร</th>
+                    <th style="width: 110px;">ที่อยู่</th>
                     <th>ราคารวม</th>
-                    <th>สถานะ</th>
-                    <th style="width: 150px;">เวลาสั่งซื้อ</th>
-                    <th style="width: 150px;">สลิปการจ่ายเงิน</th>
-                    <th style="width: 150px;">เมนู</th>
+                    <th style="width: 250px;">สถานะ</th>
+                    <th style="width: 100px;">เวลาสั่งซื้อ</th>
+                    <th style="width: 100px;">สลิปการจ่ายเงิน</th>
                 </tr>
             </thead>
             <tbody>
@@ -86,22 +91,35 @@ $result = $conn->query($sql);
                             ?>
                             <form id="uploadForm" action="upload_image_slip.php" method="post" enctype="multipart/form-data">
                                 <tr style="background-color: #EF959D;">
-                                    <td colspan="9" class="text-center"><strong>รายการที่ :
+                                    <td colspan="11" class="text-center"><strong>รายการที่ :
                                             <?php echo $row['cart_no']; ?>
                                         </strong></td>
                                 </tr>
                                 <tr>
+                               
+                                    
 
                                     <td><img src="data:image/png;base64,<?php echo base64_encode($row['image']); ?>"
                                             alt="Thumbnail">
+                                           
                                     </td>
-                                    <td>
-                                        <?php echo $row['product_name'] ?>
-                                    </td>
+
+                                    <td> <?php echo $row['product_name'] ?></td>
                                     <td>
                                         <?php echo $row['quantity'] ?>
                                     </td>
-
+                                    <td>
+                                        <?php echo $row['customer_id'] ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row['fullname'] ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row['phone'] ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row['address'] ?>
+                                    </td>
                                     <td>
                                         <?php echo $row['total_amount'] ?>
                                     </td>
@@ -110,6 +128,9 @@ $result = $conn->query($sql);
                                 <option value="1" <?php if($row['status_delivery'] == 1) echo 'selected'; ?>>ชำระเงินเสร็จสิ้น รอการยืนยัน</option>
                                 <option value="2" <?php if($row['status_delivery'] == 2) echo 'selected'; ?>>ยืนยันสำเร็จ กำลังจัดส่ง</option>
                                 <option value="3" <?php if($row['status_delivery'] == 3) echo 'selected'; ?>>จัดส่งสำเร็จ</option>
+                                <option value="4" <?php if($row['status_delivery'] == 4) echo 'selected'; ?>>ขอยกเลิกรายการ</option>
+                                <option value="5" <?php if($row['status_delivery'] == 5) echo 'selected'; ?>>ยกเลิกรายการสำเร็จ</option>
+                                <option value="6" <?php if($row['status_delivery'] == 5) echo 'selected'; ?>>ยกเลิกรายการล้มเหลว</option>
                             </select>
                         </td>
                                     <td>
@@ -117,11 +138,6 @@ $result = $conn->query($sql);
                                     </td>
                                     <td><img src="data:image/png;base64,<?php echo base64_encode($row['transaction']); ?>"
                                             alt="Thumbnail">
-                                    </td>
-                                    <td>
-                                        <a href='admin_product_delete_process.php?delete_id=" . $row["order_id"] . "'
-                                            class='btn btn-danger btn-sm'
-                                            onclick='return confirm(\"คุณจะลบสินค้านี้จริงหรือ?\")'>ยกเลิก</a>
                                     </td>
                                 </tr>
                                 <?php
@@ -176,21 +192,28 @@ $result = $conn->query($sql);
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Function to update status
-        function updateStatus(status, order_id) {
-            // AJAX request
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    // If successful, reload the page or update UI as needed
-                    window.location.reload(); // Reload the page for example
+    function updateStatus(status, order_id) {
+        // AJAX request
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                // If successful, update the status in the UI
+                var response = JSON.parse(this.responseText);
+                if (response.success) {
+                    // Update the status directly in the table cell
+                    var statusCell = document.getElementById("status_" + order_id);
+                    statusCell.innerText = response.newStatus;
+                } else {
+                    // Handle error scenario
+                    console.error("Error updating status:", response.error);
                 }
-            };
-            xhttp.open("POST", "admin_update_status.php", true);
-            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhttp.send("status=" + status + "&order_id=" + order_id);
-        }
-    </script>
+            }
+        };
+        xhttp.open("POST", "admin_update_status.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("status=" + status + "&order_id=" + order_id);
+    }
+</script>
 
 
 </body>
