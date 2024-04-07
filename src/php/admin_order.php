@@ -1,6 +1,10 @@
 <?php
 require_once "../../config/db.php";
 include '../include/navbar_admin.php';
+if ($_SESSION['user_role'] !== 'admin') {
+    header("Location: index.php"); // หากไม่ใช่ admin ให้เปลี่ยนเส้นทางไปยังหน้าแสดงข้อความการเข้าถึงไม่ได้
+    exit;
+}
 // Check if user is logged in
 $id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
 // Fetch products associated with the logged-in user
@@ -26,7 +30,7 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>admin order</title>
+    <title>Admin Order</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
