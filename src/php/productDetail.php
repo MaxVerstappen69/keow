@@ -87,7 +87,6 @@ if (isset($_POST['add_to_cart'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <!-- <script src="../js/buttonQuantity.js"></script> -->
 </head>
 
 <body>
@@ -120,19 +119,22 @@ if (isset($_POST['add_to_cart'])) {
                             <?php echo $product['detail']; ?>
                         </p>
 
-                        <div class="input-group">
-                            <p class='pe-4 opacity-50'>จำนวน</p>
-                            <input type="number" class="rounded text-center " name="quantity" id="quantity" value="1" min="1"
-                                max="<?php echo $product['quantity']; ?>">
-                            <p class='ps-4 opacity-50'>มีสินค้าทั้งหมด
-                                <span id="quantity">
-                                    <?php echo $product['quantity']; ?> ชิ้น
-                                </span>
-                            </p>
-                        </div>
-
-                        <button class="btn fw-bold mt-2 shadow-sm" type="submit" name="add_to_cart"
-                            style='background-color: #EF959D'>Add to Cart</button>
+                        <?php if ($product['quantity'] > 0): ?>
+                            <div class="input-group">
+                                <p class='pe-4 opacity-50'>จำนวน</p>
+                                <input type="number" class="rounded text-center " name="quantity" id="quantity" value="1"
+                                    min="1" max="<?php echo $product['quantity']; ?>">
+                                <p class='ps-4 opacity-50'>มีสินค้าทั้งหมด
+                                    <span id="quantity">
+                                        <?php echo $product['quantity']; ?> ชิ้น
+                                    </span>
+                                </p>
+                            </div>
+                            <button class="btn fw-bold mt-2 shadow-sm" type="submit" name="add_to_cart"
+                                style='background-color: #EF959D'>Add to Cart</button>
+                        <?php else: ?>
+                            <p class="text-danger">สินค้าหมด</p>
+                        <?php endif; ?>
 
                     </form>
                 </div>

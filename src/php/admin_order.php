@@ -130,7 +130,7 @@ $result = $conn->query($sql);
                                 <option value="3" <?php if($row['status_delivery'] == 3) echo 'selected'; ?>>จัดส่งสำเร็จ</option>
                                 <option value="4" <?php if($row['status_delivery'] == 4) echo 'selected'; ?>>ขอยกเลิกรายการ</option>
                                 <option value="5" <?php if($row['status_delivery'] == 5) echo 'selected'; ?>>ยกเลิกรายการสำเร็จ</option>
-                                <option value="6" <?php if($row['status_delivery'] == 5) echo 'selected'; ?>>ยกเลิกรายการล้มเหลว</option>
+                                <option value="6" <?php if($row['status_delivery'] == 6) echo 'selected'; ?>>ยกเลิกรายการล้มเหลว</option>
                             </select>
                         </td>
                                     <td>
@@ -196,7 +196,7 @@ $result = $conn->query($sql);
         // AJAX request
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
+            if (this.readyState == 4 && this.status == 100) {
                 // If successful, update the status in the UI
                 var response = JSON.parse(this.responseText);
                 if (response.success) {

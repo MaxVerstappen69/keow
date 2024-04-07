@@ -1,6 +1,10 @@
 <?php
 require_once "../../config/db.php";
 include '../include/navbar_admin.php';
+if ($_SESSION['user_role'] !== 'admin') {
+  header("Location: index.php"); // หากไม่ใช่ admin ให้เปลี่ยนเส้นทางไปยังหน้าแสดงข้อความการเข้าถึงไม่ได้
+  exit;
+}
 
 if(isset($_GET['id'])) {
     $employee_id = $_GET['id'];

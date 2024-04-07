@@ -1,5 +1,9 @@
 <?php
 include '../include/navbar_main.php';
+if (!isset($_SESSION['login_user'])) {
+  header("Location: login.php"); // หากไม่ได้เข้าสู่ระบบ ให้เปลี่ยนเส้นทางไปยังหน้าล็อกอิน
+  exit;
+}
 $k = $_SESSION['login_user'];
 $sql = "SELECT * FROM customer where email='$k'";
 $result = $conn->query($sql);

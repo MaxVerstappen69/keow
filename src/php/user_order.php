@@ -1,6 +1,10 @@
 <?php
 require_once "../../config/db.php";
 include '../include/navbar_main.php';
+if (!isset($_SESSION['login_user'])) {
+    header("Location: login.php"); // หากไม่ได้เข้าสู่ระบบ ให้เปลี่ยนเส้นทางไปยังหน้าล็อกอิน
+    exit;
+}
 // Check if user is logged in
 $id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
 // Fetch orders associated with the logged-in user
@@ -137,11 +141,11 @@ function getStatusText($statusCode)
                                             alt="Thumbnail">
                                     </td>
                                     <td>
-                                        <?php if ($row['status_delivery'] == 1) { ?>
-                                            <input type="hidden" name="order_id" value="<?php echo $row['order_id']; ?>">
-                                            <button type="submit" class="btn btn-danger btn-sm"
-                                                onclick="return confirm('คุณต้องการยกเลิกรายการสั่งซื้อนี้ใช่หรือไม่?')">ยกเลิกรายการสั่งซื้อ</button>
-                                        <?php } ?>
+                                    <?php if ($row['status_delivery'] == 1) { ?>
+    <input type="hidden" name="status" value="4"> <!-- เพิ่ม input hidden เพื่อส่งค่า status_delivery เป็น 4 -->
+    <input type="hidden" name="order_id" value="<?php echo $row['order_id']; ?>">
+    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('คุณต้องการยกเลิกรายการสั่งซื้อนี้ใช่หรือไม่?')">ยกเลิกรายการสั่งซื้อ</button>
+<?php } ?>
                                     </td>
                                 </tr>
                             </form>
@@ -178,6 +182,30 @@ function getStatusText($statusCode)
     </div>
     <!-- Bootstrap JS (Optional) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    function updateStatus(status, order_id) {
+    // AJAX request
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) { // ตรวจสอบว่าสถานะของการเรียกข้อมูลเสร็จสมบูรณ์และสถานะ HTTP สำเร็จ
+            // If successful, update the status in the UI
+            var response = JSON.parse(this.responseText);
+            if (response.success) {
+                // Update the status directly in the table cell
+                var statusCell = document.getElementById("status_" + order_id);
+                statusCell.innerText = response.newStatus;
+            } else {
+                // Handle error scenario
+                console.error("Error updating status:", response.error);
+            }
+        }
+    };
+    xhttp.open("POST", "user_cancel_order.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("status=4&order_id=" + order_id); // ส่งค่า status เป็น 4
+}
+
+</script>
 </body>
 
 </html>

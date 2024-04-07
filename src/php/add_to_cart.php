@@ -2,9 +2,22 @@
 session_start();
 require_once "../../config/db.php";
 
-// Start with cart_no equal to 1 for each new set of selected_products
-$cart_no = isset($_SESSION['cart_no']) ? $_SESSION['cart_no'] : 1;
-$order_no = isset($_SESSION['order_no']) ? $_SESSION['order_no'] : 1;
+// Retrieve the highest order_no from the orders table
+$get_max_order_no_sql = "SELECT MAX(order_no) AS max_order_no FROM orders";
+$get_max_order_no_result = $conn->query($get_max_order_no_sql);
+$max_order_no_row = $get_max_order_no_result->fetch_assoc();
+$max_order_no = $max_order_no_row['max_order_no'];
+
+// Retrieve the highest cart_no from the cart table
+$get_max_cart_no_sql = "SELECT MAX(cart_no) AS max_cart_no FROM cart";
+$get_max_cart_no_result = $conn->query($get_max_cart_no_sql);
+$max_cart_no_row = $get_max_cart_no_result->fetch_assoc();
+$max_cart_no = $max_cart_no_row['max_cart_no'];
+
+// Start with cart_no equal to the highest value + 1
+$cart_no = $max_cart_no + 1;
+// Start with order_no equal to the highest value + 1
+$order_no = $max_order_no + 1;
 
 if (isset($_POST['selected_products'])) {
     $id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
@@ -54,6 +67,13 @@ if (isset($_POST['selected_products'])) {
 
             // Retrieve cart_id of the inserted cart
             $cartId = $insert_cart_stmt->insert_id;
+
+            // Delete cart items for the current product and customer
+            $delete_cart_item_sql = "DELETE FROM cart_item WHERE product_id = ? AND customer_id = ?";
+            $delete_cart_item_stmt = $conn->prepare($delete_cart_item_sql);
+            $delete_cart_item_stmt->bind_param("ii", $product_id, $customer);
+            $delete_cart_item_stmt->execute();
+
             $transaction = file_get_contents($_FILES["fileToUpload"]["tmp_name"]);
             // Insert into orders table
             $insert_order_sql = "INSERT INTO orders (cart_id, total_amount, transaction, status_delivery, order_no, created_date, update_date) VALUES (?, ?,?, 1,?, NOW(), NOW())";
@@ -65,6 +85,23 @@ if (isset($_POST['selected_products'])) {
                 echo "Error inserting product into cart: " . $insert_order_stmt->error;
                 exit();
             }
+        }
+
+        // Update product quantity and remove items from cart after placing order
+        if ($insert_order_stmt->errno === 0) {
+            foreach ($selectedProducts as $product) {
+                $product_id = $product;
+
+                // Update product quantity in product table
+                $update_quantity_sql = "UPDATE product SET quantity = quantity - ? WHERE product_id = ?";
+                $update_quantity_stmt = $conn->prepare($update_quantity_sql);
+                $update_quantity_stmt->bind_param("ii", $quantity, $product_id);
+                $update_quantity_stmt->execute();
+
+            }
+        } else {
+            echo "Error placing order: " . $insert_order_stmt->error;
+            exit();
         }
 
         // Increment cart_no for the next set of products

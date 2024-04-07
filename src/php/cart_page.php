@@ -2,6 +2,10 @@
 // เชื่อมต่อกับฐานข้อมูล
 require_once "../../config/db.php";
 include '../include/navbar_main.php';
+if (!isset($_SESSION['login_user'])) {
+    header("Location: login.php"); // หากไม่ได้เข้าสู่ระบบ ให้เปลี่ยนเส้นทางไปยังหน้าล็อกอิน
+    exit;
+}
 
 // สร้างอาร์เรย์เพื่อเก็บข้อมูลของสินค้าที่เลือก
 $selected_products = array();
