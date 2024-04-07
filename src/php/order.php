@@ -1,6 +1,7 @@
 <?php
 include '../include/navbar_main.php';
 
+$fileUploaded = isset($_FILES['fileToUpload']['name']) && !empty($_FILES['fileToUpload']['name']);
 // Check if any product data is sent
 if (isset($_POST['selected_products'])) {
     // Connect to the database
@@ -61,7 +62,8 @@ if (isset($_POST['selected_products'])) {
 <body>
     <div class="container mt-5">
         <h2 class="mb-4 text-center">รายการสั่งซื้อ</h2>
-        <form method="post" action="add_to_cart.php">
+        <form method="post" action="add_to_cart.php" enctype="multipart/form-data" id="uploadForm">
+
             <?php
             if (isset($_POST['selected_products'])) {
                 // Connect to the database
@@ -184,25 +186,37 @@ if (isset($_POST['selected_products'])) {
 
                     <h5 class="mt-3">แจ้งหลักฐานการชำระเงิน</h5>
                     <div class="input-group">
-                        <input type="file" class="form-control" name="fileToUpload" id="fileToUpload"
-                            aria-describedby="uploadButton">
-                    </div>
+                                            <input type="file" class="form-control" name="fileToUpload" id="fileToUpload"
+                                                aria-describedby="uploadButton">
+                                        </div>
+                                        <?php if (!$fileUploaded): ?>
+                                            <button type="submit" class="btn btn-primary mt-2" id="submitButton" name="submit" disabled>สั่งสินค้า</button>
 
-                    <script>
-                        // Listen for changes in the file input field
-                        document.getElementById("fileToUpload").addEventListener("change", function () {
-                            // Trigger form submission when a file is selected
-                            document.getElementById("uploadForm").submit();
-                        });
-                    </script>
-                    <button type="submit" class="btn btn-primary mt-2">สั่งสินค้า</button>
+
+<?php else: ?>
+    <button type="submit" class="btn btn-primary mt-2" name="submit">สั่งสินค้า</button>
+<?php endif; ?>
+
                 </div>
             </div>
         </form>
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+        <script>
+    document.getElementById("fileToUpload").addEventListener("change", function () {
+    var fileUploaded = this.files.length > 0;
+    var submitButton = document.getElementById("submitButton");
+    if (fileUploaded) {
+        submitButton.disabled = false;
+    } else {
+        submitButton.disabled = true;
+    }
+});
+</script>
+
 </body>
 
 </html>

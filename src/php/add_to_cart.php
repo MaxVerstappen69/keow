@@ -54,14 +54,11 @@ if (isset($_POST['selected_products'])) {
 
             // Retrieve cart_id of the inserted cart
             $cartId = $insert_cart_stmt->insert_id;
-
-            // Retrieve file content
-            $file_content = file_get_contents($_FILES["fileToUpload"]["tmp_name"]);
-
+            $transaction = file_get_contents($_FILES["fileToUpload"]["tmp_name"]);
             // Insert into orders table
-            $insert_order_sql = "INSERT INTO orders (cart_id, total_amount, status_delivery, transaction, order_no, created_date, update_date) VALUES (?, ?, 1, ?, ?, NOW(), NOW())";
+            $insert_order_sql = "INSERT INTO orders (cart_id, total_amount, transaction, status_delivery, order_no, created_date, update_date) VALUES (?, ?,?, 1,?, NOW(), NOW())";
             $insert_order_stmt = $conn->prepare($insert_order_sql);
-            $insert_order_stmt->bind_param("iisi", $cartId, $total_amount, $file_content, $order_no);
+            $insert_order_stmt->bind_param("iisi", $cartId, $total_amount, $transaction, $order_no);
             $insert_order_stmt->execute();
 
             if ($insert_order_stmt->errno) {
@@ -77,9 +74,9 @@ if (isset($_POST['selected_products'])) {
         $_SESSION['cart_no'] = $cart_no;
 
         $order_no++;
+
         // Store the updated cart_no in the session
         $_SESSION['order_no'] = $order_no;
-
         // Redirect the user to indicate that the products are added to the cart
         header("Location: user_order.php");
         exit();
