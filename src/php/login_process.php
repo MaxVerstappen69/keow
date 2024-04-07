@@ -8,11 +8,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = md5($_POST['password']);
 
     // คิวรี่ฐานข้อมูลเพื่อตรวจสอบข้อมูลผู้ใช้ในตาราง customer
-    $query_customer = "SELECT * FROM customer WHERE email='$email' or username ='$email' AND password='$password'";
+    $query_customer = "SELECT * FROM customer WHERE email='$email' AND password='$password'";
     $result_customer = mysqli_query($conn, $query_customer);
 
     // คิวรี่ฐานข้อมูลเพื่อตรวจสอบข้อมูลผู้ใช้ในตาราง employee
-    $query_employee = "SELECT * FROM employee WHERE em_email='$email' or em_username ='$email' AND em_password='$password'";
+    $query_employee = "SELECT * FROM employee WHERE em_email='$email' AND em_password='$password'";
     $result_employee = mysqli_query($conn, $query_employee);
 
     // ถ้าพบข้อมูลผู้ใช้ในตาราง customer

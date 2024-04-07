@@ -2,7 +2,7 @@
 session_start();
 include "../../config/db.php";
 $id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
-$sql = "SELECT * FROM employee WHERE em_email or em_username  = '$id';";
+$sql = "SELECT * FROM employee WHERE em_email = '$id';";
 $result = $conn->query($sql);
 ?>
 
