@@ -4,6 +4,7 @@ require_once "../../config/db.php";
 
 // Start with cart_no equal to 1 for each new set of selected_products
 $cart_no = isset($_SESSION['cart_no']) ? $_SESSION['cart_no'] : 1;
+$order_no = isset($_SESSION['order_no']) ? $_SESSION['order_no'] : 1;
 
 if (isset($_POST['selected_products'])) {
     $id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
@@ -54,10 +55,13 @@ if (isset($_POST['selected_products'])) {
             // Retrieve cart_id of the inserted cart
             $cartId = $insert_cart_stmt->insert_id;
 
+            // Retrieve file content
+            $file_content = file_get_contents($_FILES["fileToUpload"]["tmp_name"]);
+
             // Insert into orders table
-            $insert_order_sql = "INSERT INTO orders (cart_id, total_amount, status_delivery, created_date, update_date) VALUES (?, ?, 1, NOW(), NOW())";
+            $insert_order_sql = "INSERT INTO orders (cart_id, total_amount, status_delivery, transaction, order_no, created_date, update_date) VALUES (?, ?, 1, ?, ?, NOW(), NOW())";
             $insert_order_stmt = $conn->prepare($insert_order_sql);
-            $insert_order_stmt->bind_param("id", $cartId, $total_amount);
+            $insert_order_stmt->bind_param("iisi", $cartId, $total_amount, $file_content, $order_no);
             $insert_order_stmt->execute();
 
             if ($insert_order_stmt->errno) {
@@ -71,6 +75,10 @@ if (isset($_POST['selected_products'])) {
 
         // Store the updated cart_no in the session
         $_SESSION['cart_no'] = $cart_no;
+
+        $order_no++;
+        // Store the updated cart_no in the session
+        $_SESSION['order_no'] = $order_no;
 
         // Redirect the user to indicate that the products are added to the cart
         header("Location: user_order.php");

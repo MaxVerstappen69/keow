@@ -37,8 +37,6 @@ $result = $conn->query($sql);
                             style="color: black;">รายการสั่งซื้อ</a></li>
                     <li class="nav-item"><a href="../php/admin_product.php" class="nav-link"
                             style="color: black;">รายการสินค้า</a></li>
-                    <li class="nav-item"><a href="../php/admin_employee_payment.php" class="nav-link"
-                            style="color: black;">ธุรกรรม</a></li>
                 </ul>
             </div>
 

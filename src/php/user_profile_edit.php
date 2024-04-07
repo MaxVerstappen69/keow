@@ -190,7 +190,7 @@ $resultadmin = $conn->query($sqladmid);
         <?php
       }
     } else {
-      echo "0 results";
+      echo "";
     } ?>
 
   </div>

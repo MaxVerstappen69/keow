@@ -118,13 +118,19 @@ if (isset($_POST['selected_products'])) {
                                 <img src="data:image/png;base64,<?php echo base64_encode($row['image']); ?>"
                                     class="product-image me-3">
                                 <div>
-                                    <h3><?php echo $product_name ?></h3>
-                                    <p>ราคา:<?php echo $price ?> บาท</p>
-                                    <p>จำนวน:<?php echo $quantity ?></p>
+                                    <h3>
+                                        <?php echo $product_name ?>
+                                    </h3>
+                                    <p>ราคา:
+                                        <?php echo $price ?> บาท
+                                    </p>
+                                    <p>จำนวน:
+                                        <?php echo $quantity ?>
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                    <?php
+                        <?php
                     }
                 } else {
                     echo "No selected products found.";
@@ -134,10 +140,61 @@ if (isset($_POST['selected_products'])) {
             }
             ?>
             <div class="container d-flex justify-content-center">
-                <div class="product-card text-center w-25">
+                <div class="product-card text-center w-50">
                     <h5><input type="hidden" name="totalPrice" value="<?php echo $totalPrice; ?>">
                         ราคารวมทั้งหมด:
-                        <?php echo number_format($totalPrice, 2); ?> บาท</h5>
+                        <?php echo number_format($totalPrice, 2); ?> บาท
+                    </h5>
+
+                    <div class="modal fade" id="exampleModalToggle" aria-hidden="true"
+                        aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalToggleLabel">สแกนQrcodeเพื่อชำระเงิน</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <img src="../../public/image/SCBQR.png" alt="image">
+                                </div>
+                                <div class="">
+                                    <h3 class="text-white" style="background-color: purple;">SCB</h3>
+                                    <h5>ชื่อบัญชี: นายเทพพิทักษ์ เกรียงไกรฉัตร</h5>
+                                    <h5>เลขบัญชี: 686-0-51255-5</h5>
+                                    <div style="color: #dc3545;">
+                                        <h4><input type="hidden" name="totalPrice" value="<?php echo $totalPrice; ?>">
+                                            ราคาที่ต้องจ่าย:
+                                            <?php echo number_format($totalPrice, 2); ?> บาท
+                                        </h4>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger"
+                                        data-bs-dismiss="modal">ปิดหน้าต่าง</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="btn btn-info mt-2" data-bs-toggle="modal" href="#exampleModalToggle"
+                        role="button">ชำระเงิน</a>
+
+
+                    <h5 class="mt-3">แจ้งหลักฐานการชำระเงิน</h5>
+                    <div class="input-group">
+                        <input type="file" class="form-control" name="fileToUpload" id="fileToUpload"
+                            aria-describedby="uploadButton">
+                    </div>
+
+                    <script>
+                        // Listen for changes in the file input field
+                        document.getElementById("fileToUpload").addEventListener("change", function () {
+                            // Trigger form submission when a file is selected
+                            document.getElementById("uploadForm").submit();
+                        });
+                    </script>
                     <button type="submit" class="btn btn-primary mt-2">สั่งสินค้า</button>
                 </div>
             </div>
