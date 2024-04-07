@@ -4,7 +4,7 @@ include "../../config/db.php";
 $id = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : null;
 $sql = "SELECT * FROM customer WHERE email = '$id';";
 $result = $conn->query($sql);
-$sqladmid = "SELECT * FROM employee WHERE em_email '$id';";
+$sqladmid = "SELECT * FROM employee WHERE em_email = '$id';";
 $resultadmin = $conn->query($sqladmid);
 
 ?>
