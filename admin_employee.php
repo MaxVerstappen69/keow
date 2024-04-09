@@ -1,3 +1,14 @@
+<?php include 'include/navbar_admin.php';
+if ($_SESSION['user_role'] !== 'admin') {
+    header("Location: index.php"); // หากไม่ใช่ admin ให้เปลี่ยนเส้นทางไปยังหน้าแสดงข้อความการเข้าถึงไม่ได้
+    exit;
+}
+if (!isset($_SESSION['login_user'])) {
+    header("Location: login.php"); // หากไม่ได้เข้าสู่ระบบ ให้เปลี่ยนเส้นทางไปยังหน้าล็อกอิน
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,18 +28,6 @@
 </head>
 
 <body>
-
-
-    <?php include 'include/navbar_admin.php';
-    if ($_SESSION['user_role'] !== 'admin') {
-        header("Location: index.php"); // หากไม่ใช่ admin ให้เปลี่ยนเส้นทางไปยังหน้าแสดงข้อความการเข้าถึงไม่ได้
-        exit;
-    }
-    if (!isset($_SESSION['login_user'])) {
-        header("Location: login.php"); // หากไม่ได้เข้าสู่ระบบ ให้เปลี่ยนเส้นทางไปยังหน้าล็อกอิน
-        exit;
-    }
-    ?>
 
     <?php
     if (isset($_SESSION['error'])) {

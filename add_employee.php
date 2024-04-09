@@ -1,4 +1,4 @@
-<?php include 'include/navbar_admin.php'; 
+<?php include 'include/navbar_admin.php';
 if ($_SESSION['user_role'] !== 'admin') {
     header("Location: index.php"); // หากไม่ใช่ admin ให้เปลี่ยนเส้นทางไปยังหน้าแสดงข้อความการเข้าถึงไม่ได้
     exit;
@@ -73,8 +73,6 @@ if ($_SESSION['user_role'] !== 'admin') {
                     <input type="text" class="form-control" name="em_username" required>
                     <label for="username">ชื่อพนักงาน</label>
                 </div>
-
-
             </div>
             <div class="container pt-5">
                 <button class="btn w-25 py-2 fw-bold rounded-pill" type="submit" name="submit"
