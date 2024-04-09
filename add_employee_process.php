@@ -27,8 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_role = 'admin';
 
     // เพิ่มข้อมูลลงในฐานข้อมูล
-    $sql = "INSERT INTO employee (em_firstname, em_lastname, em_email, em_username, em_phone, em_password, user_role)
-            VALUES ('$em_firstname', '$em_lastname', '$em_email', '$em_username', '$em_phone', '$em_password','$user_role')";
+    $sql = "INSERT INTO employee (em_firstname, em_lastname, em_email, em_username, em_phone, em_password, user_role, em_thumbnail)
+            VALUES ('$em_firstname', '$em_lastname', '$em_email', '$em_username', '$em_phone', '$em_password','$user_role', 'NULL')";
 
     if ($conn->query($sql) === TRUE) {
         $_SESSION['success1'] = 'เพิ่มข้อมูลเรียบร้อย.';
