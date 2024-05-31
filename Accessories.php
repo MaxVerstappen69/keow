@@ -65,12 +65,6 @@ $result = $conn->query($sql);
         </div>
     </div>
 
-
-
-
-
-
-
 </body>
 <footer>
 
